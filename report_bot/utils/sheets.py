@@ -4,7 +4,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from pg_maker import all_authors, find_author
-from utils.calendar import current_month, current_day
+from utils.calendar import current_month, current_day, next_month
 from collections import defaultdict
 import os
 
@@ -165,36 +165,38 @@ def who_is_free():
 
 
 def brief_is_free():
-    values = get_data_from_sheet(current_month())
-    if not values:
-        return
-
+    now_and_next_month = [current_month(), next_month()]
     all_briefs = []
-    flag_mvideo = False
+    for month in now_and_next_month:
+        values = get_data_from_sheet(month)
+        if not values:
+            return
 
-    for row in values:
-        if "МВИДЕО" in str(row):
-            flag_mvideo = True
-        try:
-            title = str(row[0])
-            brief = str(row[3])
-            author = row[2]
-            money = str(row[6])
-            symbs = str(row[8])
+        flag_mvideo = False
 
-            if brief and not author:
-                temp_row = f'[{title}]({brief})\n' \
-                           f'Объем: {symbs} тыс. символов\n' \
-                           f'Для блога: {"Мвидео" if flag_mvideo else "Эльдорадо"}\n' \
-                           f'Гонорар: {money}\n\n'
-                all_briefs.append(temp_row)
+        for row in values:
+            if "МВИДЕО" in str(row):
+                flag_mvideo = True
+            try:
+                title = str(row[0])
+                brief = str(row[3])
+                author = row[2]
+                money = str(row[6])
+                symbs = str(row[8])
 
-        except Exception as e:
-            print(f"Error: {e}")
+                if brief and not author:
+                    temp_row = f'[{title}]({brief})\n' \
+                               f'Объем: {symbs} тыс. символов\n' \
+                               f'Для блога: {"Мвидео" if flag_mvideo else "Эльдорадо"}\n' \
+                               f'Гонорар: {money}\n\n'
+                    all_briefs.append(temp_row)
 
-    msg = ''
-    for num, brief in enumerate(all_briefs, start=1):
-        msg += f"{num}. {brief}"
+            except Exception as e:
+                print(f"Error: {e}")
+
+        msg = ''
+        for num, brief in enumerate(all_briefs, start=1):
+            msg += f"{num}. {brief}"
 
     return msg
 

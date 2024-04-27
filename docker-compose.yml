@@ -5,7 +5,7 @@ services:
       context: report_bot
     stop_signal: SIGKILL
     ports:
-      - 5003
+      - 5003:5003
     networks:
       - webnet
     depends_on:
@@ -16,7 +16,7 @@ services:
       context: GuideGuru
     stop_signal: SIGKILL
     ports:
-      - 5002
+      - 5002:5002
     networks:
       - webnet
     depends_on:
