@@ -27,6 +27,20 @@ if not creds or not creds.valid:
     with open("token.json", "w") as token:
         token.write(creds.to_json())
 
+def get_sheet_names():
+    try:
+        service = build("sheets", "v4", credentials=creds)
+
+        spreadsheet = service.spreadsheets().get(spreadsheetId=SAMPLE_SPREADSHEET_ID).execute()
+        sheets = spreadsheet.get('sheets', [])
+
+        sheet_names = [sheet['properties']['title'] for sheet in sheets]
+        return sheet_names
+
+    except HttpError as err:
+        print(err)
+        return None
+
 def get_data_from_sheet(month):
     SAMPLE_RANGE_NAME = f"{month}!A2:I"
 
@@ -271,7 +285,7 @@ def in_work_today():
 
 
 def all_texts_of_author(name):
-    all_months = ["Ноябрь 2023", "Декабрь 2023", "Январь 2024", "Февраль 2024", "Март 2024", "Апрель 2024", "Май 2024"]
+    all_months = get_sheet_names()
     temp_eldo = ""
     temp_mvideo = ""
     recording_mvideo = False

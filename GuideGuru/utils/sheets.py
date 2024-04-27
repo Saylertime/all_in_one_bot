@@ -25,6 +25,22 @@ if not creds or not creds.valid:
     with open("token.json", "w") as token:
         token.write(creds.to_json())
 
+
+def get_sheet_names():
+    try:
+        service = build("sheets", "v4", credentials=creds)
+
+        spreadsheet = service.spreadsheets().get(spreadsheetId=SAMPLE_SPREADSHEET_ID).execute()
+        sheets = spreadsheet.get('sheets', [])
+
+        sheet_names = [sheet['properties']['title'] for sheet in sheets]
+        return sheet_names
+
+    except HttpError as err:
+        print(err)
+        return None
+
+
 def get_data_from_sheet(month):
     SAMPLE_RANGE_NAME = f"{month}!A2:I"
 
@@ -48,37 +64,6 @@ def get_data_from_sheet(month):
     except HttpError as err:
         print(err)
         return None
-
-
-all_authors = {
-    'quir1ll': 'Кирилл',
-    'kirill_morales': 'Моралес',
-    'isaywheee': 'Саша',
-    'Vice_Mallow': 'Артем',
-    'Catygen': 'Генералова',
-    'interneuronic': 'Дина',
-    'baego': 'Егор',
-    'ArseniyMirniy': 'Арсений',
-    'Mkarow': 'Вадим',
-    'Irina_Grodzinskaya': 'Ира',
-    'annacalico': 'Анна',
-    'aliullov_sh': 'Шамиль',
-    'the_barteneva': 'Ана',
-    'johnyscreams': 'Бо',
-    'barvikki': 'Вика',
-    'pescadotravel': 'Сергей',
-    'suspicious_fox': 'Алина',
-    'kuchkanov': 'Фил',
-    'Sedn04ka': 'Седна',
-    'Hurtson': 'Никита',
-    'dimkor42': 'Дима',
-    'drrmmn': 'Дарья',
-    'marabouto': 'Рома',
-    'vegur': 'Ксения',
-    'saylertime': 'Глинкин',
-    'maria_vyshnegradskaya': 'Маша'
-}
-
 
 def rep_name_and_month(name, month=current_month()):
     values = get_data_from_sheet(month)
@@ -138,7 +123,8 @@ def rep_name_and_month(name, month=current_month()):
 
 
 def all_texts_of_author(name_in_db):
-    all_months = ["Ноябрь 2023", "Декабрь 2023", "Январь 2024", "Февраль 2024", "Март 2024", "Апрель 2024", "Май 2024"]
+
+    all_months = get_sheet_names()
     temp_eldo = ""
     temp_mvideo = ""
     recording_mvideo = False
