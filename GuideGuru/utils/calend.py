@@ -7,7 +7,13 @@ def previous_month():
     previous_month_date = current_date - timedelta(days=current_date.day)
     previous_month_name = calendar.month_name[previous_month_date.month]
     month = f"{months_dict[previous_month_name]} {current_date.year}"
-    print(month)
+    return month
+
+def next_month():
+    current_date = datetime.now()
+    next_month_date = current_date + timedelta(days=current_date.day)
+    next_month_name = calendar.month_name[next_month_date.month]
+    month = f"{months_dict[next_month_name]} {current_date.year}"
     return month
 
 months_dict = {
