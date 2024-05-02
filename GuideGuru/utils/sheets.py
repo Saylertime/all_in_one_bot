@@ -212,3 +212,4 @@ def brief_is_free():
         msg += f"{num}. {brief}"
 
     return msg
+
