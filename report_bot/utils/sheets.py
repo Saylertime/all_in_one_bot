@@ -167,7 +167,6 @@ def who_is_free():
 def brief_is_free():
     now_and_next_month = [current_month(), next_month()]
     all_briefs = []
-    msg = ''
     for month in now_and_next_month:
         values = get_data_from_sheet(month)
         if not values:
@@ -195,6 +194,7 @@ def brief_is_free():
             except Exception as e:
                 print(f"Error: {e}")
 
+    msg = ''
     for num, brief in enumerate(all_briefs, start=1):
         msg += f"{num}. {brief}"
 
