@@ -186,6 +186,7 @@ def brief_is_free():
             return
 
         flag_mvideo = False
+        all_briefs = []
 
         for row in values:
             if "МВИДЕО" in str(row):
