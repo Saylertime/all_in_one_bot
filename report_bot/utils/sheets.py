@@ -174,7 +174,6 @@ def brief_is_free():
             return
 
         flag_mvideo = False
-        all_briefs.clear()
 
         for row in values:
             if "МВИДЕО" in str(row):
@@ -196,8 +195,8 @@ def brief_is_free():
             except Exception as e:
                 print(f"Error: {e}")
 
-        for num, brief in enumerate(all_briefs, start=1):
-            msg += f"{num}. {brief}"
+    for num, brief in enumerate(all_briefs, start=1):
+        msg += f"{num}. {brief}"
 
     return msg
 
