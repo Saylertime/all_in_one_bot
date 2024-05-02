@@ -11,9 +11,9 @@ def previous_month():
 
 def next_month():
     current_date = datetime.now()
-    next_month_date = current_date + timedelta(days=current_date.day)
+    next_month_date = current_date.replace(day=1) + timedelta(days=32)
     next_month_name = calendar.month_name[next_month_date.month]
-    month = f"{months_dict[next_month_name]} {current_date.year}"
+    month = f"{months_dict[next_month_name]} {next_month_date.year}"
     return month
 
 months_dict = {
