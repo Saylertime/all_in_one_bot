@@ -6,7 +6,7 @@ from utils.logger import logger
 import os
 
 @bot.message_handler(commands=['last_month'])
-def history(message):
+def last_month(message):
     logger.warning(f'{message.from_user.username} — команда {"HISTORY" }')
     username = "@" + message.from_user.username
     name_in_db = find_author(username)

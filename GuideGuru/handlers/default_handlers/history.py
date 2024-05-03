@@ -1,12 +1,11 @@
 from loader import bot
 from psql_maker import find_author
 from utils.sheets import rep_name_and_month
-from utils.calend import previous_month
 from utils.logger import logger
 import os
 
-@bot.message_handler(commands=['history])
-def history(message, is_history=False):
+@bot.message_handler(commands=['history'])
+def history(message):
     logger.warning(f'{message.from_user.username} — команда {"HISTORY" }')
     username = "@" + message.from_user.username
     name_in_db = find_author(username)
