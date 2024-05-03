@@ -6,12 +6,12 @@ from utils.logger import logger
 import os
 
 @bot.message_handler(commands=['history', 'last_month'])
-def history(message, is_last_month=False):
-    logger.warning(f'{message.from_user.username} — команда {"LAST_MONTH" if is_last_month else "HISTORY" }')
+def history(message, month):
+    # logger.warning(f'{message.from_user.username} — команда {"LAST_MONTH" if is_last_month else "HISTORY" }')
     username = "@" + message.from_user.username
     name_in_db = find_author(username)
     if name_in_db:
-        if not is_last_month:
+        if month == 'this':
             msg = rep_name_and_month(name_in_db)
         else:
             msg = rep_name_and_month(name_in_db, previous_month())
