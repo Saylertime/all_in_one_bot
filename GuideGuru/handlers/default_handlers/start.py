@@ -7,6 +7,7 @@ from handlers.default_handlers.all_texts import all_texts
 from handlers.default_handlers.check import check
 from handlers.default_handlers.free_texts import free_texts
 from handlers.default_handlers.history import history
+from handlers.default_handlers.last_month import last_month
 from handlers.default_handlers.unique import unique
 from utils.logger import logger
 
@@ -39,13 +40,12 @@ def callback_query(call):
     elif call.data == "4":
         unique(call)
     elif call.data == "5":
-        history(call, is_history=True)
+        history(call)
     elif call.data == "6":
         all_texts(call)
     elif call.data == "7":
         free_texts(call)
     elif call.data == "8":
-        history(call, is_history=False)
-        # last_month(call)
+        last_month(call)
     elif call.data == 'start':
         start_message(call)
