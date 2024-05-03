@@ -39,13 +39,13 @@ def callback_query(call):
     elif call.data == "4":
         unique(call)
     elif call.data == "5":
-        history(call, 'this')
+        history(call, is_history=True)
     elif call.data == "6":
         all_texts(call)
     elif call.data == "7":
         free_texts(call)
     elif call.data == "8":
-        history(call, 'last')
+        history(call, is_history=False)
         # last_month(call)
     elif call.data == 'start':
         start_message(call)
