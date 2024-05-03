@@ -7,6 +7,8 @@ import os
 
 @bot.message_handler(commands=['history', 'last_month'])
 def history(message, is_last_month=False):
+    if message.text == '/last_month':
+        is_last_month = True
     logger.warning(f'{message.from_user.username} — команда {"LAST_MONTH" if is_last_month else "HISTORY" }')
     username = "@" + message.from_user.username
     name_in_db = find_author(username)
