@@ -19,13 +19,13 @@ def receipt(message):
 
 @bot.message_handler(state=CheckState.check)
 def upload_link(message):
+    bot.delete_state(message.from_user.id)
     if contains_ru_domain(message.text):
         full_name = get_data_from_sheet(message.from_user.username)
         new_list(full_name, message.text)
-        bot.delete_state(message.from_user.id)
         bot.send_message(message.from_user.id, 'Спасибо, всё получилось')
     else:
-        bot.send_message(message.from_user.id, 'Это точно ссылка? Не вижу в ней .ru')
+        bot.send_message(message.from_user.id, 'Это точно ссылка? Не вижу в ней .ru. Начни всё заново')
 
 
 def contains_ru_domain(url):
