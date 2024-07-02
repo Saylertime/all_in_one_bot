@@ -9,6 +9,7 @@ from handlers.default_handlers.free_texts import free_texts
 from handlers.default_handlers.history import history
 from handlers.default_handlers.last_month import last_month
 from handlers.default_handlers.unique import unique
+from handlers.default_handlers.receipt import receipt
 from utils.logger import logger
 
 
@@ -20,6 +21,7 @@ def start_message(message):
     buttons = [('Правила оформления Эльдо', '1',),
                ('Правила оформления МВидео', '2'),
                ('Проверить текст на стоп-слова', '3'),
+               ('Загрузить чек', '9'),
                ('Проверить текст на уникальность', '4'),
                ('Тексты за этот месяц', '5'),
                ('Тексты за прошлый месяц', '8'),
@@ -47,5 +49,7 @@ def callback_query(call):
         free_texts(call)
     elif call.data == "8":
         last_month(call)
+    elif call.data == "9":
+        receipt(call)
     elif call.data == 'start':
         start_message(call)

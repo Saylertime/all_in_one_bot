@@ -1,5 +1,6 @@
 from . import history
 from . import last_month
+from . import receipt
 from . import check
 from . import start
 from . import free_texts
