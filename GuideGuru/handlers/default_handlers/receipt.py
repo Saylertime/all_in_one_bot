@@ -25,7 +25,7 @@ def upload_link(message):
         new_list(full_name, message.text)
         bot.send_message(message.from_user.id, 'Спасибо, всё получилось')
     else:
-        bot.send_message(message.from_user.id, 'Это точно ссылка? Не вижу в ней .ru. Начни всё заново')
+        bot.send_message(message.from_user.id, 'Это точно ссылка? Не вижу в ней .ru. Начни всё заново /receipt')
 
 
 def contains_ru_domain(url):
