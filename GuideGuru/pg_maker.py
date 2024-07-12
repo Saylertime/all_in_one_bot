@@ -100,6 +100,14 @@ def find_author(name):
     close_db_connection(conn, cursor)
     return author
 
+def find_author_name(name_in_db):
+    conn, cursor = connect_to_db()
+    sql = f"SELECT name FROM public.authors WHERE name_in_db = '{name_in_db}'"
+    cursor.execute(sql)
+    author = cursor.fetchone()
+    close_db_connection(conn, cursor)
+    return author
+
 def drop_table(table_name):
     conn, cursor = connect_to_db()
     sql = f"""DROP TABLE IF EXISTS {table_name};"""

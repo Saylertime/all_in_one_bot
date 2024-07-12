@@ -3,7 +3,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from pg_maker import all_authors, find_author
+from pg_maker import all_authors, find_author, find_author_name
 from utils.calendar import current_month, current_day, next_month
 from collections import defaultdict
 import os
@@ -74,21 +74,39 @@ def rep_month(month):
     dct = dict()
 
     for row in values:
-      try:
-        key = row[2]
-        value = int(row[6])
-        if key in dct:
-          current_sum, current_count = dct[key]
-          dct[key] = (current_sum + value, current_count + 1)
-        else:
-          dct[key] = (value, 1)
-      except:
-        pass
+        try:
+            key = row[2]
+            value = int(row[6])
+            symb = float(row[4].replace(',', '.'))
+            if key in dct:
+                current_sum, current_count = dct[key]
+                dct[key] = (current_sum + value, current_count + 1)
+                if symb >= 25:
+                    dct[key] = (current_sum + value, current_count + 2)
+            else:
+                dct[key] = (value, 1)
+                if symb >= 25:
+                    dct[key] = (value, 2)
+        except:
+            pass
 
     msg = ''
     sorted_dct = sorted(dct.items(), key=lambda item: item[1][0], reverse=True)
     for author, summa in sorted_dct:
-        msg += f"{author} — {summa[0]} руб.\nТекстов за месяц — {summa[1]}\n\n"
+        try:
+            author_name = find_author_name(author)[0]
+        except:
+            author_name = author
+        bonus = 0
+        if summa[1] >= 20:
+            bonus = 4000
+        elif summa[1] >= 15:
+            bonus = 2500
+        elif summa[1] >= 10:
+            bonus = 1500
+        elif summa[1] >= 5:
+            bonus = 500
+        msg += f"{author_name} — {summa[0] + bonus} руб. Из них бонус — {bonus}\nТекстов за месяц — {summa[1]}\n\n"
     return msg
 
 
