@@ -113,8 +113,9 @@ def rep_name_and_month(name, month=current_month()):
                 bonus = 1500
             elif summa[1] >= 5:
                 bonus = 500
-            msg += (f"Гонорар за сданные тексты за {month} — {summa[0] + bonus}  руб.\nТекстов за месяц — {summa[1]}.\n"
-                    f"Из них бонус — {bonus} руб.\n\n")
+            msg += (f"Гонорар за сданные тексты за {month} — {summa[0] + bonus}  руб.\n"
+                    f"Из них бонус — {bonus} руб.\n"
+                    f"Текстов за месяц — {summa[1]}.\n\n")
 
         msg_texts = '<b>Все сданные тексты:</b> \n'
         for title in dct_texts[name]:
