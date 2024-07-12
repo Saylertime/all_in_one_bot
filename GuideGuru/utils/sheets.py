@@ -81,23 +81,40 @@ def rep_name_and_month(name, month=current_month()):
                 money = int(row[6])
                 link = row[1]
                 brief = str(row[3])
+                symb = float(row[4].replace(',', '.'))
                 if name == row[2]:
-                    if (name in dct or name in dct_texts):
+                    if name in dct:
+                        value_money, current_count = dct[name]
                         if link:
-                            value_money, current_count = dct[name]
                             dct_texts[name].append(title)
-                            dct[name] = (value_money + money, current_count + 1)
+                            current_count += 1
+                            if symb >= 25:
+                                current_count += 1
+                            dct[name] = (value_money + money, current_count)
                         else:
                             texts_in_work[name].append((title, brief))
                     else:
                         dct[name] = (money, 1)
+                        if symb >= 25:
+                            dct[name] = (money, 2)
                         dct_texts[name] = [title]
-            except:
+            except Exception as e:
+                print(f"Error processing row: {e}")
                 pass
         msg = ''
+        bonus = 0
         sorted_dct = sorted(dct.items(), key=lambda item: item[1][0], reverse=True)
         for author, summa in sorted_dct:
-            msg += f"Гонорар за сданные тексты за {month} — {summa[0]} руб.\nТекстов за месяц — {summa[1]}\n\n"
+            if summa[1] >= 20:
+                bonus = 4000
+            elif summa[1] >= 15:
+                bonus = 2500
+            elif summa[1] >= 10:
+                bonus = 1500
+            elif summa[1] >= 5:
+                bonus = 500
+            msg += (f"Гонорар за сданные тексты за {month} — {summa[0] + bonus}  руб.\nТекстов за месяц — {summa[1]}.\n"
+                    f"Из них бонус — {bonus} руб.\n\n")
 
         msg_texts = '<b>Все сданные тексты:</b> \n'
         for title in dct_texts[name]:
