@@ -8,7 +8,9 @@ import os
 
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
-SAMPLE_SPREADSHEET_ID = "14rfetnaiqgiT3o0TsLC-yi3EICobIH5rNljilhDS70M"
+SAMPLE_SPREADSHEET_ID_ELDO = "14rfetnaiqgiT3o0TsLC-yi3EICobIH5rNljilhDS70M"
+SAMPLE_SPREADSHEET_ID_SBER = "1TimmvVzxIn5J_1HeXpjuf0PIGq-gdLb6Yr4r7enEImo"
+
 
 creds = None
 if os.path.exists("token.json"):
@@ -26,11 +28,11 @@ if not creds or not creds.valid:
         token.write(creds.to_json())
 
 
-def get_sheet_names():
+def get_sheet_names(spreadsheet_id):
     try:
         service = build("sheets", "v4", credentials=creds)
 
-        spreadsheet = service.spreadsheets().get(spreadsheetId=SAMPLE_SPREADSHEET_ID).execute()
+        spreadsheet = service.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
         sheets = spreadsheet.get('sheets', [])
 
         sheet_names = [sheet['properties']['title'] for sheet in sheets]
@@ -41,7 +43,7 @@ def get_sheet_names():
         return None
 
 
-def get_data_from_sheet(month):
+def get_data_from_sheet(month, spreadsheet_id):
     SAMPLE_RANGE_NAME = f"{month}!A2:I"
 
     try:
@@ -50,7 +52,7 @@ def get_data_from_sheet(month):
         sheet = service.spreadsheets()
         result = (
             sheet.values()
-            .get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME)
+            .get(spreadsheetId=spreadsheet_id, range=SAMPLE_RANGE_NAME)
             .execute()
         )
         values = result.get("values", [])
@@ -65,8 +67,8 @@ def get_data_from_sheet(month):
         print(err)
         return None
 
-def rep_name_and_month(name, month=current_month()):
-    values = get_data_from_sheet(month)
+def rep_name_and_month(name, month=current_month(), sber_data=None):
+    values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
     name = name[0]
     if not values:
         return
@@ -75,6 +77,12 @@ def rep_name_and_month(name, month=current_month()):
         dct_texts = dict()
         texts_in_work = dict()
         texts_in_work[name] = []
+
+        if sber_data:
+            dct.update(sber_data['dct'])
+            dct_texts.update(sber_data['dct_texts'])
+            texts_in_work[name].extend(sber_data['texts_in_work'].get(name, []))
+
         for row in values:
             try:
                 title = f"{row[0]} — {row[6]} руб. {row[1]}"
@@ -134,21 +142,65 @@ def rep_name_and_month(name, month=current_month()):
         else:
             return msg
 
-    except:
-        msg = 'Кажется, у тебя пока ничего не написано...'
+    except Exception as e:
+        msg = f'Кажется, у тебя пока ничего не написано...'
 
         return msg
+
+def rep_name_and_month_sber(name, month=current_month()):
+    values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_SBER)
+    name = name[0]
+    if not values:
+        return
+
+    dct = dict()
+    dct_texts = dict()
+    texts_in_work = dict()
+    texts_in_work[name] = []
+    for row in values:
+        try:
+            title = f"{row[0]} — {row[3]} руб. {row[1]}"
+            money = int(row[3])
+            link = row[1]
+            brief = str(row[4])
+            symb = int(row[3])
+
+            if name == str(row[2]):
+                if name in dct:
+                    value_money, current_count = dct[name]
+                    if link:
+                        dct_texts[name].append(title)
+                        current_count += 1
+                        if symb >= 25000:
+                            current_count += 1
+                        dct[name] = (value_money + money, current_count)
+                    else:
+                        texts_in_work[name].append((title, brief))
+                else:
+                    dct[name] = (money, 1)
+                    if symb >= 25000:
+                        dct[row[2]] = (money, 2)
+                    dct_texts[name] = [title]
+        except Exception as e:
+            print(f"Error processing row: {e}")
+            pass
+
+    return {
+        'dct': dct,
+        'dct_texts': dct_texts,
+        'texts_in_work': texts_in_work
+    }
 
 
 def all_texts_of_author(name_in_db):
 
-    all_months = get_sheet_names()
+    all_months = get_sheet_names(SAMPLE_SPREADSHEET_ID_ELDO)
     temp_eldo = ""
     temp_mvideo = ""
     recording_mvideo = False
 
     for month in all_months:
-        values = get_data_from_sheet(month)
+        values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
         if not values:
             return
 
@@ -199,7 +251,7 @@ def brief_is_free():
     now_and_next_month = [current_month(), next_month()]
     all_briefs = []
     for month in now_and_next_month:
-        values = get_data_from_sheet(month)
+        values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
         if not values:
             return
 

@@ -27,3 +27,4 @@ openai==0.28
 schedule
 pytz
 Flask
+watchdog

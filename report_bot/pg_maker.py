@@ -36,7 +36,15 @@ def delete_author(name_in_db):
 
 def all_authors():
     conn, cursor = connect_to_db()
-    sql = "SELECT name, nickname, name_in_db FROM public.authors"
+    sql = "SELECT name, nickname, name_in_db FROM public.authors WHERE vacation = False"
+    cursor.execute(sql)
+    authors = cursor.fetchall()
+    close_db_connection(conn, cursor)
+    return authors
+
+def authors_on_vacation():
+    conn, cursor = connect_to_db()
+    sql = "SELECT name, nickname, name_in_db FROM public.authors WHERE vacation = True"
     cursor.execute(sql)
     authors = cursor.fetchall()
     close_db_connection(conn, cursor)
@@ -45,6 +53,12 @@ def all_authors():
 def create_db():
     conn, cursor = connect_to_db()
     sql = 'CREATE TABLE IF NOT EXISTS public.authors (name VARCHAR, nickname VARCHAR, name_in_db VARCHAR, phone VARCHAR, about VARCHAR);'
+    cursor.execute(sql)
+    close_db_connection(conn, cursor)
+
+def alter_db_add_vacation():
+    conn, cursor = connect_to_db()
+    sql = 'ALTER TABLE public.authors ADD COLUMN vacation BOOLEAN DEFAULT FALSE;'
     cursor.execute(sql)
     close_db_connection(conn, cursor)
 

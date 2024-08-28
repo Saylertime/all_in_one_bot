@@ -1,5 +1,6 @@
 from loader import bot
 from pg_sql import new_user
+from psql_maker import author_on_vacation, update_vacation_status
 from keyboards.reply.create_markup import create_markup
 from handlers.default_handlers.eldo import eldo
 from handlers.default_handlers.mvideo import mvideo
@@ -17,6 +18,7 @@ from utils.logger import logger
 def start_message(message):
     logger.warning(f'{message.from_user.username} — команда START')
     new_user(message.from_user.username, message.from_user.id)
+    vacation = author_on_vacation(message.from_user.username)[0]
 
     buttons = [('Правила оформления Эльдо', '1',),
                ('Правила оформления МВидео', '2'),
@@ -26,7 +28,8 @@ def start_message(message):
                ('Тексты за этот месяц', '5'),
                ('Тексты за прошлый месяц', '8'),
                ('Все твои тексты с ноября 2023', '6'),
-               ('Свободные брифы', '7')]
+               ('Свободные брифы', '7'),
+               (f'{"Хочу снова работать!!!" if vacation else "Иду в отпуск"}', 'vacation')]
     markup = create_markup(buttons)
     bot.send_message(message.from_user.id, "⬇⬇⬇ Ультимативный гайд для авторов GameGuru ⬇⬇⬇", reply_markup=markup)
 
@@ -53,3 +56,9 @@ def callback_query(call):
         receipt(call)
     elif call.data == 'start':
         start_message(call)
+
+    elif call.data == "vacation":
+        vacation = author_on_vacation(call.from_user.username)[0]
+        update_vacation_status(call.from_user.username, 'False' if vacation else 'True')
+        start_message(call)
+

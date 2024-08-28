@@ -1,6 +1,6 @@
 from telebot.types import Message
 from loader import bot
-from pg_maker import refresh_db, delete_author, new_table
+from pg_maker import refresh_db, delete_author, new_table, alter_db_add_vacation
 from utils.text_ru import text_unique_check
 
 @bot.message_handler(state=None)
@@ -14,6 +14,10 @@ def bot_echo(message: Message) -> None:
     elif message.text == 'НАПОМИНАЛКА':
         new_table()
         bot.send_message(message.chat.id, 'Создана')
+
+    elif "ALTER" in message.text:
+        alter_db_add_vacation()
+        bot.send_message(message.chat.id, 'Добавил...')
 
     elif "УДАЛИТЬ" in message.text:
         try:
