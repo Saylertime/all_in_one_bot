@@ -1,7 +1,8 @@
 from telebot.types import Message
 from loader import bot
 from pg_sql import all_users_from_db
-from pg_maker_guide import new_table_stop_words, insert_new_word, delete_stop_word
+from psql_maker import new_table_stop_words, insert_new_word, delete_stop_word, all_stop_words
+from utils.text_ru import symbols_left
 from utils.logger import logger
 
 @bot.message_handler(state=None)
@@ -31,15 +32,19 @@ def bot_echo(message: Message) -> None:
 
     elif 'ДОБАВИТЬ' in message.text:
         word = str(message.text.split()[1])
-        insert_new_word(word)
-        bot.send_message(message.from_user.id, f'Слово "{word}" добавлено в базу запрещенных')
-
+        msg = insert_new_word(word)
+        bot.send_message(message.from_user.id, msg)
 
     elif 'УБРАТЬ' in message.text:
         word = str(message.text.split()[1])
-        delete_stop_word(word)
-        bot.send_message(message.from_user.id, f'Слово "{word}" удалено из базы запрещенных')
+        msg = delete_stop_word(word)
+        bot.send_message(message.from_user.id, msg)
 
+    elif 'СТОП-СЛОВА' in message.text:
+        bot.send_message(message.from_user.id, str(", ".join([i for i in all_stop_words()])))
+
+    elif "TEXT" in message.text:
+        bot.send_message(message.chat.id, f"{symbols_left()}")
 
     else:
         logger.warning(f'{message.from_user.username} — ECHO — {message.text}')

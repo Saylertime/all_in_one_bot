@@ -10,6 +10,15 @@ services:
       - webnet
     depends_on:
       - postgres
+    develop:
+      watch:
+        - action: sync
+          path: ./report_bot
+          target: /telegram_bot
+          ignore:
+            - venv/
+        - action: rebuild
+          path: requirements.txt
 
   guide_guru:
     build:
@@ -21,6 +30,15 @@ services:
       - webnet
     depends_on:
       - postgres
+    develop:
+      watch:
+        - action: sync
+          path: ./GuideGuru
+          target: /telegram_bot
+          ignore:
+            - venv/
+        - action: rebuild
+          path: requirements.txt
 
   postgres:
     image: postgres

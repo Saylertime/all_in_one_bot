@@ -11,6 +11,7 @@ from handlers.default_handlers.history import history
 from handlers.default_handlers.last_month import last_month
 from handlers.default_handlers.unique import unique
 from handlers.default_handlers.receipt import receipt
+from handlers.default_handlers.vacation import vacation
 from utils.logger import logger
 
 
@@ -58,7 +59,4 @@ def callback_query(call):
         start_message(call)
 
     elif call.data == "vacation":
-        vacation = author_on_vacation(call.from_user.username)[0]
-        update_vacation_status(call.from_user.username, 'False' if vacation else 'True')
-        start_message(call)
-
+        vacation(call)

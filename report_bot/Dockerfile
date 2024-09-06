@@ -6,4 +6,4 @@ COPY . /telegram_bot
 
 RUN pip install -r requirements.txt
 
-CMD ["python", "main.py"]
+CMD ["watchmedo", "auto-restart", "--pattern=*.py", "--recursive", "python", "main.py"]

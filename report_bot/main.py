@@ -5,7 +5,6 @@ from utils.set_bot_commands import set_default_commands
 from config_data import config
 import time
 import threading
-from utils.tasks import send_notifications
 from flask import Flask, request
 import requests
 import telebot
@@ -15,6 +14,7 @@ app = Flask(__name__)
 
 WEBHOOK_URL = 'https://glinkin.pro'
 BOT_TOKEN = config.BOT_TOKEN
+DEBUG = config.LOCAL_ENV
 
 @app.route('/webhook_report', methods=['POST'])
 def webhook():
@@ -30,20 +30,15 @@ def webhook_thread():
     while True:
         set_webhook()
         time.sleep(30)
-set_webhook()
-
-
-def scheduled_job():
-    while True:
-        send_notifications()
-        time.sleep(60)
 
 
 if __name__ == "__main__":
     bot.add_custom_filter(StateFilter(bot))
     set_default_commands(bot)
-    thread = threading.Thread(target=scheduled_job)
-    thread.start()
-    webhook_thread = threading.Thread(target=webhook_thread)
-    webhook_thread.start()
-    app.run(host='0.0.0.0', port=5003)
+    if DEBUG:
+        bot.infinity_polling()
+    else:
+        set_webhook()
+        webhook_thread = threading.Thread(target=webhook_thread)
+        webhook_thread.start()
+        app.run(host='0.0.0.0', port=5003)

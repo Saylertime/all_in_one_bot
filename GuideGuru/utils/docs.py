@@ -1,5 +1,5 @@
 import os.path
-from pg_maker_guide import all_stop_words
+from psql_maker import all_stop_words
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials

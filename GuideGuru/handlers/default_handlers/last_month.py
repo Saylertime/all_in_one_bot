@@ -5,6 +5,7 @@ from utils.calend import previous_month
 from utils.logger import logger
 import os
 
+
 @bot.message_handler(commands=['last_month'])
 def last_month(message):
     logger.warning(f'{message.from_user.username} — команда {"HISTORY" }')
