@@ -22,9 +22,15 @@ def webhook():
     bot.process_new_updates([update])
     return 'ok', 200
 
+def remove_webhook():
+    response = requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/deleteWebhook')
+    print(response.json())
+
 def set_webhook():
+    remove_webhook()
     response = requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/setWebhook?url={WEBHOOK_URL}/webhook_report')
     print(response.json())
+
 
 def webhook_thread():
     while True:
