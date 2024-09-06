@@ -14,7 +14,6 @@ app = Flask(__name__)
 
 WEBHOOK_URL = 'https://glinkin.pro'
 BOT_TOKEN = config.BOT_TOKEN
-DEBUG = config.LOCAL_ENV
 
 @app.route('/webhook_guideguru', methods=['POST'])
 def webhook():
@@ -22,27 +21,27 @@ def webhook():
     bot.process_new_updates([update])
     return 'ok', 200
 
-def remove_webhook():
-    response = requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/deleteWebhook')
-    print(response.json())
-
 def set_webhook():
-    remove_webhook()
-    response = requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/setWebhook?url={WEBHOOK_URL}/webhook_report')
+    response = requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/setWebhook?url={WEBHOOK_URL}/webhook_guideguru')
     print(response.json())
 
 def webhook_thread():
     while True:
         set_webhook()
         time.sleep(30)
+set_webhook()
+
+
 
 if __name__ == "__main__":
     bot.add_custom_filter(StateFilter(bot))
     set_default_commands(bot)
-    if DEBUG:
-        bot.infinity_polling()
-    else:
-        set_webhook()
-        webhook_thread = threading.Thread(target=webhook_thread)
-        webhook_thread.start()
-        app.run(host='0.0.0.0', port=5003)
+    webhook_thread = threading.Thread(target=webhook_thread)
+    webhook_thread.start()
+    app.run(host='0.0.0.0', port=5002)
+
+
+# if __name__ == "__main__":
+#     bot.add_custom_filter(StateFilter(bot))
+#     set_default_commands(bot)
+#     bot.infinity_polling()(venv) flask@1738991-cy22118:~/all_in_one_bot/GuideGuru$
