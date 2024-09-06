@@ -44,4 +44,4 @@ if __name__ == "__main__":
 # if __name__ == "__main__":
 #     bot.add_custom_filter(StateFilter(bot))
 #     set_default_commands(bot)
-#     bot.infinity_polling()(venv) flask@1738991-cy22118:~/all_in_one_bot/GuideGuru$
+#     bot.infinity_polling()

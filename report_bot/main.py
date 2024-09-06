@@ -5,7 +5,6 @@ from utils.set_bot_commands import set_default_commands
 from config_data import config
 import time
 import threading
-from utils.tasks import send_notifications
 from flask import Flask, request
 import requests
 import telebot
@@ -33,17 +32,15 @@ def webhook_thread():
 set_webhook()
 
 
-def scheduled_job():
-    while True:
-        send_notifications()
-        time.sleep(60)
-
 
 if __name__ == "__main__":
     bot.add_custom_filter(StateFilter(bot))
     set_default_commands(bot)
-    thread = threading.Thread(target=scheduled_job)
-    thread.start()
     webhook_thread = threading.Thread(target=webhook_thread)
     webhook_thread.start()
     app.run(host='0.0.0.0', port=5003)
+
+# if __name__ == "__main__":
+#     bot.add_custom_filter(StateFilter(bot))
+#     set_default_commands(bot)
+#     bot.infinity_polling()
