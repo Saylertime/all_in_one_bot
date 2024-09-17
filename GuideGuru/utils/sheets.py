@@ -44,7 +44,7 @@ def get_sheet_names(spreadsheet_id):
 
 
 def get_data_from_sheet(month, spreadsheet_id):
-    SAMPLE_RANGE_NAME = f"{month}!A2:I"
+    SAMPLE_RANGE_NAME = f"{month}!A2:J"
 
     try:
         service = build("sheets", "v4", credentials=creds)
@@ -68,6 +68,7 @@ def get_data_from_sheet(month, spreadsheet_id):
         return None
 
 def rep_name_and_month(name, month=current_month(), sber_data=None):
+    print(sber_data)
     values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
     name = name[0]
     if not values:
@@ -89,41 +90,39 @@ def rep_name_and_month(name, month=current_month(), sber_data=None):
                 money = int(row[6])
                 link = row[1]
                 brief = str(row[3])
-                symb = float(row[4].replace(',', '.'))
+                bonus_pts = int(row[9])
+
                 if name == row[2]:
                     if name in dct:
-                        value_money, current_count = dct[name]
+                        value_money, current_count, general_bonus = dct[name]
                         if link:
                             dct_texts[name].append(title)
                             current_count += 1
-                            if symb >= 25:
-                                current_count += 1
-                            dct[name] = (value_money + money, current_count)
+                            general_bonus += bonus_pts
+                            dct[name] = (value_money + money, current_count, general_bonus)
                         else:
                             texts_in_work[name].append((title, brief))
                     else:
-                        dct[name] = (money, 1)
-                        if symb >= 25:
-                            dct[name] = (money, 2)
+                        dct[name] = (money, 1, bonus_pts)
                         dct_texts[name] = [title]
             except Exception as e:
                 print(f"Error processing row: {e}")
                 pass
         msg = ''
-        bonus = 0
-        sorted_dct = sorted(dct.items(), key=lambda item: item[1][0], reverse=True)
-        for author, summa in sorted_dct:
-            if summa[1] >= 20:
-                bonus = 4000
-            elif summa[1] >= 15:
-                bonus = 2500
-            elif summa[1] >= 10:
-                bonus = 1500
-            elif summa[1] >= 5:
-                bonus = 500
-            msg += (f"Гонорар за сданные тексты за {month} — {summa[0] + bonus}  руб.\n"
-                    f"Из них бонус — {bonus} руб.\n"
-                    f"Текстов за месяц — {summa[1]}.\n\n")
+        sorted_dct = sorted(dct.items(), key=lambda item: (item[1][0], item[1][2]), reverse=True)
+        bonus_money = 0
+        for author, (summa, count, general_bonus) in sorted_dct:
+            if general_bonus >= 20:
+                bonus_money = 4000
+            elif general_bonus >= 15:
+                bonus_money = 2500
+            elif general_bonus >= 10:
+                bonus_money = 1500
+            elif general_bonus >= 5:
+                bonus_money = 500
+            msg += (f"Гонорар за сданные тексты за {month} — {summa + bonus_money}  руб.\n"
+                    f"Из них бонус — {bonus_money} руб.\n"
+                    f"Текстов за месяц — {count}.\n\n")
 
         msg_texts = '<b>Все сданные тексты:</b> \n'
         for title in dct_texts[name]:
@@ -144,6 +143,7 @@ def rep_name_and_month(name, month=current_month(), sber_data=None):
 
     except Exception as e:
         msg = f'Кажется, у тебя пока ничего не написано...'
+        # msg = str(e)
 
         return msg
 
@@ -163,23 +163,20 @@ def rep_name_and_month_sber(name, month=current_month()):
             money = int(row[3])
             link = row[1]
             brief = str(row[4])
-            symb = int(row[3])
+            general_bonus = 1
 
             if name == str(row[2]):
                 if name in dct:
-                    value_money, current_count = dct[name]
+                    value_money, current_count, general_bonus = dct[name]
                     if link:
                         dct_texts[name].append(title)
                         current_count += 1
-                        if symb >= 25000:
-                            current_count += 1
-                        dct[name] = (value_money + money, current_count)
+                        general_bonus += 1
+                        dct[name] = (value_money + money, current_count, general_bonus)
                     else:
                         texts_in_work[name].append((title, brief))
                 else:
-                    dct[name] = (money, 1)
-                    if symb >= 25000:
-                        dct[row[2]] = (money, 2)
+                    dct[name] = (money, 1, general_bonus)
                     dct_texts[name] = [title]
         except Exception as e:
             print(f"Error processing row: {e}")
