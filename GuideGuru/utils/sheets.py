@@ -44,7 +44,7 @@ def get_sheet_names(spreadsheet_id):
 
 
 def get_data_from_sheet(month, spreadsheet_id):
-    SAMPLE_RANGE_NAME = f"{month}!A2:J"
+    SAMPLE_RANGE_NAME = f"{month}!A2:M"
 
     try:
         service = build("sheets", "v4", credentials=creds)
@@ -67,6 +67,7 @@ def get_data_from_sheet(month, spreadsheet_id):
         print(err)
         return None
 
+
 def rep_name_and_month(name, month=current_month(), sber_data=None):
     print(sber_data)
     values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
@@ -78,6 +79,7 @@ def rep_name_and_month(name, month=current_month(), sber_data=None):
         dct_texts = dict()
         texts_in_work = dict()
         texts_in_work[name] = []
+        dict_with_addons = {}
 
         if sber_data:
             dct.update(sber_data['dct'])
@@ -86,11 +88,14 @@ def rep_name_and_month(name, month=current_month(), sber_data=None):
 
         for row in values:
             try:
-                title = f"{row[0]} — {row[6]} руб. {row[1]}"
+                title = f"\n— <a href='{row[1]}'>{row[0]}</a> — {row[6]} руб.\n"
                 money = int(row[6])
                 link = row[1]
                 brief = str(row[3])
-                bonus_pts = int(row[9])
+                try:
+                    bonus_pts = int(row[9])
+                except:
+                    bonus_pts = 1
 
                 if name == row[2]:
                     if name in dct:
@@ -108,6 +113,27 @@ def rep_name_and_month(name, month=current_month(), sber_data=None):
             except Exception as e:
                 print(f"Error processing row: {e}")
                 pass
+
+        for row in values:
+            try:
+                if name == row[10]:
+                    money = int(row[11])
+                    addons = str(row[12])
+
+                    if name in dict_with_addons:
+                        dict_with_addons[name].append((money, addons))
+                    else:
+                        dict_with_addons[name] = [(money, addons)]
+
+                    if name in dct:
+                        value_money, current_count, general_bonus = dct[name]
+                        general_bonus += 1
+                        dct[name] = (value_money + money, current_count, general_bonus)
+                    else:
+                        dct[name] = (money, 0, 0)
+            except:
+                pass
+
         msg = ''
         sorted_dct = sorted(dct.items(), key=lambda item: (item[1][0], item[1][2]), reverse=True)
         bonus_money = 0
@@ -120,20 +146,34 @@ def rep_name_and_month(name, month=current_month(), sber_data=None):
                 bonus_money = 1500
             elif general_bonus >= 5:
                 bonus_money = 500
-            msg += (f"Гонорар за сданные тексты за {month} — {summa + bonus_money}  руб.\n"
+
+            if author == 'Седна':
+                summa += 60000
+
+            total_money = sum(money for money, _ in dict_with_addons.get(name, []))
+
+            msg += (f"Гонорар за сданные тексты и допы за {month} — {summa + bonus_money}  руб.\n"
                     f"Из них бонус — {bonus_money} руб.\n"
+                    f"И допы — {total_money} руб.\n"
+                    f"Всего бонусов набрано — {general_bonus} шт.\n"
                     f"Текстов за месяц — {count}.\n\n")
 
         msg_texts = '<b>Все сданные тексты:</b> \n'
         for title in dct_texts[name]:
-            msg_texts += f"\n— {title}\n"
+            msg_texts += title
         msg += msg_texts
 
         if texts_in_work[name]:
-            msg_texts_in_work = '\n\n<b>Тексты в работе: </b>\n'
+            msg_texts_in_work = '\n\n<b>Тексты в работе:</b>'
             for title in texts_in_work[name]:
-                msg_texts_in_work += f"\n— <a href='{title[1]}'>{title[0]}</a>\n"
+                msg_texts_in_work += f"\n<a href='{title[1]}'>{title[0]}</a>"
             msg += msg_texts_in_work
+
+        if dict_with_addons:
+            msg_addons = '\n\n<b>Дополнительные гонорары: </b>\n'
+            for addon in dict_with_addons[name]:
+                msg_addons += f"\n — {addon[1]} — {addon[0]} руб.\n"
+            msg += msg_addons
 
         if len(msg) > 4090:
             msg_file = create_and_return_file(name, 'last_month', msg)
@@ -144,8 +184,8 @@ def rep_name_and_month(name, month=current_month(), sber_data=None):
     except Exception as e:
         msg = f'Кажется, у тебя пока ничего не написано...'
         # msg = str(e)
-
         return msg
+
 
 def rep_name_and_month_sber(name, month=current_month()):
     values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_SBER)
@@ -159,7 +199,7 @@ def rep_name_and_month_sber(name, month=current_month()):
     texts_in_work[name] = []
     for row in values:
         try:
-            title = f"{row[0]} — {row[3]} руб. {row[1]}"
+            title = f"\n— <a href='{row[1]}'>{row[0]}</a> — {row[3]} руб.\n"
             money = int(row[3])
             link = row[1]
             brief = str(row[4])

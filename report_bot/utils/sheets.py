@@ -10,7 +10,9 @@ import os
 
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
-SAMPLE_SPREADSHEET_ID = "14rfetnaiqgiT3o0TsLC-yi3EICobIH5rNljilhDS70M"
+SAMPLE_SPREADSHEET_ID_ELDO = "14rfetnaiqgiT3o0TsLC-yi3EICobIH5rNljilhDS70M"
+SAMPLE_SPREADSHEET_ID_SBER = "1TimmvVzxIn5J_1HeXpjuf0PIGq-gdLb6Yr4r7enEImo"
+
 
 creds = None
 if os.path.exists("token.json"):
@@ -27,11 +29,11 @@ if not creds or not creds.valid:
     with open("token.json", "w") as token:
         token.write(creds.to_json())
 
-def get_sheet_names():
+def get_sheet_names(spreadsheet_id):
     try:
         service = build("sheets", "v4", credentials=creds)
 
-        spreadsheet = service.spreadsheets().get(spreadsheetId=SAMPLE_SPREADSHEET_ID).execute()
+        spreadsheet = service.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
         sheets = spreadsheet.get('sheets', [])
 
         sheet_names = [sheet['properties']['title'] for sheet in sheets]
@@ -41,8 +43,8 @@ def get_sheet_names():
         print(err)
         return None
 
-def get_data_from_sheet(month):
-    SAMPLE_RANGE_NAME = f"{month}!A2:I"
+def get_data_from_sheet(month, spreadsheet_id):
+    SAMPLE_RANGE_NAME = f"{month}!A2:M"
 
     try:
         service = build("sheets", "v4", credentials=creds)
@@ -50,7 +52,7 @@ def get_data_from_sheet(month):
         sheet = service.spreadsheets()
         result = (
             sheet.values()
-            .get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME)
+            .get(spreadsheetId=spreadsheet_id, range=SAMPLE_RANGE_NAME)
             .execute()
         )
         values = result.get("values", [])
@@ -67,51 +69,188 @@ def get_data_from_sheet(month):
 
 
 def rep_month(month):
-    values = get_data_from_sheet(month)
+    values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
     if not values:
         return
 
     dct = dict()
 
+    # Проходимся первый раз
     for row in values:
         try:
-            key = row[2]
-            value = int(row[6])
-            symb = float(row[4].replace(',', '.'))
-            if key in dct:
-                current_sum, current_count = dct[key]
-                dct[key] = (current_sum + value, current_count + 1)
-                if symb >= 25:
-                    dct[key] = (current_sum + value, current_count + 2)
+            name = row[2]
+            money = int(row[6])
+            try:
+                bonus_pts = int(row[9])
+            except:
+                bonus_pts = 1
+
+            if name in dct:
+                value_money, current_count, general_bonus = dct[name]
+                current_count += 1
+                general_bonus += bonus_pts
+                dct[name] = (value_money + money, current_count, general_bonus)
             else:
-                dct[key] = (value, 1)
-                if symb >= 25:
-                    dct[key] = (value, 2)
+                dct[name] = (money, 1, bonus_pts)
+        except:
+            pass
+
+    # Проходимся второй раз, для подсчета допов и бонусов
+    for row in values:
+        try:
+            name = row[10]
+            money = int(row[11])
+            if name in dct:
+                value_money, current_count, general_bonus = dct[name]
+                general_bonus += 1
+                dct[name] = (value_money + money, current_count, general_bonus)
+            else:
+                dct[name] = (money, 0, 1)
         except:
             pass
 
     msg = ''
-    sorted_dct = sorted(dct.items(), key=lambda item: item[1][0], reverse=True)
-    for author, summa in sorted_dct:
+    sorted_dct = sorted(dct.items(), key=lambda item: (item[1][0], item[1][2]), reverse=True)
+    for author, (summa, count, general_bonus) in sorted_dct:
         try:
             author_name = find_author_name(author)[0]
         except:
             author_name = author
-        bonus = 0
-        if summa[1] >= 20:
-            bonus = 4000
-        elif summa[1] >= 15:
-            bonus = 2500
-        elif summa[1] >= 10:
-            bonus = 1500
-        elif summa[1] >= 5:
-            bonus = 500
-        msg += f"{author_name} — {summa[0] + bonus} руб. Из них бонус — {bonus}\nТекстов за месяц — {summa[1]}\n\n"
+
+        bonus_money = 0
+
+        if general_bonus >= 20:
+            bonus_money = 4000
+        elif general_bonus >= 15:
+            bonus_money = 2500
+        elif general_bonus >= 10:
+            bonus_money = 1500
+        elif general_bonus >= 5:
+            bonus_money = 500
+
+        if author == 'Седна':
+            summa += 60000
+
+        msg += (f"{author_name} — {summa + bonus_money} руб. Из них бонус — {bonus_money}\n"
+                f"Текстов за месяц — {count}\n"
+                f"Бонусов — {general_bonus}\n\n")
     return msg
 
 
 def rep_name_and_month(name, month='Январь 2024'):
-    values = get_data_from_sheet(month)
+    values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
+    if not values:
+        return
+
+    try:
+        dct = dict()
+        dct_texts = dict()
+        texts_in_work = dict()
+        texts_in_work[name] = []
+        dict_with_addons = {}
+
+        for row in values:
+            try:
+                title = f"{row[0]} — {row[6]} руб. {row[1]}"
+                money = int(row[6])
+                link = row[1]
+                brief = str(row[3])
+                try:
+                    bonus_pts = int(row[9])
+                except:
+                    bonus_pts = 1
+
+                if name == row[2]:
+                    if name in dct:
+                        value_money, current_count, general_bonus = dct[name]
+                        if link:
+                            dct_texts[name].append(title)
+                            current_count += 1
+                            general_bonus += bonus_pts
+                            dct[name] = (value_money + money, current_count, general_bonus)
+                        else:
+                            texts_in_work[name].append((title, brief))
+                    else:
+                        dct[name] = (money, 1, bonus_pts)
+                        dct_texts[name] = [title]
+            except Exception as e:
+                print(f"Error processing row: {e}")
+                pass
+
+        for row in values:
+            try:
+                if name == row[10]:
+                    money = int(row[11])
+                    addons = str(row[12])
+
+                    if name in dict_with_addons:
+                        dict_with_addons[name].append((money, addons))
+                    else:
+                        dict_with_addons[name] = [(money, addons)]
+
+                    if name in dct:
+                        value_money, current_count, general_bonus = dct[name]
+                        general_bonus += 1
+                        dct[name] = (value_money + money, current_count, general_bonus)
+                    else:
+                        dct[name] = (money, 0, 1)
+            except:
+                pass
+
+        msg = ''
+        sorted_dct = sorted(dct.items(), key=lambda item: (item[1][0], item[1][2]), reverse=True)
+        bonus_money = 0
+        for author, (summa, count, general_bonus) in sorted_dct:
+            if general_bonus >= 20:
+                bonus_money = 4000
+            elif general_bonus >= 15:
+                bonus_money = 2500
+            elif general_bonus >= 10:
+                bonus_money = 1500
+            elif general_bonus >= 5:
+                bonus_money = 500
+
+            if author == 'Седна':
+                summa += 60000
+
+            total_money = sum(money for money, _ in dict_with_addons.get(name, []))
+
+            msg += (f"Гонорар за сданные тексты и допы за {month} — {summa + bonus_money}  руб.\n"
+                    f"Из них бонус — {bonus_money} руб.\n"
+                    f"И допы — {total_money} руб.\n"
+                    f"Всего бонусов набрано — {general_bonus} шт.\n"
+                    f"Текстов за месяц — {count}.\n\n")
+
+        msg_texts = '<b>Все сданные тексты:</b> \n'
+        for title in dct_texts[name]:
+            msg_texts += f"\n— {title}\n"
+        msg += msg_texts
+
+        if texts_in_work[name]:
+            msg_texts_in_work = '\n\n<b>Тексты в работе: </b>\n'
+            for title in texts_in_work[name]:
+                msg_texts_in_work += f"\n— <a href='{title[1]}'>{title[0]}</a>\n"
+            msg += msg_texts_in_work
+
+        if dict_with_addons:
+            msg_addons = '\n\n<b>Дополнительные гонорары: </b>\n'
+            for addon in dict_with_addons[name]:
+                msg_addons += f"\n — {addon[1]} — {addon[0]} руб.\n"
+            msg += msg_addons
+
+        if len(msg) > 4090:
+            msg_file = create_and_return_file(name, 'last_month', msg)
+            return msg_file
+        else:
+            return msg
+
+    except Exception as e:
+        msg = str(e)
+        return msg
+
+def rep_name_and_month_sber(name, month=current_month()):
+    values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_SBER)
+    name = name[0]
     if not values:
         return
 
@@ -121,42 +260,37 @@ def rep_name_and_month(name, month='Январь 2024'):
     texts_in_work[name] = []
     for row in values:
         try:
-            title = f"{row[0]} — {row[6]} руб. {row[1]}"
-            money = int(row[6])
+            title = f"\n— <a href='{row[1]}'>{row[0]}</a> — {row[3]} руб.\n"
+            money = int(row[3])
             link = row[1]
-            brief = str(row[3])
-            if name == row[2]:
-                if (name in dct or name in dct_texts):
+            brief = str(row[4])
+            general_bonus = 1
+
+            if name == str(row[2]):
+                if name in dct:
+                    value_money, current_count, general_bonus = dct[name]
                     if link:
-                        value_money, current_count = dct[name]
                         dct_texts[name].append(title)
-                        dct[name] = (value_money + money, current_count + 1)
+                        current_count += 1
+                        general_bonus += 1
+                        dct[name] = (value_money + money, current_count, general_bonus)
                     else:
                         texts_in_work[name].append((title, brief))
                 else:
-                    dct[name] = (money, 1)
+                    dct[name] = (money, 1, general_bonus)
                     dct_texts[name] = [title]
-        except:
+        except Exception as e:
+            print(f"Error processing row: {e}")
             pass
-    msg = ''
-    sorted_dct = sorted(dct.items(), key=lambda item: item[1][0], reverse=True)
-    for author, summa in sorted_dct:
-        msg += f"Гонорар за сданные тексты за {month} — {summa[0]} руб.\nТекстов за месяц — {summa[1]}\n\n"
 
-    msg_texts = '<b>Все сданные тексты:</b> \n'
-    for title in dct_texts[name]:
-        msg_texts += f"\n— {title}\n"
-    msg += msg_texts
-
-    msg_texts_in_work = '\n\n<b>Тексты в работе: </b>\n'
-    for title in texts_in_work[name]:
-        msg_texts_in_work += f"\n— <a href='{title[1]}'>{title[0]}</a>\n"
-    msg += msg_texts_in_work
-    return msg
-
+    return {
+        'dct': dct,
+        'dct_texts': dct_texts,
+        'texts_in_work': texts_in_work
+    }
 
 def who_is_free():
-    values = get_data_from_sheet(current_month())
+    values = get_data_from_sheet(current_month(), SAMPLE_SPREADSHEET_ID_ELDO)
     if not values:
         return
 
@@ -186,7 +320,7 @@ def brief_is_free():
     now_and_next_month = [current_month(), next_month()]
     all_briefs = []
     for month in now_and_next_month:
-        values = get_data_from_sheet(month)
+        values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
         if not values:
             return
 
@@ -220,7 +354,7 @@ def brief_is_free():
 
 
 def stats_for_month(month):
-    values = get_data_from_sheet(month)
+    values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
     if not values:
         return
 
@@ -264,7 +398,7 @@ def stats_for_month(month):
 
 
 def in_work_today():
-    values = get_data_from_sheet(current_month())
+    values = get_data_from_sheet(current_month(), SAMPLE_SPREADSHEET_ID_ELDO)
     if not values:
         return
     today, tomorrow = current_day()
@@ -305,13 +439,13 @@ def in_work_today():
 
 
 def all_texts_of_author(name):
-    all_months = get_sheet_names()
+    all_months = get_sheet_names(SAMPLE_SPREADSHEET_ID_ELDO)
     temp_eldo = ""
     temp_mvideo = ""
     recording_mvideo = False
 
     for month in all_months:
-        values = get_data_from_sheet(month)
+        values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
         if not values:
             return
 
@@ -353,11 +487,3 @@ def create_and_return_file(name, blog, content):
             return file_path
         else:
             return ''
-
-
-
-
-
-
-
-

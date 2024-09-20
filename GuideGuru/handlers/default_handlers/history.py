@@ -19,6 +19,3 @@ def history(message):
     else:
         msg = f' {username}, тебя пока нет в базе данных ;( Напиши @saylertime, чтобы добавил'
     bot.send_message(message.from_user.id, msg, parse_mode='HTML')
-
-    # bot.send_message(message.from_user.id, rep_name_and_month_sber(name_in_db),  parse_mode='HTML')
-
