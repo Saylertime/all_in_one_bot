@@ -1,6 +1,6 @@
 from loader import bot
 from utils.logger import logger
-from utils.docs import get_content
+from utils.docs import get_content, check_text
 from utils.text_ru import text_unique_check, symbols_left
 from states.overall import OverallState
 
@@ -18,11 +18,12 @@ def unique_answer(message):
     try:
         url = message.text.split('/')[-2]
         full_text = get_content(url)
+        msg = check_text(url) + '\n\n _____________________ \n\n'
         print('Достали контент')
         symb = int(symbols_left().replace(",", ""))
         if not len(full_text) > symb:
             bot.send_message(message.from_user.id, 'Нужно подождать..... Если текст большой, проверка займёт пару минут')
-            msg = text_unique_check(full_text)
+            msg += text_unique_check(full_text)
             if len(msg) > 3999:
                 bot.send_message(message.from_user.id,
                                  'Очень много ссылок, откуда скопировано. Я не резиновый, чтобы все их вывести...')
