@@ -34,7 +34,6 @@ def text_unique_check(text):
                 break
 
         unique = second_response.get('text_unique')
-
         result_json_dict = json.loads(second_response['result_json'])
         urls = result_json_dict.get('urls', [])
         url_keys = [item.get('url', '') for item in urls]
@@ -50,7 +49,8 @@ def text_unique_check(text):
 
         msg = ''
 
-        msg += f"Уникальность: {unique}\n"\
+        msg += f"Уникальность: {unique}\n" \
+               f"Посмотреть все заимствования на сайте: https://text.ru/antiplagiat/{text_uid}\n" \
                f"Количество слов: {count_words}\n" \
                f"Количество символов с пробелом: {count_chars_with_space}\n" \
                f"Процент спама: {spam_percent if spam_percent else '0'}\n"\

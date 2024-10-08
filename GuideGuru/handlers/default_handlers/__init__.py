@@ -5,6 +5,7 @@ from . import vacation
 from . import check
 from . import start
 from . import free_texts
+from . import turgenev_check
 from . import unique
 from . import all_texts
 from . import eldo

@@ -5,6 +5,7 @@ class OverallState(StatesGroup):
 
     check = State()
     unique = State()
+    turgenev = State()
 
 class CheckState(StatesGroup):
     """ Класс со всеми необходимыми состояниями """
