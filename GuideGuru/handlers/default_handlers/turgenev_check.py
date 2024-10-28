@@ -2,19 +2,25 @@ from loader import bot
 from utils.turgenev import check_text_in_turgenev
 from utils.docs import get_content
 from states.overall import OverallState
+from psql_maker import find_author
 
 
 @bot.message_handler(commands=['turgenev'])
 def turgenev(message):
-    msg = ("Введи ссылку в формате \n\n"
-           "https://docs.google.com/document/d/1Q33XaT68BhrUPYPkOQPuzTZCATiNn0QnV3bxu74_bug/edit\n\n"
-           "Критерии оценки: \n"
-           "<b>До 5 баллов</b> — все хорошо\n"
-           "<b>5-8 баллов</b> — средний риск\n"
-           "<b>8-13</b> — нужно что-то делать\n"
-           "<b>13+</b> – критическая ситуация.")
+    username = "@" + message.from_user.username
+    name_in_db = find_author(username)
+    if name_in_db:
+        msg = ("Введи ссылку в формате \n\n"
+               "https://docs.google.com/document/d/1Q33XaT68BhrUPYPkOQPuzTZCATiNn0QnV3bxu74_bug/edit\n\n"
+               "Критерии оценки: \n"
+               "<b>До 5 баллов</b> — все хорошо\n"
+               "<b>5-8 баллов</b> — средний риск\n"
+               "<b>8-13</b> — нужно что-то делать\n"
+               "<b>13+</b> – критическая ситуация.")
+        bot.set_state(message.from_user.id, state=OverallState.turgenev)
+    else:
+        msg = f'{username}, тебя пока нет в базе данных ;( Напиши @saylertime, чтобы добавил'
     bot.send_message(message.from_user.id, msg, parse_mode='HTML')
-    bot.set_state(message.from_user.id, state=OverallState.turgenev)
 
 @bot.message_handler(state=OverallState.turgenev)
 def turgenev_answer(message):
