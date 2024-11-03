@@ -24,7 +24,7 @@ def unique(message):
 @bot.message_handler(state=OverallState.unique)
 def unique_answer(message):
     try:
-        url = message.text.split('/')[-2]
+        url = message.text.split('/')[5]
         full_text = get_content(url)
         msg = check_text(url) + '\n\n _____________________ \n\n'
         print('Достали контент')

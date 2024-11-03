@@ -25,7 +25,7 @@ def turgenev(message):
 @bot.message_handler(state=OverallState.turgenev)
 def turgenev_answer(message):
     try:
-        url = message.text.split('/')[-2]
+        url = message.text.split('/')[5]
         full_text = get_content(url)
         bot.send_message(message.from_user.id, 'Нужно подождать..... Если текст большой, проверка займёт пару минут')
         result = check_text_in_turgenev(full_text)
