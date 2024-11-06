@@ -70,16 +70,19 @@ def text_unique_check(text):
 def symbols_left():
     try:
         URL = 'https://api.text.ru/account'
-
         request = {
-        'userkey': f'{config.USERKEY_TEXT_RU}',
-        'method': 'get_packages_info'
+            'userkey': config.USERKEY_TEXT_RU,
+            'method': 'get_packages_info'
         }
-        response = requests.post(f'{URL}', data=request).json()
-        value = response.get('size', 'Ошибка')
+
+        response = requests.post(URL, data=request)
+
+        if response.status_code != 200:
+            return 'Ошибка при обращении к API'
+
+        value = response.json().get('size', 'Ошибка')
         msg = "{:,}".format(value)
         return msg
 
     except Exception as e:
-        msg = str(e)
-    return msg
+        return str(e)

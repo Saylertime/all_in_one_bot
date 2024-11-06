@@ -28,15 +28,15 @@ def unique_answer(message):
         full_text = get_content(url)
         msg = check_text(url) + '\n\n _____________________ \n\n'
         print('Достали контент')
-        symb = int(symbols_left().replace(",", ""))
-        if not len(full_text) > symb:
-            bot.send_message(message.from_user.id, 'Нужно подождать..... Если текст большой, проверка займёт пару минут')
-            msg += text_unique_check(full_text)
-            if len(msg) > 3999:
-                bot.send_message(message.from_user.id,
-                                 'Очень много ссылок, откуда скопировано. Я не резиновый, чтобы все их вывести...')
-            else:
-                bot.send_message(message.from_user.id, msg)
+        # symb = int(symbols_left().replace(",", ""))
+        # if not len(full_text) > symb:
+        bot.send_message(message.from_user.id, 'Нужно подождать..... Если текст большой, проверка займёт пару минут')
+        msg += text_unique_check(full_text)
+        if len(msg) > 3999:
+            bot.send_message(message.from_user.id,
+                             'Очень много ссылок, откуда скопировано. Я не резиновый, чтобы все их вывести...')
+        else:
+            bot.send_message(message.from_user.id, msg)
     except Exception as error:
         bot.send_message(message.from_user.id, 'Похоже, ссылкая кривая, не тот формат или закрыт доступ для редактирования')
         error = str(error) + f"\n\n{message.from_user.username}\n\n{message.text}"
