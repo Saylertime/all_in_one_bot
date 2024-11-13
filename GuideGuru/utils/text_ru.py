@@ -20,7 +20,7 @@ def text_unique_check(text):
             if response.status_code == 200:
                 if not response.text:
                     return 'Пустой ответ от API'
-                return response.json()
+                response = response.json()
 
             attempts += 1
             print(f"Попытка {attempts} неудачна. Статус код: {response.status_code}")
