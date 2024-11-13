@@ -11,7 +11,7 @@ def text_unique_check(text):
         'text': text
     }
     attempts = 0
-    max_attempts = 5
+    max_attempts = 15
 
     while attempts < max_attempts:
         try:
