@@ -6,20 +6,6 @@ from config_data import config
 
 def text_unique_check(text):
     try:
-
-        # URL = 'https://api.text.ru/post'
-        #
-        # request = {
-        # 'userkey': f'{config.USERKEY_TEXT_RU}',
-        # 'text': text
-        # }
-        # response = requests.post(f'{URL}', data=request).json()
-        # text_uid = response.get('text_uid')
-        #
-        # print(response)
-        # print(text_uid)
-
-
         URL = 'https://api.text.ru/post'
         request = {
             'userkey': config.USERKEY_TEXT_RU,
@@ -30,11 +16,14 @@ def text_unique_check(text):
         if response.status_code != 200:
             return 'Ошибка при обращении к API: ' + response.text
 
-        # Проверяем, если ответ пустой
         if not response.text:
             return 'Пустой ответ от API'
 
-        response_data = response.json()
+        response_data = None
+        try:
+            response_data = response.json()
+        except ValueError:
+            return 'Ошибка: Ответ не в формате JSON: ' + response.text
         text_uid = response_data.get('text_uid')
 
         print(response_data)
