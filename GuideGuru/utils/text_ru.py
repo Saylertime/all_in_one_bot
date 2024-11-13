@@ -5,19 +5,21 @@ from config_data import config
 
 
 def text_unique_check(text):
-    # try:
-    URL = 'https://api.text.ru/post'
-    request = {
-        'userkey': config.USERKEY_TEXT_RU,
-        'text': text
-    }
-    response = requests.post(URL, data=request)
+    try:
+        URL = 'https://api.text.ru/post'
+        request = {
+            'userkey': config.USERKEY_TEXT_RU,
+            'text': text
+        }
+        response = requests.post(URL, data=request)
 
-    if response.status_code != 200:
-        return 'Ошибка при обращении к API: ' + response.text
+        if response.status_code != 200:
+            return 'Ошибка при обращении к API: ' + response.text
 
-    if not response.text:
-        return 'Пустой ответ от API'
+        if not response.text:
+            return 'Пустой ответ от API'
+    except:
+        return 'Ошибка в начале'
 
     response_data = None
     try:
@@ -29,19 +31,22 @@ def text_unique_check(text):
     print(response_data)
     print(text_uid)
 
-    second_request = {
-    'userkey': f'{config.USERKEY_TEXT_RU}',
-    'uid': text_uid,
-    # 'uid': '65fed5649096f',
-    'jsonvisible':'detail'}
+    try:
+        second_request = {
+        'userkey': f'{config.USERKEY_TEXT_RU}',
+        'uid': text_uid,
+        # 'uid': '65fed5649096f',
+        'jsonvisible':'detail'}
 
-    while True:
-        second_response = requests.post(f'{URL}', data=second_request).json()
-        sleep(3)
-        print('Еще раз')
-        if not second_response.get('error_desc') == 'Текст ещё не проверен':
-            print("Готово")
-            break
+        while True:
+            second_response = requests.post(f'{URL}', data=second_request).json()
+            sleep(3)
+            print('Еще раз')
+            if not second_response.get('error_desc') == 'Текст ещё не проверен':
+                print("Готово")
+                break
+    except:
+        return 'Ошибка во второй части'
 
     try:
         unique = second_response.get('text_unique')
@@ -75,7 +80,7 @@ def text_unique_check(text):
 
         return msg
     except:
-        return 'Ошибка здесь'
+        return 'Ошибка в третьей'
 
     # except requests.exceptions.RequestException as e:
     #     return f"{e}"
