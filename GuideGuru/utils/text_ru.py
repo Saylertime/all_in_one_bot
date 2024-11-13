@@ -12,9 +12,12 @@ def text_unique_check(text):
             'text': text
         }
         response = requests.post(URL, data=request)
+        while response.status_code != 200:
+            sleep(3)
+            response = requests.post(URL, data=request)
 
-        if response.status_code != 200:
-            return f'Ошибка при обращении к API. Status code: {response.status_code}'
+        # if response.status_code != 200:
+        #     return f'Ошибка при обращении к API. Status code: {response.status_code}'
 
         if not response.text:
             return 'Пустой ответ от API'
