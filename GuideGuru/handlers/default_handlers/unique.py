@@ -35,6 +35,9 @@ def unique_answer(message):
         if len(msg) > 3999:
             bot.send_message(message.from_user.id,
                              'Очень много ссылок, откуда скопировано. Я не резиновый, чтобы все их вывести...')
+            with open('error.txt', 'a') as file:
+                file.write(str(msg))
+                file.write('\n')
         else:
             bot.send_message(message.from_user.id, msg)
     except Exception as error:
