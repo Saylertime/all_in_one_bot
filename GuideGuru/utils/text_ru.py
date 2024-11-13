@@ -5,21 +5,34 @@ from config_data import config
 
 
 def text_unique_check(text):
-    try:
-        URL = 'https://api.text.ru/post'
-        request = {
-            'userkey': config.USERKEY_TEXT_RU,
-            'text': text
-        }
-        response = requests.post(URL, data=request)
+    URL = 'https://api.text.ru/post'
+    request = {
+        'userkey': config.USERKEY_TEXT_RU,
+        'text': text
+    }
+    attempts = 0
+    max_attempts = 5
 
-        if response.status_code != 200:
-            return 'Ошибка при обращении к API: ' + response.text
+    while attempts < max_attempts:
+        try:
+            response = requests.post(URL, data=request, timeout=10)
 
-        if not response.text:
-            return 'Пустой ответ от API'
-    except:
-        return 'Ошибка в начале'
+            if response.status_code == 200:
+                if not response.text:
+                    return 'Пустой ответ от API'
+                return response.json()
+
+            attempts += 1
+            print(f"Попытка {attempts} неудачна. Статус код: {response.status_code}")
+            sleep(3)
+
+        except requests.exceptions.RequestException as e:
+            attempts += 1
+            print(f"Ошибка при запросе: {e}. Попытка {attempts} из {max_attempts}")
+            sleep(3)
+
+    if attempts == max_attempts:
+        return 'Ошибка при обращении к API после нескольких попыток'
 
     response_data = None
     try:
