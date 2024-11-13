@@ -42,7 +42,7 @@ def text_unique_check(text):
 
         while True:
             second_response = requests.post(f'{URL}', data=second_request).json()
-            sleep(3)
+            sleep(10)
             print('Еще раз')
             if not second_response.get('error_desc') == 'Текст ещё не проверен':
                 print("Готово")
