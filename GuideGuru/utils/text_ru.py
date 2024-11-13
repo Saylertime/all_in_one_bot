@@ -5,80 +5,80 @@ from config_data import config
 
 
 def text_unique_check(text):
+    # try:
+    URL = 'https://api.text.ru/post'
+    request = {
+        'userkey': config.USERKEY_TEXT_RU,
+        'text': text
+    }
+    response = requests.post(URL, data=request)
+
+    if response.status_code != 200:
+        return 'Ошибка при обращении к API: ' + response.text
+
+    if not response.text:
+        return 'Пустой ответ от API'
+
+    response_data = None
     try:
-        URL = 'https://api.text.ru/post'
-        request = {
-            'userkey': config.USERKEY_TEXT_RU,
-            'text': text
-        }
-        response = requests.post(URL, data=request)
+        response_data = response.json()
+    except ValueError:
+        return 'Ошибка: Ответ не в формате JSON: ' + response.text
+    text_uid = response_data.get('text_uid')
 
-        if response.status_code != 200:
-            return 'Ошибка при обращении к API: ' + response.text
+    print(response_data)
+    print(text_uid)
 
-        if not response.text:
-            return 'Пустой ответ от API'
+    second_request = {
+    'userkey': f'{config.USERKEY_TEXT_RU}',
+    'uid': text_uid,
+    # 'uid': '65fed5649096f',
+    'jsonvisible':'detail'}
 
-        response_data = None
-        try:
-            response_data = response.json()
-        except ValueError:
-            return 'Ошибка: Ответ не в формате JSON: ' + response.text
-        text_uid = response_data.get('text_uid')
+    while True:
+        second_response = requests.post(f'{URL}', data=second_request).json()
+        sleep(3)
+        print('Еще раз')
+        if not second_response.get('error_desc') == 'Текст ещё не проверен':
+            print("Готово")
+            break
 
-        print(response_data)
-        print(text_uid)
+    try:
+        unique = second_response.get('text_unique')
+        result_json_dict = json.loads(second_response['result_json'])
+        urls = result_json_dict.get('urls', [])
+        url_keys = [item.get('url', '') for item in urls]
+        url_keys_str = "\n— ".join(url_keys)
 
-        second_request = {
-        'userkey': f'{config.USERKEY_TEXT_RU}',
-        'uid': text_uid,
-        # 'uid': '65fed5649096f',
-        'jsonvisible':'detail'}
+        spell_check = result_json_dict.get('spell_check')
+        seo_check = json.loads(second_response['seo_check'])
+        count_words = seo_check.get('count_words')
+        spam_percent = seo_check.get('spam_percent')
+        water_percent = seo_check.get('water_percent')
+        count_chars_with_space = seo_check.get('count_chars_with_space')
+        count_chars_without_space = seo_check.get('count_chars_without_space')
 
-        while True:
-            second_response = requests.post(f'{URL}', data=second_request).json()
-            sleep(3)
-            print('Еще раз')
-            if not second_response.get('error_desc') == 'Текст ещё не проверен':
-                print("Готово")
-                break
+        msg = ''
 
-        try:
-            unique = second_response.get('text_unique')
-            result_json_dict = json.loads(second_response['result_json'])
-            urls = result_json_dict.get('urls', [])
-            url_keys = [item.get('url', '') for item in urls]
-            url_keys_str = "\n— ".join(url_keys)
+        msg += f"Уникальность: {unique}\n" \
+               f"Посмотреть все заимствования на сайте: https://text.ru/antiplagiat/{text_uid}\n" \
+               f"Количество слов: {count_words}\n" \
+               f"Количество символов с пробелом: {count_chars_with_space}\n" \
+               f"Процент спама: {spam_percent if spam_percent else '0'}\n"\
+               f"Процент воды: {water_percent if water_percent else '0'}\n"\
+               f"Грамматика: {spell_check if spell_check else 'Вроде бы всё чётко'}\n" \
+               f"Откуда скопировано: {url_keys_str if url_keys and len(url_keys) < 3333 else 'Вроде, ниоткудова'}"
 
-            spell_check = result_json_dict.get('spell_check')
-            seo_check = json.loads(second_response['seo_check'])
-            count_words = seo_check.get('count_words')
-            spam_percent = seo_check.get('spam_percent')
-            water_percent = seo_check.get('water_percent')
-            count_chars_with_space = seo_check.get('count_chars_with_space')
-            count_chars_without_space = seo_check.get('count_chars_without_space')
+        print(count_words)
+        print(count_chars_with_space)
+        print(count_chars_without_space)
 
-            msg = ''
+        return msg
+    except:
+        return 'Ошибка здесь'
 
-            msg += f"Уникальность: {unique}\n" \
-                   f"Посмотреть все заимствования на сайте: https://text.ru/antiplagiat/{text_uid}\n" \
-                   f"Количество слов: {count_words}\n" \
-                   f"Количество символов с пробелом: {count_chars_with_space}\n" \
-                   f"Процент спама: {spam_percent if spam_percent else '0'}\n"\
-                   f"Процент воды: {water_percent if water_percent else '0'}\n"\
-                   f"Грамматика: {spell_check if spell_check else 'Вроде бы всё чётко'}\n" \
-                   f"Откуда скопировано: {url_keys_str if url_keys and len(url_keys) < 3333 else 'Вроде, ниоткудова'}"
-
-            print(count_words)
-            print(count_chars_with_space)
-            print(count_chars_without_space)
-
-            return msg
-        except:
-            return 'Ошибка здесь'
-
-    except requests.exceptions.RequestException as e:
-        return f"{e}"
+    # except requests.exceptions.RequestException as e:
+    #     return f"{e}"
 
 def symbols_left():
     try:
