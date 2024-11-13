@@ -25,7 +25,9 @@ def text_unique_check(text):
     try:
         response_data = response.json()
     except ValueError:
-        return 'Ошибка: Ответ не в формате JSON: ' + response.text
+        with open('error.txt', 'a') as file:
+            file.write(str(response.text))
+        return 'Ошибка: Ответ не в формате JSON'
     text_uid = response_data.get('text_uid')
 
     print(response_data)
