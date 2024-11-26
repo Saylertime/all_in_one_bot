@@ -6,6 +6,7 @@ from . import check
 from . import start
 from . import free_texts
 from . import turgenev_check
+from . import content_watch
 from . import unique
 from . import all_texts
 from . import eldo

@@ -9,6 +9,7 @@ else:
 LOCAL_ENV = os.getenv("LOCAL_ENV")
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 USERKEY_TEXT_RU = os.getenv("USERKEY_TEXT_RU")
+USERKEY_CONTENT_WATCH = os.getenv("USERKEY_CONTENT_WATCH")
 TURGENEV_API_KEY = os.getenv("TURGENEV_API_KEY")
 DB_NAME = os.getenv('DB_NAME')
 DB_USER = os.getenv('DB_USER')
@@ -22,7 +23,8 @@ DEFAULT_COMMANDS = (
     ("mvideo", "Правила для Мвидео"),
     ("free_texts", "Свободные брифы"),
     ("check", "Проверить текст на стоп-слова"),
-    ("unique", "Проверить текст на уникальность"),
+    ("unique", "Проверить текст на уникальность в text.ru"),
+    ("content_watch", "Проверить текст на уникальность в content_watch.ru"),
     ("turgenev", "Проверить текст на Turgenev"),
     ("receipt", "Загрузить чек за гонорары"),
     ("history", "Все тексты за этот месяц"),

@@ -13,6 +13,7 @@ from handlers.default_handlers.unique import unique
 from handlers.default_handlers.receipt import receipt
 from handlers.default_handlers.vacation import vacation
 from handlers.default_handlers.turgenev_check import turgenev
+from handlers.default_handlers.content_watch import content_watch
 from utils.logger import logger
 
 
@@ -25,7 +26,8 @@ def start_message(message):
     buttons = [('Правила оформления Эльдо', '1',),
                ('Правила оформления МВидео', '2'),
                ('Проверить текст на стоп-слова', '3'),
-               ('Проверить текст на уникальность', '4'),
+               ('Проверить текст на уникальность в text.ru', '4'),
+               ('Проверить текст на уникальность в сontent_watch', '11'),
                ('Проверить текст на в Turgenev', '10'),
                ('Загрузить чек', '9'),
                ('Тексты за этот месяц', '5'),
@@ -59,6 +61,8 @@ def callback_query(call):
         receipt(call)
     elif call.data == "10":
         turgenev(call)
+    elif call.data == "11":
+        content_watch(call)
     elif call.data == 'start':
         start_message(call)
 

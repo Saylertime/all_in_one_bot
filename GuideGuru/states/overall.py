@@ -6,6 +6,7 @@ class OverallState(StatesGroup):
     check = State()
     unique = State()
     turgenev = State()
+    content_watch = State()
 
 class CheckState(StatesGroup):
     """ Класс со всеми необходимыми состояниями """
