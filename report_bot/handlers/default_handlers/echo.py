@@ -2,6 +2,7 @@ from telebot.types import Message
 from loader import bot
 from pg_maker import refresh_db, delete_author, new_table, alter_db_add_vacation
 from utils.text_ru import text_unique_check
+from utils.sheets import rep_name_and_month_sber
 
 @bot.message_handler(state=None)
 def bot_echo(message: Message) -> None:
@@ -33,6 +34,9 @@ def bot_echo(message: Message) -> None:
     elif "TEXT" in message.text:
         left_symbs = text_unique_check()
         bot.send_message(message.chat.id, f"{left_symbs}")
+
+    elif "SBER" in message.text or "СБЕР" in message.text:
+        bot.send_message(message.from_user.id, str(rep_name_and_month_sber()))
 
     else:
         bot.reply_to(

@@ -85,7 +85,7 @@ def rep_month(month):
             except:
                 bonus_pts = 1
 
-            if name in dct:
+            if name and name in dct:
                 value_money, current_count, general_bonus = dct[name]
                 current_count += 1
                 general_bonus += bonus_pts
@@ -248,46 +248,44 @@ def rep_name_and_month(name, month='Январь 2024'):
         msg = str(e)
         return msg
 
-def rep_name_and_month_sber(name, month=current_month()):
+def rep_name_and_month_sber(month=current_month()):
     values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_SBER)
-    name = name[0]
     if not values:
         return
 
     dct = dict()
-    dct_texts = dict()
-    texts_in_work = dict()
-    texts_in_work[name] = []
+
     for row in values:
         try:
-            title = f"\n— <a href='{row[1]}'>{row[0]}</a> — {row[3]} руб.\n"
+            name = row[2]
             money = int(row[3])
-            link = row[1]
-            brief = str(row[4])
-            general_bonus = 1
+            try:
+                bonus_pts = int(row[6])
+            except:
+                bonus_pts = 1
 
-            if name == str(row[2]):
-                if name in dct:
-                    value_money, current_count, general_bonus = dct[name]
-                    if link:
-                        dct_texts[name].append(title)
-                        current_count += 1
-                        general_bonus += 1
-                        dct[name] = (value_money + money, current_count, general_bonus)
-                    else:
-                        texts_in_work[name].append((title, brief))
-                else:
-                    dct[name] = (money, 1, general_bonus)
-                    dct_texts[name] = [title]
-        except Exception as e:
-            print(f"Error processing row: {e}")
+            if name and name in dct:
+                value_money, current_count, general_bonus = dct[name]
+                current_count += 1
+                general_bonus += bonus_pts
+                dct[name] = (value_money + money, current_count, general_bonus)
+            else:
+                dct[name] = (money, 1, bonus_pts)
+        except:
             pass
 
-    return {
-        'dct': dct,
-        'dct_texts': dct_texts,
-        'texts_in_work': texts_in_work
-    }
+    msg = ''
+    sorted_dct = sorted(dct.items(), key=lambda item: (item[1][0], item[1][2]), reverse=True)
+    for author, (summa, count, general_bonus) in sorted_dct:
+        try:
+            author_name = find_author_name(author)[0]
+        except:
+            author_name = author
+
+        msg += (f"{author_name} — {summa} руб. \n"
+                f"Текстов за месяц — {count}\n"
+                f"Бонусов — {general_bonus}\n\n")
+    return msg
 
 def who_is_free():
     values = get_data_from_sheet(current_month(), SAMPLE_SPREADSHEET_ID_ELDO)
@@ -310,10 +308,12 @@ def who_is_free():
             pass
 
     result = [author for author, count in count_dict.items() if count == 1]
+    result2 = [author for author, count in count_dict.items() if count > 1]
 
     nicknames_2 = [nickname for nickname in all_nicknames_2 if any(author in nickname for author in result)]
+    nicknames_3 = [nickname for nickname in all_nicknames_2 if any(author in nickname for author in result2)]
 
-    return all_nicknames, nicknames_2
+    return all_nicknames, nicknames_2, nicknames_3
 
 
 def brief_is_free():
