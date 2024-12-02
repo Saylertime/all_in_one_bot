@@ -38,6 +38,11 @@ def bot_echo(message: Message) -> None:
     elif "SBER" in message.text or "СБЕР" in message.text:
         bot.send_message(message.from_user.id, str(rep_name_and_month_sber()))
 
+    elif message.text == "сбер" or message.text == "sber":
+        from utils.calendar import last_month
+        bot.send_message(message.from_user.id, str(rep_name_and_month_sber(month=last_month())))
+
+
     else:
         bot.reply_to(
             message, f"Такой команды нет: {message.text}\n"
