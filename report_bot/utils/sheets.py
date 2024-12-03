@@ -74,6 +74,7 @@ def rep_month(month):
         return
 
     dct = dict()
+    all_money = 0
 
     # Проходимся первый раз
     for row in values:
@@ -134,6 +135,9 @@ def rep_month(month):
         msg += (f"{author_name} — {summa + bonus_money} руб. Из них бонус — {bonus_money}\n"
                 f"Текстов за месяц — {count}\n"
                 f"Бонусов — {general_bonus}\n\n")
+        all_money += (summa + bonus_money)
+
+    msg += f"ВСЕГО: \n\n {all_money}"
     return msg
 
 
@@ -254,6 +258,7 @@ def rep_name_and_month_sber(month=current_month()):
         return
 
     dct = dict()
+    all_money = 0
 
     for row in values:
         try:
@@ -282,9 +287,12 @@ def rep_name_and_month_sber(month=current_month()):
         except:
             author_name = author
 
+        all_money += summa
         msg += (f"{author_name} — {summa} руб. \n"
                 f"Текстов за месяц — {count}\n"
                 f"Бонусов — {general_bonus}\n\n")
+
+    msg += f"\n\nВСЕГО: {all_money}"
     return msg
 
 def who_is_free():

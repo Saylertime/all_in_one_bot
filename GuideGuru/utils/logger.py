@@ -3,7 +3,9 @@ import logging
 class NoHTTPFilter(logging.Filter):
     def filter(self, record):
         message = record.getMessage()
-        return not any(method in message for method in ['POST', 'GET', 'HTTP', 'code', 'HTTP'])
+        return not any(method in message for method in ['POST', 'GET', 'HTTP', 'code 400',
+                                                        'HTTP', 'message Bad request version'])
+
 
 logging.basicConfig(filename='bot.log',
                     filemode='a',

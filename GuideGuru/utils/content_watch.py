@@ -15,9 +15,6 @@ def content_watch_check(text):
         result = response.json()
         msg = ""
 
-        with open('ttt.txt', 'a') as file:
-            file.write(str(response.text))
-
         if result["error_code"] == 0:
             msg += f"Процент уникальности: {result['percent']}\n\n"
             if len(result["matches"]) > 0:
