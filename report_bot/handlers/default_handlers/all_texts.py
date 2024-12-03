@@ -1,10 +1,12 @@
 from loader import bot
 from states.overall import OverallState
 from utils.sheets import all_texts_of_author
+from utils.logger import logger
 
 
 @bot.message_handler(commands=['all_texts'])
 def all_texts(message):
+    logger.warning(f'{message.from_user.username} — команда all_texts')
     bot.send_message(message.chat.id, "Введи имя автора (как в таблице) Пример:"
                                       "\n\nПаша")
     bot.set_state(message.chat.id, state=OverallState.all_texts)

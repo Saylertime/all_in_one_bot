@@ -23,7 +23,7 @@ def bot_echo(message: Message) -> None:
 
     elif "ИСТОРИЯ" in message.text:
         with open('bot.log', 'r') as file:
-            msg = "\n".join(file.readlines()[-20:])
+            msg = "\n".join(file.readlines()[-30:])
             bot.send_message(message.from_user.id, f"{str(msg)}")
 
     elif "WORDS" in message.text:

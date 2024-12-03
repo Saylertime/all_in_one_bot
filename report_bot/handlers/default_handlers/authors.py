@@ -1,8 +1,10 @@
 from loader import bot
 from pg_maker import all_authors
+from utils.logger import logger
 
 @bot.message_handler(commands=['authors'])
 def authors(message):
+    logger.warning(f'{message.from_user.username} — команда authors')
     msg = ''
     authors = all_authors()
     if authors:

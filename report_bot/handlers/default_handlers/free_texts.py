@@ -1,22 +1,21 @@
 from loader import bot
 from utils.sheets import brief_is_free
+from utils.logger import logger
 
 @bot.message_handler(commands=['free_texts'])
 def free_texts(message):
-    free_authors = brief_is_free()
-    if free_authors:
-        messages = split_message_by_paragraphs(f"Сейчас свободны: \n\n{free_authors}")
+    logger.warning(f'{message.from_user.username} — команда FREE_TEXTS')
+    free_briefs = brief_is_free()
+    if free_briefs:
+        messages = split_message_by_paragraphs(f"Сейчас свободны: \n\n{free_briefs}")
         for msg in messages:
             bot.send_message(message.from_user.id, msg, parse_mode='Markdown', disable_web_page_preview=True)
-            msg = f'Сейчас свободны: \n\n' \
-                  f'{free_authors}'
     else:
         msg = 'Ого, всё раздали! Чмаффки <333!'
+        bot.send_message(message.chat.id, msg, parse_mode='Markdown')
 
-    bot.send_message(message.chat.id, msg, parse_mode='Markdown')
 
-
-def split_message_by_paragraphs(message, max_length=4000):
+def split_message_by_paragraphs(message, max_length=4500):
     parts = []
     current_part = ""
 
@@ -32,4 +31,4 @@ def split_message_by_paragraphs(message, max_length=4000):
     if current_part.strip():
         parts.append(current_part.strip())
 
-    return parts
+    return list(dict.fromkeys(parts))

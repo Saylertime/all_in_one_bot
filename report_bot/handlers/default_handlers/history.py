@@ -1,9 +1,11 @@
 from loader import bot
 from states.overall import OverallState
 from utils.sheets import rep_name_and_month
+from utils.logger import logger
 
 @bot.message_handler(commands=['history'])
 def history(message):
+    logger.warning(f'{message.from_user.username} — команда history')
     bot.send_message(message.chat.id, "Введи имя автора (как в таблице) и через запятую месяц и год. Пример:"
                                            "\n\nПаша, Январь 2024")
     bot.set_state(message.chat.id, state=OverallState.name)

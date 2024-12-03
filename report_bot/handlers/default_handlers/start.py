@@ -1,7 +1,9 @@
 from loader import bot
+from utils.logger import logger
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
+    logger.warning(f'{message.from_user.username} — команда START')
 
     msg = f"Ультимативный бот для сотрудников ГейГуру \n\n" \
           f"/free_authors — Свободные авторы \n\n" \
