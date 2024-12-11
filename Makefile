@@ -17,11 +17,18 @@ build:
 down:
 	docker-compose -f $(COMPOSE_FILE) down
 
-log_report:
-	docker exec -it all_in_one-report_bot-1 /bin/sh -c "cat bot.log"
+report:
+	docker exec -it report /bin/sh -c "cat bot.log"
 
-log_guru:
-	docker exec -it all_in_one-guide_guru-1 /bin/sh -c "cat bot.log"
+guru:
+	docker exec -it guide_guru /bin/sh -c "cat bot.log"
+
+pg_bash:
+	docker exec -it postgres /bin/sh -c "psql -h postgres -U sayler -d postgres"
+
+logs_report:
+	docker logs postgres
+
 
 debug:
 	@echo "Current Hostname: $(CURRENT_HOSTNAME)"

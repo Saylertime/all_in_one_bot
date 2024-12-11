@@ -8,6 +8,5 @@ from . import deadlines
 from . import free_texts
 from . import all_texts
 from . import test
-from . import notification
 from . import stats_month
 from . import echo

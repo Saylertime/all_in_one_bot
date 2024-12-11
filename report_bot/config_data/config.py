@@ -23,7 +23,6 @@ DEFAULT_COMMANDS = (
     ("free_authors", "Свободные авторы"),
     ("free_texts", "Свободные брифы"),
     ("deadlines", "Дедлайны"),
-    ("notification", "Напоминалка"),
     ("new_author", "Добавить автора"),
     ("money", "Гонорары за месяц"),
     ("stats_month", "Статистика по текстам за месяц"),

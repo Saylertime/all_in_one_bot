@@ -3,6 +3,7 @@ services:
   report_bot:
     build:
       context: report_bot
+    container_name: report
     stop_signal: SIGKILL
     ports:
       - 5003:5003
@@ -27,6 +28,7 @@ services:
   guide_guru:
     build:
       context: GuideGuru
+    container_name: guide_guru
     stop_signal: SIGKILL
     ports:
       - 5002:5002
@@ -50,6 +52,7 @@ services:
 
   postgres:
     image: postgres
+    container_name: postgres
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
