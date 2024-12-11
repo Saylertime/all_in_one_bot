@@ -5,7 +5,7 @@ CURRENT_HOSTNAME := $(shell hostname)
 ifeq ($(CURRENT_HOSTNAME), 1738991-cy22118.twc1.net)
     COMPOSE_FILE = docker-compose_prod.yml
 else
-    COMPOSE_FILE = docker-compose_local.yml
+    COMPOSE_FILE = docker_compose_local.yml
 endif
 
 up:
