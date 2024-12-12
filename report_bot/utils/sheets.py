@@ -137,7 +137,7 @@ def rep_month(month):
                 f"Бонусов — {general_bonus}\n\n")
         all_money += (summa + bonus_money)
 
-    msg += f"ВСЕГО: \n\n {all_money}"
+    msg += f"ВСЕГО: {all_money}"
     return msg
 
 
@@ -284,15 +284,22 @@ def rep_name_and_month_sber(month=current_month()):
     for author, (summa, count, general_bonus) in sorted_dct:
         try:
             author_name = find_author_name(author)[0]
+            author_card = find_author_name(author)[1]
         except:
             author_name = author
+            author_card = ""
 
         all_money += summa
         msg += (f"{author_name} — {summa} руб. \n"
                 f"Текстов за месяц — {count}\n"
-                f"Бонусов — {general_bonus}\n\n")
+                f"Бонусов — {general_bonus}\n")
 
-    msg += f"\n\nВСЕГО: {all_money}"
+        if author_card:
+            msg += f"Карта или телефон — {author_card}\n\n"
+        else:
+            msg += "\n"
+
+    msg += f"\nВСЕГО: {all_money}"
     return msg
 
 def who_is_free():

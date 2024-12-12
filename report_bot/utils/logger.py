@@ -1,19 +1,49 @@
 import logging
+from datetime import datetime
+import pytz
+
+
+class MoscowTimeFormatter(logging.Formatter):
+    def formatTime(self, record, datefmt=None):
+        moscow_tz = pytz.timezone('Europe/Moscow')
+        dt = datetime.fromtimestamp(record.created, tz=moscow_tz)
+        return dt.strftime(datefmt or '%m-%d %H:%M')
+
 
 class NoHTTPFilter(logging.Filter):
     def filter(self, record):
         message = record.getMessage()
-        return not any(method in message for method in ['POST', 'GET', 'HTTP', 'code 400',
-                                                        'HTTP', 'message Bad request version'])
+        unwanted_phrases = [
+            'Bad request syntax',
+            'Bad HTTP/0.9 request type',
+            'Invalid HTTP version',
+            'code 400',
+            'code 505'
+        ]
+        return not any(phrase in message for phrase in unwanted_phrases)
 
-
-logging.basicConfig(filename='bot.log',
-                    filemode='a',
-                    format='%(asctime)s - %(message)s',
-                    datefmt='%m-%d %H:%M',
-                    level=logging.WARNING)
 
 logger = logging.getLogger()
-logger.addFilter(NoHTTPFilter())
+logger.setLevel(logging.WARNING)
+
+
+file_handler = logging.FileHandler('bot.log', mode='a')
+file_handler.setFormatter(MoscowTimeFormatter(
+    fmt='%(asctime)s - %(message)s',
+    datefmt='%m-%d %H:%M'
+))
+file_handler.addFilter(NoHTTPFilter())
+
+
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(logging.Formatter(
+    fmt='%(asctime)s - %(message)s',
+    datefmt='%m-%d %H:%M'
+))
+
+
+logger.addHandler(file_handler)
+logger.addHandler(console_handler)
+
 
 logging.getLogger('werkzeug').setLevel(logging.ERROR)

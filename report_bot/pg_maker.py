@@ -9,15 +9,18 @@ user = config.DB_USER
 password = config.DB_PASSWORD
 host = config.DB_HOST
 
+
 def connect_to_db():
     conn = psycopg2.connect(dbname=dbname, user=user, password=password, host=host)
     cursor = conn.cursor()
     conn.autocommit = True
     return conn, cursor
 
+
 def close_db_connection(conn, cursor):
     cursor.close()
     conn.close()
+
 
 def add_author(name, nickname, name_in_db, about='', phone=''):
     conn, cursor = connect_to_db()
@@ -27,12 +30,14 @@ def add_author(name, nickname, name_in_db, about='', phone=''):
     print(f"{nickname} добавлен")
     close_db_connection(conn, cursor)
 
+
 def delete_author(name_in_db):
     conn, cursor = connect_to_db()
     sql = f"""DELETE from public.authors WHERE name_in_db=%s"""
     cursor.execute(sql, (name_in_db, ))
     close_db_connection(conn, cursor)
     return cursor.rowcount
+
 
 def all_authors():
     conn, cursor = connect_to_db()
@@ -42,6 +47,7 @@ def all_authors():
     close_db_connection(conn, cursor)
     return authors
 
+
 def authors_on_vacation():
     conn, cursor = connect_to_db()
     sql = "SELECT name, nickname, name_in_db FROM public.authors WHERE vacation = True"
@@ -50,17 +56,22 @@ def authors_on_vacation():
     close_db_connection(conn, cursor)
     return authors
 
+
 def create_db():
     conn, cursor = connect_to_db()
-    sql = 'CREATE TABLE IF NOT EXISTS public.authors (name VARCHAR, nickname VARCHAR, name_in_db VARCHAR, phone VARCHAR, about VARCHAR);'
+    sql = '''
+    CREATE TABLE IF NOT EXISTS public.authors (
+        name VARCHAR NOT NULL,
+        nickname VARCHAR,
+        name_in_db VARCHAR,
+        phone VARCHAR,
+        about VARCHAR,
+        vacation BOOLEAN DEFAULT FALSE
+    );
+    '''
     cursor.execute(sql)
     close_db_connection(conn, cursor)
 
-def alter_db_add_vacation():
-    conn, cursor = connect_to_db()
-    sql = 'ALTER TABLE public.authors ADD COLUMN vacation BOOLEAN DEFAULT FALSE;'
-    cursor.execute(sql)
-    close_db_connection(conn, cursor)
 
 def refresh_db():
     conn, cursor = connect_to_db()
@@ -103,6 +114,7 @@ def refresh_db():
     cursor.executemany(insert_data_sql, authors_data)
     close_db_connection(conn, cursor)
 
+
 def find_author(name):
     conn, cursor = connect_to_db()
     sql = f"SELECT nickname FROM public.authors WHERE name_in_db = '{name}'"
@@ -111,19 +123,22 @@ def find_author(name):
     close_db_connection(conn, cursor)
     return author
 
+
 def find_author_name(name_in_db):
     conn, cursor = connect_to_db()
-    sql = f"SELECT name FROM public.authors WHERE name_in_db = '{name_in_db}'"
+    sql = f"SELECT name, about FROM public.authors WHERE name_in_db = '{name_in_db}'"
     cursor.execute(sql)
     author = cursor.fetchone()
     close_db_connection(conn, cursor)
     return author
+
 
 def drop_table(table_name):
     conn, cursor = connect_to_db()
     sql = f"""DROP TABLE IF EXISTS {table_name};"""
     cursor.execute(sql)
     close_db_connection(conn, cursor)
+
 
 def new_table():
     conn, cursor = connect_to_db()
@@ -140,6 +155,7 @@ def new_table():
     cursor.execute(sql)
     close_db_connection(conn, cursor)
 
+
 def new_notifications(user_id, n_date, n_time, text):
     conn, cursor = connect_to_db()
     sql = """INSERT INTO public.notifications 
@@ -154,6 +170,7 @@ def new_notifications(user_id, n_date, n_time, text):
     cursor.execute(sql, values)
     close_db_connection(conn, cursor)
 
+
 def find_notifications(user_id):
     conn, cursor = connect_to_db()
     sql = f"SELECT * FROM public.notifications WHERE user_id={user_id}"
@@ -161,6 +178,7 @@ def find_notifications(user_id):
     notifications = cursor.fetchall()
     close_db_connection(conn, cursor)
     return notifications
+
 
 def find_for_tasks():
     new_table()
