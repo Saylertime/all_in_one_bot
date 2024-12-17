@@ -21,7 +21,7 @@ def bot_echo(message: Message) -> None:
             print(id)
             bot.send_message(id, msg)
 
-    elif "ИСТОРИЯ" in message.text:
+    elif "история" in message.text:
         with open('bot.log', 'r') as file:
             msg = "\n".join(file.readlines()[-30:])
             bot.send_message(message.from_user.id, f"{str(msg)}")

@@ -66,7 +66,7 @@ def check_text(doc_id):
     if stop_count == 0 and e_count == 0:
         msg = "Стоп-слов нет, ты молодчуля ;)"
     elif stop_count and e_count:
-        msg = f"Стоп-слов в тексте: {stop_count}. Вот они, слева направо :\n\n"
+        msg = f"Стоп-слов в тексте: {stop_count}. Вот они, слева направо:\n\n"
         msg += ", ".join(words)
         msg += f"\n\nА еще убери буквы Ё. У тебя в тексте их {e_count}"
     elif e_count:
@@ -76,3 +76,32 @@ def check_text(doc_id):
         msg += ", ".join(words)
 
     return msg
+
+
+def get_content_with_links(doc_id):
+    try:
+        service = build("docs", "v1", credentials=creds)
+        document = service.documents().get(documentId=doc_id).execute()
+        content = document.get("body").get("content")
+
+        links = []
+
+        for elem in content:
+            paragraph = elem.get("paragraph")
+            if paragraph:
+                elements = paragraph.get("elements")
+                for element in elements:
+                    text_run = element.get("textRun")
+                    if text_run:
+                        link = (
+                            text_run.get("textStyle", {})
+                            .get("link", {})
+                            .get("url")
+                        )
+                        if link:
+                            links.append(link)
+
+        return links
+    except Exception as e:
+        print(e)
+        return "", []

@@ -5,6 +5,7 @@ class OverallState(StatesGroup):
 
     check = State()
     unique = State()
+    get_ids = State()
     turgenev = State()
     content_watch = State()
 
