@@ -24,6 +24,7 @@ def turgenev(message):
 
 @bot.message_handler(state=OverallState.turgenev)
 def turgenev_answer(message):
+    bot.delete_state(message.from_user.id)
     try:
         url = message.text.split('/')[5]
         full_text = get_content(url)
@@ -35,5 +36,3 @@ def turgenev_answer(message):
         bot.send_message(message.from_user.id, 'Похоже, ссылкая кривая, не тот формат или закрыт доступ для редактирования')
         error = str(error) + f"\n\n{message.from_user.username}\n\n{message.text}"
         bot.send_message('68086662', error)
-    finally:
-        bot.delete_state(message.from_user.id)
