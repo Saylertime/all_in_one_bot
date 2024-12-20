@@ -148,7 +148,7 @@ def rep_name_and_month(name, month=current_month(), sber_data=None):
                 bonus_money = 500
 
             if author == 'Седна':
-                summa += 60000
+                summa += 80000
 
             total_money = sum(money for money, _ in dict_with_addons.get(name, []))
 

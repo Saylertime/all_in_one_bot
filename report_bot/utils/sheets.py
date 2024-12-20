@@ -130,7 +130,7 @@ def rep_month(month):
             bonus_money = 500
 
         if author == 'Седна':
-            summa += 60000
+            summa += 80000
 
         msg += (f"{author_name} — {summa + bonus_money} руб. Из них бонус — {bonus_money}\n"
                 f"Текстов за месяц — {count}\n"
@@ -215,7 +215,7 @@ def rep_name_and_month(name, month='Январь 2024'):
                 bonus_money = 500
 
             if author == 'Седна':
-                summa += 60000
+                summa += 80000
 
             total_money = sum(money for money, _ in dict_with_addons.get(name, []))
 
