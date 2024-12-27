@@ -1,34 +1,41 @@
-import os.path
+import os
+import asyncio
+import aiofiles
 from psql_maker import all_stop_words
-
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from googleapiclient.http import HttpRequest
 
 SCOPES = ["https://www.googleapis.com/auth/documents.readonly"]
 
-creds = None
 
-if os.path.exists("token2.json"):
-    creds = Credentials.from_authorized_user_file("token2.json", SCOPES)
+# Асинхронный токен
+async def get_creds():
+    creds = None
+    if os.path.exists("token2.json"):
+        creds = Credentials.from_authorized_user_file("token2.json", SCOPES)
 
-if not creds or not creds.valid:
-    if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-    else:
-        flow = InstalledAppFlow.from_client_secrets_file(
-          "credentials.json", SCOPES)
-        creds = flow.run_local_server(port=0)
-    with open("token2.json", "w") as token:
-        token.write(creds.to_json())
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            await asyncio.to_thread(creds.refresh, Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                "credentials.json", SCOPES
+            )
+            creds = await asyncio.to_thread(flow.run_local_server, port=0)
+        async with aiofiles.open("token2.json", "w") as token:
+            await token.write(creds.to_json())
+    return creds
 
 
-def get_content(doc_id):
+async def get_content(doc_id):
     try:
-        service = build("docs", "v1", credentials=creds)
-        document = service.documents().get(documentId=doc_id).execute()
+        creds = await get_creds()
+        service = await asyncio.to_thread(build, "docs", "v1", credentials=creds)
+        document = await asyncio.to_thread(service.documents().get(documentId=doc_id).execute)
         content = document.get("body").get("content")
 
         full_text = ""
@@ -45,12 +52,12 @@ def get_content(doc_id):
         return full_text
     except Exception as e:
         print(e)
-        return ''
+        return f'{e}'
 
 
-def check_text(doc_id):
-    stop_words = all_stop_words()
-    all_content = get_content(doc_id)
+async def check_text(doc_id):
+    stop_words = await all_stop_words()  # Асинхронная работа с БД
+    all_content = await get_content(doc_id)
 
     stop_count = 0
     e_count = 0
@@ -78,10 +85,11 @@ def check_text(doc_id):
     return msg
 
 
-def get_content_with_links(doc_id):
+async def get_content_with_links(doc_id):
     try:
-        service = build("docs", "v1", credentials=creds)
-        document = service.documents().get(documentId=doc_id).execute()
+        creds = await get_creds()
+        service = await asyncio.to_thread(build, "docs", "v1", credentials=creds)
+        document = await asyncio.to_thread(service.documents().get(documentId=doc_id).execute)
         content = document.get("body").get("content")
 
         links = []

@@ -5,6 +5,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from utils.calend import current_month, next_month
 import os
+import aiofiles
 
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
@@ -28,7 +29,7 @@ if not creds or not creds.valid:
         token.write(creds.to_json())
 
 
-def get_sheet_names(spreadsheet_id):
+async def get_sheet_names(spreadsheet_id):
     try:
         service = build("sheets", "v4", credentials=creds)
 
@@ -43,7 +44,7 @@ def get_sheet_names(spreadsheet_id):
         return None
 
 
-def get_data_from_sheet(month, spreadsheet_id):
+async def get_data_from_sheet(month, spreadsheet_id):
     SAMPLE_RANGE_NAME = f"{month}!A2:M"
 
     try:
@@ -68,10 +69,8 @@ def get_data_from_sheet(month, spreadsheet_id):
         return None
 
 
-def rep_name_and_month(name, month=current_month(), sber_data=None):
-    print(sber_data)
-    values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
-    name = name[0]
+async def rep_name_and_month(name, month, sber_data=None):
+    values = await get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
     if not values:
         return
     try:
@@ -111,7 +110,6 @@ def rep_name_and_month(name, month=current_month(), sber_data=None):
                         dct[name] = (money, 1, bonus_pts)
                         dct_texts[name] = [title]
             except Exception as e:
-                print(f"Error processing row: {e}")
                 pass
 
         for row in values:
@@ -176,20 +174,19 @@ def rep_name_and_month(name, month=current_month(), sber_data=None):
             msg += msg_addons
 
         if len(msg) > 4090:
-            msg_file = create_and_return_file(name, 'last_month', msg)
+            msg_file = await create_and_return_file(name, 'last_month', msg)
             return msg_file
         else:
             return msg
 
     except Exception as e:
         msg = f'Кажется, у тебя пока ничего не написано...'
-        # msg = str(e)
         return msg
 
 
-def rep_name_and_month_sber(name, month=current_month()):
-    values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_SBER)
-    name = name[0]
+async def rep_name_and_month_sber(name, month):
+    values = await get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_SBER)
+
     if not values:
         return
 
@@ -219,7 +216,6 @@ def rep_name_and_month_sber(name, month=current_month()):
                     dct[name] = (money, 1, general_bonus)
                     dct_texts[name] = [title]
         except Exception as e:
-            print(f"Error processing row: {e}")
             pass
 
     return {
@@ -229,15 +225,15 @@ def rep_name_and_month_sber(name, month=current_month()):
     }
 
 
-def all_texts_of_author(name_in_db):
+async def all_texts_of_author(name_in_db):
 
-    all_months = get_sheet_names(SAMPLE_SPREADSHEET_ID_ELDO)
+    all_months = await get_sheet_names(SAMPLE_SPREADSHEET_ID_ELDO)
     temp_eldo = ""
     temp_mvideo = ""
     recording_mvideo = False
 
     for month in all_months:
-        values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
+        values = await get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
         if not values:
             return
 
@@ -262,8 +258,8 @@ def all_texts_of_author(name_in_db):
 
         recording_mvideo = False
 
-    temp_file_eldo = create_and_return_file(name_in_db, 'eldo', temp_eldo)
-    temp_file_mvideo = create_and_return_file(name_in_db, 'mvideo', temp_mvideo)
+    temp_file_eldo = await create_and_return_file(name_in_db, 'eldo', temp_eldo)
+    temp_file_mvideo = await create_and_return_file(name_in_db, 'mvideo', temp_mvideo)
 
     temp_eldo = ''
     temp_mvideo = ''
@@ -271,24 +267,23 @@ def all_texts_of_author(name_in_db):
     return temp_file_eldo, temp_file_mvideo
 
 
-def create_and_return_file(name, blog, content):
+async def create_and_return_file(name, blog, content):
     current_directory = os.path.dirname(os.path.abspath(__file__))
     temp_directory = os.path.join(current_directory, "temp")
     os.makedirs(temp_directory, exist_ok=True)
     file_path = os.path.join(temp_directory, f"{name}_{blog}.txt")
-    with open(file_path, "w") as file:
-        if content:
-            file.write(content)
-            return file_path
-        else:
-            return ''
+    if content:
+        async with aiofiles.open(file_path, "w") as file:
+            await file.write(content)
+        return file_path
+    return ''
 
 
-def brief_is_free():
+async def brief_is_free():
     now_and_next_month = [current_month(), next_month()]
     all_briefs = []
     for month in now_and_next_month:
-        values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
+        values = await get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
         if not values:
             return
 

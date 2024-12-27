@@ -51,7 +51,7 @@ services:
           path: requirements.txt
 
   postgres:
-    image: postgres
+    image: postgres:16
     container_name: postgres
     environment:
       - POSTGRES_USER=${POSTGRES_USER}

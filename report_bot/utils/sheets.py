@@ -178,7 +178,6 @@ def rep_name_and_month(name, month='Январь 2024'):
                         dct[name] = (money, 1, bonus_pts)
                         dct_texts[name] = [title]
             except Exception as e:
-                print(f"Error processing row: {e}")
                 pass
 
         for row in values:

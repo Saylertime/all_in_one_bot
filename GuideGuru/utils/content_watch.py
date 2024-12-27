@@ -1,7 +1,7 @@
-import requests
-from config_data import config
+import aiohttp
 
-def content_watch_check(text):
+
+async def content_watch_check(text):
     try:
         url = "https://content-watch.ru/public/api/"
         data = {
@@ -11,8 +11,19 @@ def content_watch_check(text):
             "test": 0
         }
 
-        response = requests.post(url=url, data=data)
-        result = response.json()
+        headers = {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url=url, data=data, headers=headers) as response:
+
+                response_text = await response.text()
+                try:
+                    result = await response.json(content_type=None)
+                except Exception:
+                    raise ValueError(f"Failed to parse JSON. Response text:\n{response_text}")
+
         msg = ""
 
         if result["error_code"] == 0:
@@ -25,6 +36,5 @@ def content_watch_check(text):
             msg = f"ОШИБКА: {result['error']}"
 
         return msg
-
-    except:
-        return "Произошла какая-то ошибка. Напиши @saylertime, он пофиксит (возможно)"
+    except Exception as e:
+        return f"Ошибка: {e}"

@@ -1,26 +1,33 @@
-from loader import bot
+from aiogram import Router, F
+from aiogram.filters import Command
+from aiogram.types import CallbackQuery
+
 from utils.sheets import brief_is_free
-from utils.logger import logger
 from psql_maker import find_author
 
 
-@bot.message_handler(commands=['free_texts'])
-def free_texts(message):
-    logger.warning(f'{message.from_user.username} — команда FREE_TEXTS')
-    free_briefs = brief_is_free()
+router_free_texts = Router()
+
+
+@router_free_texts.callback_query(F.data == "free_texts")
+@router_free_texts.message(Command('free_texts'))
+async def free_texts(message):
     username = "@" + message.from_user.username
-    name_in_db = find_author(username)
+    if isinstance(message, CallbackQuery):
+        message = message.message
+
+    free_briefs = await brief_is_free()
+    name_in_db = await find_author(username)
 
     if name_in_db:
         if free_briefs:
             messages = split_message_by_paragraphs(f"Сейчас свободны: \n\n{free_briefs}")
             for msg in messages:
-                bot.send_message(message.from_user.id, msg, parse_mode='Markdown', disable_web_page_preview=True)
+                await message.answer(msg, parse_mode='Markdown', disable_web_page_preview=True)
         else:
-            bot.send_message(message.from_user.id, 'Всё разобрали! Ждём новых поступлений', parse_mode='Markdown', disable_web_page_preview=True)
+            await message.answer('Всё разобрали! Ждём новых поступлений', parse_mode='Markdown', disable_web_page_preview=True)
     else:
-        bot.send_message(
-            message.from_user.id,
+        await message.answer(
             f'{username}, тебя пока нет в базе данных ;( Напиши @saylertime, чтобы добавил',
             parse_mode='Markdown',
             disable_web_page_preview=True,

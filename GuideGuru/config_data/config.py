@@ -1,5 +1,8 @@
 import os
+
+from aiogram.types import BotCommand
 from dotenv import load_dotenv, find_dotenv
+
 
 if not find_dotenv():
     exit("Переменные окружения не загружены т.к отсутствует файл .env")
@@ -15,9 +18,10 @@ DB_NAME = os.getenv('DB_NAME')
 DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_HOST = os.getenv('DB_HOST')
+ADMINS = os.getenv('ADMINS').split(",")
 
 
-DEFAULT_COMMANDS = (
+DEFAULT_COMMANDS = [
     ("start", "Запустить бота"),
     ("eldo", "Правила для Эльдорадо"),
     ("mvideo", "Правила для Мвидео"),
@@ -32,4 +36,4 @@ DEFAULT_COMMANDS = (
     ("last_month", "Все тексты за прошлый месяц"),
     ("all_texts", "Все тексты с ноября 2023 года"),
     ("vacation", "В отпуск или из отпуска"),
-)
+]

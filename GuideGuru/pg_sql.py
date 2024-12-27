@@ -41,4 +41,4 @@ def all_users_from_db():
     print(all_users, all_ids)
     return all_users, all_ids
 
-all_users_from_db()
+# all_users_from_db()

@@ -37,3 +37,6 @@ yarl==1.9.4
 Flask
 gspread
 watchdog
+asyncpg
+aiogram
+gspread_asyncio
