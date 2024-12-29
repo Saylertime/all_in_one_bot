@@ -90,6 +90,7 @@ async def main():
 
 if __name__ == "__main__":
     if LOCAL_ENV == "local":
-        asyncio.run(main())
+        asyncio.run(main())  # Локальный запуск на long polling
     else:
-        main()
+        main_webhook()  # Запуск вебхука (эта функция синхронная)
+
