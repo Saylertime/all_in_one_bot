@@ -23,7 +23,6 @@ async def turgenev(message, state):
         message = message.message
 
     name_in_db = await find_author(username)
-    await message.answer(str(name_in_db))
     if name_in_db:
         msg = (
             "Введи ссылку в формате \n\n"
@@ -35,6 +34,7 @@ async def turgenev(message, state):
             "<b>13+</b> – критическая ситуация."
         )
         await state.set_state(TurgenevState.response)
+        await message.answer(msg)
     else:
         await message.answer(
             f"{username}, тебя пока нет в базе данных ;( Напиши @saylertime, чтобы добавил",
