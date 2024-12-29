@@ -23,9 +23,7 @@ if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
         creds.refresh(Request())
     else:
-        flow = InstalledAppFlow.from_client_secrets_file(
-            "credentials.json", SCOPES
-        )
+        flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
         creds = flow.run_local_server(port=0)
     with open("token.json", "w") as token:
         token.write(creds.to_json())
@@ -36,9 +34,9 @@ async def get_sheet_names(spreadsheet_id):
         service = build("sheets", "v4", credentials=creds)
 
         spreadsheet = service.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
-        sheets = spreadsheet.get('sheets', [])
+        sheets = spreadsheet.get("sheets", [])
 
-        sheet_names = [sheet['properties']['title'] for sheet in sheets]
+        sheet_names = [sheet["properties"]["title"] for sheet in sheets]
         return sheet_names
 
     except HttpError as err:
@@ -113,8 +111,10 @@ async def rep_month(month):
         except:
             pass
 
-    msg = ''
-    sorted_dct = sorted(dct.items(), key=lambda item: (item[1][0], item[1][2]), reverse=True)
+    msg = ""
+    sorted_dct = sorted(
+        dct.items(), key=lambda item: (item[1][0], item[1][2]), reverse=True
+    )
     for author, (summa, count, general_bonus) in sorted_dct:
         try:
             author_name = await find_author_name(author)[0]
@@ -132,13 +132,15 @@ async def rep_month(month):
         elif general_bonus >= 5:
             bonus_money = 500
 
-        if author == 'Седна':
+        if author == "Седна":
             summa += 80000
 
-        msg += (f"{author_name} — {summa + bonus_money} руб. Из них бонус — {bonus_money}\n"
-                f"Текстов за месяц — {count}\n"
-                f"Бонусов — {general_bonus}\n\n")
-        all_money += (summa + bonus_money)
+        msg += (
+            f"{author_name} — {summa + bonus_money} руб. Из них бонус — {bonus_money}\n"
+            f"Текстов за месяц — {count}\n"
+            f"Бонусов — {general_bonus}\n\n"
+        )
+        all_money += summa + bonus_money
 
     msg += f"ВСЕГО: {all_money}"
     return msg
@@ -156,9 +158,9 @@ async def rep_name_and_month(name, month, sber_data=None):
         dict_with_addons = {}
 
         if sber_data:
-            dct.update(sber_data['dct'])
-            dct_texts.update(sber_data['dct_texts'])
-            texts_in_work[name].extend(sber_data['texts_in_work'].get(name, []))
+            dct.update(sber_data["dct"])
+            dct_texts.update(sber_data["dct_texts"])
+            texts_in_work[name].extend(sber_data["texts_in_work"].get(name, []))
 
         for row in values:
             try:
@@ -178,7 +180,11 @@ async def rep_name_and_month(name, month, sber_data=None):
                             dct_texts[name].append(title)
                             current_count += 1
                             general_bonus += bonus_pts
-                            dct[name] = (value_money + money, current_count, general_bonus)
+                            dct[name] = (
+                                value_money + money,
+                                current_count,
+                                general_bonus,
+                            )
                         else:
                             texts_in_work[name].append((title, brief))
                     else:
@@ -207,8 +213,10 @@ async def rep_name_and_month(name, month, sber_data=None):
             except:
                 pass
 
-        msg = ''
-        sorted_dct = sorted(dct.items(), key=lambda item: (item[1][0], item[1][2]), reverse=True)
+        msg = ""
+        sorted_dct = sorted(
+            dct.items(), key=lambda item: (item[1][0], item[1][2]), reverse=True
+        )
         bonus_money = 0
         for author, (summa, count, general_bonus) in sorted_dct:
             if general_bonus >= 20:
@@ -220,43 +228,46 @@ async def rep_name_and_month(name, month, sber_data=None):
             elif general_bonus >= 5:
                 bonus_money = 500
 
-            if author == 'Седна':
+            if author == "Седна":
                 summa += 80000
 
             total_money = sum(money for money, _ in dict_with_addons.get(name, []))
 
-            msg += (f"Гонорар за сданные тексты и допы за {month} — {summa + bonus_money}  руб.\n"
-                    f"Из них бонус — {bonus_money} руб.\n"
-                    f"И допы — {total_money} руб.\n"
-                    f"Всего бонусов набрано — {general_bonus} шт.\n"
-                    f"Текстов за месяц — {count}.\n\n")
+            msg += (
+                f"Гонорар за сданные тексты и допы за {month} — {summa + bonus_money}  руб.\n"
+                f"Из них бонус — {bonus_money} руб.\n"
+                f"И допы — {total_money} руб.\n"
+                f"Всего бонусов набрано — {general_bonus} шт.\n"
+                f"Текстов за месяц — {count}.\n\n"
+            )
 
-        msg_texts = '<b>Все сданные тексты:</b> \n'
+        msg_texts = "<b>Все сданные тексты:</b> \n"
         for title in dct_texts[name]:
             msg_texts += title
         msg += msg_texts
 
         if texts_in_work[name]:
-            msg_texts_in_work = '\n\n<b>Тексты в работе:</b>'
+            msg_texts_in_work = "\n\n<b>Тексты в работе:</b>"
             for title in texts_in_work[name]:
                 msg_texts_in_work += f"\n<a href='{title[1]}'>{title[0]}</a>"
             msg += msg_texts_in_work
 
         if dict_with_addons:
-            msg_addons = '\n\n<b>Дополнительные гонорары: </b>\n'
+            msg_addons = "\n\n<b>Дополнительные гонорары: </b>\n"
             for addon in dict_with_addons[name]:
                 msg_addons += f"\n — {addon[1]} — {addon[0]} руб.\n"
             msg += msg_addons
 
         if len(msg) > 4090:
-            msg_file = await create_and_return_file(name, 'last_month', msg)
+            msg_file = await create_and_return_file(name, "last_month", msg)
             return msg_file
         else:
             return msg
 
     except Exception as e:
-        msg = f'Кажется, у тебя пока ничего не написано...'
+        msg = f"Кажется, у тебя пока ничего не написано..."
         return msg
+
 
 async def rep_name_and_month_sber(month=current_month()):
     values = await get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_SBER)
@@ -285,8 +296,10 @@ async def rep_name_and_month_sber(month=current_month()):
         except:
             pass
 
-    msg = ''
-    sorted_dct = sorted(dct.items(), key=lambda item: (item[1][0], item[1][2]), reverse=True)
+    msg = ""
+    sorted_dct = sorted(
+        dct.items(), key=lambda item: (item[1][0], item[1][2]), reverse=True
+    )
     for author, (summa, count, general_bonus) in sorted_dct:
         try:
             name_and_card = await find_author_name(author)
@@ -297,9 +310,11 @@ async def rep_name_and_month_sber(month=current_month()):
             author_card = ""
 
         all_money += summa
-        msg += (f"{author_name} — {summa} руб. \n"
-                f"Текстов за месяц — {count}\n"
-                f"Бонусов — {general_bonus}\n")
+        msg += (
+            f"{author_name} — {summa} руб. \n"
+            f"Текстов за месяц — {count}\n"
+            f"Бонусов — {general_bonus}\n"
+        )
 
         if author_card:
             msg += f"Карта или телефон — {author_card}\n\n"
@@ -308,6 +323,7 @@ async def rep_name_and_month_sber(month=current_month()):
 
     msg += f"\nВСЕГО: {all_money}"
     return msg
+
 
 async def who_is_free():
     values = await get_data_from_sheet(current_month(), SAMPLE_SPREADSHEET_ID_ELDO)
@@ -332,8 +348,16 @@ async def who_is_free():
     result = [author for author, count in count_dict.items() if count == 1]
     result2 = [author for author, count in count_dict.items() if count > 1]
 
-    nicknames_2 = [nickname for nickname in all_nicknames_2 if any(author in nickname for author in result)]
-    nicknames_3 = [nickname for nickname in all_nicknames_2 if any(author in nickname for author in result2)]
+    nicknames_2 = [
+        nickname
+        for nickname in all_nicknames_2
+        if any(author in nickname for author in result)
+    ]
+    nicknames_3 = [
+        nickname
+        for nickname in all_nicknames_2
+        if any(author in nickname for author in result2)
+    ]
 
     return all_nicknames, nicknames_2, nicknames_3
 
@@ -359,16 +383,18 @@ async def brief_is_free():
                 symbs = str(row[8])
 
                 if brief and not author:
-                    temp_row = f'[{title}]({brief})\n' \
-                               f'Объем: {symbs} тыс. символов\n' \
-                               f'Для блога: {"Мвидео" if flag_mvideo else "Эльдорадо"}\n' \
-                               f'Гонорар: {money}\n\n'
+                    temp_row = (
+                        f"[{title}]({brief})\n"
+                        f"Объем: {symbs} тыс. символов\n"
+                        f'Для блога: {"Мвидео" if flag_mvideo else "Эльдорадо"}\n'
+                        f"Гонорар: {money}\n\n"
+                    )
                     all_briefs.append(temp_row)
 
             except Exception as e:
                 print(f"Error: {e}")
 
-    msg = ''
+    msg = ""
     for num, brief in enumerate(all_briefs, start=1):
         msg += f"{num}. {brief}"
 
@@ -381,7 +407,7 @@ async def stats_for_month(month):
         return
 
     done, in_work, all_texts, seo, simple, review, test = 0, 0, 0, 0, 0, 0, 0
-    deadline_today = ''
+    deadline_today = ""
     for row in values:
         try:
             title = row[0]
@@ -391,10 +417,10 @@ async def stats_for_month(month):
             deadline = row[7]
             author = row[2]
 
-            seo += 1 if type == 'СЕО' else 0
-            simple += 1 if type == 'Простая' or row[5] == 'Новость' else 0
-            review += 1 if type == 'Обзор' else 0
-            test += 1 if type == 'Тест' else 0
+            seo += 1 if type == "СЕО" else 0
+            simple += 1 if type == "Простая" or row[5] == "Новость" else 0
+            review += 1 if type == "Обзор" else 0
+            test += 1 if type == "Тест" else 0
 
             if title and brief:
                 all_texts += 1
@@ -409,13 +435,15 @@ async def stats_for_month(month):
         except:
             pass
 
-    msg = f'Всего текстов за месяц: {all_texts}\n' \
-          f'Уже готовы: {done}\n' \
-          f'Сейчас в работе: {in_work}\n\n' \
-          f'Простых — {simple} шт\n' \
-          f'СЕО — {seo} шт\n' \
-          f'Тестов — {test}\n' \
-          f'Обзоров — {review}\n\n\n'
+    msg = (
+        f"Всего текстов за месяц: {all_texts}\n"
+        f"Уже готовы: {done}\n"
+        f"Сейчас в работе: {in_work}\n\n"
+        f"Простых — {simple} шт\n"
+        f"СЕО — {seo} шт\n"
+        f"Тестов — {test}\n"
+        f"Обзоров — {review}\n\n\n"
+    )
     return msg
 
 
@@ -426,8 +454,8 @@ async def in_work_today():
     today, tomorrow = current_day()
 
     done, in_work, all_texts = 0, 0, 0
-    deadline_today = ''
-    deadline_tomorrow = ''
+    deadline_today = ""
+    deadline_tomorrow = ""
     for row in values:
         try:
             title = row[0]
@@ -452,11 +480,13 @@ async def in_work_today():
         except:
             pass
 
-    msg = f'Всего текстов за месяц: {all_texts}\n' \
-          f'Уже готовы: {done}\n' \
-          f'Сейчас в работе: {in_work}\n\n' \
-          f'<b>Сегодня должны сдать:</b> \n{deadline_today}\n\n' \
-          f'<b>Завтра должны сдать:</b> \n{deadline_tomorrow}\n\n'
+    msg = (
+        f"Всего текстов за месяц: {all_texts}\n"
+        f"Уже готовы: {done}\n"
+        f"Сейчас в работе: {in_work}\n\n"
+        f"<b>Сегодня должны сдать:</b> \n{deadline_today}\n\n"
+        f"<b>Завтра должны сдать:</b> \n{deadline_tomorrow}\n\n"
+    )
     return msg
 
 
@@ -472,10 +502,10 @@ async def all_texts_of_author(name_in_db):
         if not values:
             return
 
-        msg_texts_eldo = ''
-        msg_texts_mvideo = ''
+        msg_texts_eldo = ""
+        msg_texts_mvideo = ""
         for row in values:
-            if 'МВИДЕО' in str(row):
+            if "МВИДЕО" in str(row):
                 recording_mvideo = True
             try:
                 title = f"{row[0]} — {row[1]}"
@@ -493,11 +523,11 @@ async def all_texts_of_author(name_in_db):
 
         recording_mvideo = False
 
-    temp_file_eldo = await create_and_return_file(name_in_db, 'eldo', temp_eldo)
-    temp_file_mvideo = await create_and_return_file(name_in_db, 'mvideo', temp_mvideo)
+    temp_file_eldo = await create_and_return_file(name_in_db, "eldo", temp_eldo)
+    temp_file_mvideo = await create_and_return_file(name_in_db, "mvideo", temp_mvideo)
 
-    temp_eldo = ''
-    temp_mvideo = ''
+    temp_eldo = ""
+    temp_mvideo = ""
 
     return temp_file_eldo, temp_file_mvideo
 
@@ -511,5 +541,4 @@ async def create_and_return_file(name, blog, content):
         async with aiofiles.open(file_path, "w") as file:
             await file.write(content)
         return file_path
-    return ''
-
+    return ""

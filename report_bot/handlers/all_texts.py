@@ -15,8 +15,7 @@ class AllTextsState(StatesGroup):
 
 @router_all_texts.message(Command("all_texts"))
 async def all_texts(message, state):
-    await message.answer("Введи имя автора (как в таблице) Пример:"
-                                      "\n\nПаша")
+    await message.answer("Введи имя автора (как в таблице) Пример:" "\n\nПаша")
     await state.set_state(AllTextsState.response)
 
 

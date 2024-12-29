@@ -11,6 +11,16 @@ from .stats_month import router_stats_month
 from .echo import router_echo
 
 
-routers = [router_authors, router_all_texts, router_deadlines, router_free_authors,
-           router_free_texts, router_history, router_money, router_new_author,
-           router_start, router_stats_month, router_echo]
+routers = [
+    router_authors,
+    router_all_texts,
+    router_deadlines,
+    router_free_authors,
+    router_free_texts,
+    router_history,
+    router_money,
+    router_new_author,
+    router_start,
+    router_stats_month,
+    router_echo,
+]

@@ -15,10 +15,7 @@ host = config.DB_HOST
 async def connect_to_db():
     """Создаёт асинхронное подключение к базе данных."""
     conn = await asyncpg.connect(
-        database=dbname,
-        user=user,
-        password=password,
-        host=host
+        database=dbname, user=user, password=password, host=host
     )
     return conn
 
@@ -31,8 +28,10 @@ async def close_db_connection(conn):
 async def add_author(name, nickname, name_in_db, about="", phone=""):
     conn = await connect_to_db()
     try:
-        sql = "INSERT INTO public.authors (name, nickname, name_in_db, about, phone) " \
-              "VALUES ($1, $2, $3, $4, $5)"
+        sql = (
+            "INSERT INTO public.authors (name, nickname, name_in_db, about, phone) "
+            "VALUES ($1, $2, $3, $4, $5)"
+        )
         await conn.execute(sql, name, nickname, name_in_db, about, phone)
         print(f"{nickname} добавлен")
     finally:
@@ -73,7 +72,7 @@ async def authors_on_vacation():
 
 def create_db():
     conn, cursor = connect_to_db()
-    sql = '''
+    sql = """
     CREATE TABLE IF NOT EXISTS public.authors (
         name VARCHAR NOT NULL,
         nickname VARCHAR,
@@ -82,7 +81,7 @@ def create_db():
         about VARCHAR,
         vacation BOOLEAN DEFAULT FALSE
     );
-    '''
+    """
     cursor.execute(sql)
     close_db_connection(conn, cursor)
 
@@ -100,30 +99,30 @@ def refresh_db():
     """
 
     authors_data = [
-        ('Кирилл Мироненко', '@quir1ll', 'Кирилл'),
-        ('Кирилл Моралес', '@kirill_morales', 'Моралес'),
-        ('Саша Никитенко', '@isaywheee', 'Саша'),
-        ('Артем Вайс', '@Vice_Mallow', 'Артем'),
-        ('Екатерина Генералова', '@Catygen', 'Генералова'),
-        ('Дина Скворцова', '@interneuronic', 'Дина'),
-        ('Егор Бабин', '@baego', 'Егор'),
-        ('Арсений Мирный', '@ArseniyMirniy', 'Арсений'),
-        ('Вадим Макаренко', '@Mkarow', 'Вадим'),
-        ('Ирина Гродзинская', '@Irina_Grodzinskaya', 'Ира'),
-        ('Анна Османова', '@annacalico', 'Анна'),
-        ('Шамиль Алиуллов', '@aliullov_sh', 'Шамиль'),
-        ('Ана Бартенева', '@the_barteneva', 'Ана'),
-        ('Борис Стародубцев', '@johnyscreams', 'Бо'),
-        ('Вика Баранова', '@barvikki', 'Вика'),
-        ('Сергей Рыбалко', '@pescadotravel', 'Сергей'),
-        ('Алина Орлова', '@suspicious_fox', 'Алина'),
-        ('Фил Кучканов', '@kuchkanov', 'Фил'),
-        ('Ксения Седна', '@Sedn04ka', 'Седна'),
-        ('Никита Баранов', '@Hurtson', 'Никита'),
-        ('Дмитрий Корниенко', '@dimkor42', 'Дима'),
-        ('Дарья Роман', '@drrmmn', 'Дарья'),
-        ('Роман Шумялов', '@marabouto', 'Рома'),
-        ('Ксения Бурыгина', '@vegur', 'Ксения'),
+        ("Кирилл Мироненко", "@quir1ll", "Кирилл"),
+        ("Кирилл Моралес", "@kirill_morales", "Моралес"),
+        ("Саша Никитенко", "@isaywheee", "Саша"),
+        ("Артем Вайс", "@Vice_Mallow", "Артем"),
+        ("Екатерина Генералова", "@Catygen", "Генералова"),
+        ("Дина Скворцова", "@interneuronic", "Дина"),
+        ("Егор Бабин", "@baego", "Егор"),
+        ("Арсений Мирный", "@ArseniyMirniy", "Арсений"),
+        ("Вадим Макаренко", "@Mkarow", "Вадим"),
+        ("Ирина Гродзинская", "@Irina_Grodzinskaya", "Ира"),
+        ("Анна Османова", "@annacalico", "Анна"),
+        ("Шамиль Алиуллов", "@aliullov_sh", "Шамиль"),
+        ("Ана Бартенева", "@the_barteneva", "Ана"),
+        ("Борис Стародубцев", "@johnyscreams", "Бо"),
+        ("Вика Баранова", "@barvikki", "Вика"),
+        ("Сергей Рыбалко", "@pescadotravel", "Сергей"),
+        ("Алина Орлова", "@suspicious_fox", "Алина"),
+        ("Фил Кучканов", "@kuchkanov", "Фил"),
+        ("Ксения Седна", "@Sedn04ka", "Седна"),
+        ("Никита Баранов", "@Hurtson", "Никита"),
+        ("Дмитрий Корниенко", "@dimkor42", "Дима"),
+        ("Дарья Роман", "@drrmmn", "Дарья"),
+        ("Роман Шумялов", "@marabouto", "Рома"),
+        ("Ксения Бурыгина", "@vegur", "Ксения"),
     ]
     cursor.executemany(insert_data_sql, authors_data)
     close_db_connection(conn, cursor)
@@ -197,7 +196,7 @@ def find_notifications(user_id):
 
 def find_for_tasks():
     new_table()
-    desired_timezone = pytz.timezone('Europe/Moscow')
+    desired_timezone = pytz.timezone("Europe/Moscow")
     today, tomorrow = current_day()
     conn, cursor = connect_to_db()
     sql = """

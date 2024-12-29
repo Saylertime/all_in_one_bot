@@ -10,10 +10,7 @@ host = config.DB_HOST
 async def connect_to_db():
     """Создаёт асинхронное подключение к базе данных."""
     conn = await asyncpg.connect(
-        database=dbname,
-        user=user,
-        password=password,
-        host=host
+        database=dbname, user=user, password=password, host=host
     )
     return conn
 
@@ -40,7 +37,7 @@ async def find_author(nickname):
         sql = f"SELECT name_in_db FROM public.authors WHERE nickname = '{nickname}'"
         record = await conn.fetchrow(sql)
         if record:
-            return record['name_in_db']
+            return record["name_in_db"]
         return None
     finally:
         await conn.close()
@@ -62,7 +59,7 @@ async def update_vacation_status(nickname, status):
         sql = """UPDATE public.authors 
                  SET vacation = $1 
                  WHERE nickname = $2;"""
-        await conn.execute(sql, status, f'@{nickname}')
+        await conn.execute(sql, status, f"@{nickname}")
     finally:
         await conn.close()
 

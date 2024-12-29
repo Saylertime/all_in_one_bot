@@ -26,7 +26,9 @@ async def vacation_func(message):
         vacation_status = vacation[0]["vacation"] if vacation else False
         new_status = not vacation_status
         await update_vacation_status(username[1:], new_status)
-        await message.answer(f'Теперь ты {"в отпуске" if new_status else "снова работаешь"}!')
+        await message.answer(
+            f'Теперь ты {"в отпуске" if new_status else "снова работаешь"}!'
+        )
 
         msg = f"{name_in_db} {'в отпуске' if new_status else 'снова в строю'}"
         for admin in admins:
@@ -35,5 +37,5 @@ async def vacation_func(message):
     else:
         await message.answer(
             f"{username}, тебя пока нет в базе данных ;( Напиши @saylertime, чтобы добавил",
-            parse_mode="HTML"
+            parse_mode="HTML",
         )

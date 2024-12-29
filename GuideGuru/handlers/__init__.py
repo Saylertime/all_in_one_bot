@@ -13,6 +13,19 @@ from .turgenev_check import router_turgenev
 from .unique import router_unique
 from .vacation import router_vacation
 
-routers = [router_all_text, router_check, router_content_watch, router_echo, router_eldo,
-           router_free_texts, router_get_ids, router_history, router_mvideo, router_receipt,
-           router_start, router_turgenev, router_unique, router_vacation]
+routers = [
+    router_all_text,
+    router_check,
+    router_content_watch,
+    router_echo,
+    router_eldo,
+    router_free_texts,
+    router_get_ids,
+    router_history,
+    router_mvideo,
+    router_receipt,
+    router_start,
+    router_turgenev,
+    router_unique,
+    router_vacation,
+]

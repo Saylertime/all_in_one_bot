@@ -24,9 +24,11 @@ async def content_watch(message, state):
 
     name_in_db = await find_author(username)
     if name_in_db:
-        msg = ("Введи ссылку в формате \n\n"
-               "https://docs.google.com/document/d/"
-               "1Q33XaT68BhrUPYPkOQPuzTZCATiNn0QnV3bxu74_bug/edit")
+        msg = (
+            "Введи ссылку в формате \n\n"
+            "https://docs.google.com/document/d/"
+            "1Q33XaT68BhrUPYPkOQPuzTZCATiNn0QnV3bxu74_bug/edit"
+        )
         await state.set_state(WatchState.response)
     else:
         msg = f"{username}, тебя пока нет в базе данных ;( Напиши @saylertime, чтобы добавил"
@@ -41,14 +43,20 @@ async def content_watch_answer(message, state):
         full_text = await get_content(url)
         first_check = await check_text(url)
         msg = first_check + "\n\n _____________________ \n\n"
-        await message.answer("Нужно подождать..... Если текст большой, проверка займёт пару минут")
+        await message.answer(
+            "Нужно подождать..... Если текст большой, проверка займёт пару минут"
+        )
         checking = await content_watch_check(full_text)
         msg += checking
         if len(msg) > 3999:
-            await message.answer("Очень много ссылок, откуда скопировано. Я не резиновый, чтобы все их вывести...")
+            await message.answer(
+                "Очень много ссылок, откуда скопировано. Я не резиновый, чтобы все их вывести..."
+            )
         else:
             await message.answer(msg)
     except Exception as error:
-        await message.answer("Похоже, ссылкая кривая, не тот формат или закрыт доступ для редактирования")
+        await message.answer(
+            "Похоже, ссылкая кривая, не тот формат или закрыт доступ для редактирования"
+        )
         error = str(error) + f"\n\n{message.from_user.username}\n\n{message.text}"
         await message.answer(error)

@@ -13,7 +13,7 @@ months_dict = {
     "September": "Сентябрь",
     "October": "Октябрь",
     "November": "Ноябрь",
-    "December": "Декабрь"
+    "December": "Декабрь",
 }
 
 
@@ -42,8 +42,7 @@ def next_month():
 
 def current_day():
     t = datetime.now()
-    today = t.strftime('%d.%m')
+    today = t.strftime("%d.%m")
     tom = t + timedelta(days=1)
-    tomorrow = tom.strftime('%d.%m')
+    tomorrow = tom.strftime("%d.%m")
     return today, tomorrow
-

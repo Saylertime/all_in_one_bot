@@ -34,5 +34,5 @@ async def all_texts(message):
             await message.answer(msg)
 
     else:
-        msg = f' {username}, тебя пока нет в базе данных ;( Напиши @saylertime, чтобы добавил'
-        await message.answer(msg, parse_mode='HTML')
+        msg = f" {username}, тебя пока нет в базе данных ;( Напиши @saylertime, чтобы добавил"
+        await message.answer(msg, parse_mode="HTML")

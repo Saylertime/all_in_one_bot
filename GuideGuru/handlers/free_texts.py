@@ -10,7 +10,7 @@ router_free_texts = Router()
 
 
 @router_free_texts.callback_query(F.data == "free_texts")
-@router_free_texts.message(Command('free_texts'))
+@router_free_texts.message(Command("free_texts"))
 async def free_texts(message):
     username = "@" + message.from_user.username
     if isinstance(message, CallbackQuery):
@@ -21,15 +21,23 @@ async def free_texts(message):
 
     if name_in_db:
         if free_briefs:
-            messages = split_message_by_paragraphs(f"Сейчас свободны: \n\n{free_briefs}")
+            messages = split_message_by_paragraphs(
+                f"Сейчас свободны: \n\n{free_briefs}"
+            )
             for msg in messages:
-                await message.answer(msg, parse_mode='Markdown', disable_web_page_preview=True)
+                await message.answer(
+                    msg, parse_mode="Markdown", disable_web_page_preview=True
+                )
         else:
-            await message.answer('Всё разобрали! Ждём новых поступлений', parse_mode='Markdown', disable_web_page_preview=True)
+            await message.answer(
+                "Всё разобрали! Ждём новых поступлений",
+                parse_mode="Markdown",
+                disable_web_page_preview=True,
+            )
     else:
         await message.answer(
-            f'{username}, тебя пока нет в базе данных ;( Напиши @saylertime, чтобы добавил',
-            parse_mode='Markdown',
+            f"{username}, тебя пока нет в базе данных ;( Напиши @saylertime, чтобы добавил",
+            parse_mode="Markdown",
             disable_web_page_preview=True,
         )
 
@@ -51,4 +59,3 @@ def split_message_by_paragraphs(message, max_length=4500):
         parts.append(current_part.strip())
 
     return list(dict.fromkeys(parts))
-

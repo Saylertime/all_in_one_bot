@@ -22,9 +22,7 @@ async def get_creds():
         if creds and creds.expired and creds.refresh_token:
             await asyncio.to_thread(creds.refresh, Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                "credentials.json", SCOPES
-            )
+            flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
             creds = await asyncio.to_thread(flow.run_local_server, port=0)
         async with aiofiles.open("token2.json", "w") as token:
             await token.write(creds.to_json())
@@ -35,7 +33,9 @@ async def get_content(doc_id):
     try:
         creds = await get_creds()
         service = await asyncio.to_thread(build, "docs", "v1", credentials=creds)
-        document = await asyncio.to_thread(service.documents().get(documentId=doc_id).execute)
+        document = await asyncio.to_thread(
+            service.documents().get(documentId=doc_id).execute
+        )
         content = document.get("body").get("content")
 
         full_text = ""
@@ -52,7 +52,7 @@ async def get_content(doc_id):
         return full_text
     except Exception as e:
         print(e)
-        return f'{e}'
+        return f"{e}"
 
 
 async def check_text(doc_id):
@@ -67,7 +67,7 @@ async def check_text(doc_id):
         if word.lower() in stop_words:
             words.append(word)
             stop_count += 1
-        elif 'ё' in word.lower() or 'Ё' in word.lower():
+        elif "ё" in word.lower() or "Ё" in word.lower():
             e_count += 1
 
     if stop_count == 0 and e_count == 0:
@@ -89,7 +89,9 @@ async def get_content_with_links(doc_id):
     try:
         creds = await get_creds()
         service = await asyncio.to_thread(build, "docs", "v1", credentials=creds)
-        document = await asyncio.to_thread(service.documents().get(documentId=doc_id).execute)
+        document = await asyncio.to_thread(
+            service.documents().get(documentId=doc_id).execute
+        )
         content = document.get("body").get("content")
 
         links = []
@@ -101,11 +103,7 @@ async def get_content_with_links(doc_id):
                 for element in elements:
                     text_run = element.get("textRun")
                     if text_run:
-                        link = (
-                            text_run.get("textStyle", {})
-                            .get("link", {})
-                            .get("url")
-                        )
+                        link = text_run.get("textStyle", {}).get("link", {}).get("url")
                         if link:
                             links.append(link)
 

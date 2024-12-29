@@ -5,7 +5,10 @@ import os
 from utils.calend import current_month
 
 
-SCOPES = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
+SCOPES = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive",
+]
 SERVICE_ACCOUNT_FILE = "noted-aloe-312816-1a7fb3d4ab15.json"
 SAMPLE_SPREADSHEET_ID = "1OkXB-077V0WEO8TbZOfgcBbsh-wVGhtTRrW__p3NY0U"
 SAMPLE_RANGE_NAME = "A2:I"
@@ -25,12 +28,13 @@ async def get_sheet_names():
     try:
         spreadsheet = await client.open_by_key(SAMPLE_SPREADSHEET_ID)
         sheets = await spreadsheet.fetch_sheet_metadata()
-        sheet_names = [sheet["properties"]["title"] for sheet in sheets.get("sheets", [])]
+        sheet_names = [
+            sheet["properties"]["title"] for sheet in sheets.get("sheets", [])
+        ]
         return sheet_names
     except Exception as err:
         print(f"Ошибка при получении имен листов: {err}")
         return None
-
 
 
 async def get_data_from_sheet(username):

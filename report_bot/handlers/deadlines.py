@@ -10,4 +10,4 @@ router_deadlines = Router()
 @router_deadlines.message(Command("deadlines"))
 async def deadlines(message):
     msg = await in_work_today()
-    await message.answer(msg, parse_mode='HTML')
+    await message.answer(msg, parse_mode="HTML")

@@ -10,7 +10,7 @@ router_echo = Router()
 
 @router_echo.message(F.text.lower() == "история")
 async def history_log(message):
-    async with aiofiles.open('bot.log', mode='r') as file:
+    async with aiofiles.open("bot.log", mode="r") as file:
         lines = await file.readlines()
         msg = "\n".join(lines[-30:])
         await message.answer(f"{msg}")
@@ -32,6 +32,7 @@ async def delete_author_func(message):
 @router_echo.message(F.text == "сбер")
 async def sber_func(message):
     from utils.calendar import last_month
+
     data = await rep_name_and_month_sber(month=last_month())
     await message.answer(str(data))
 
@@ -44,5 +45,7 @@ async def new_sber_func(message):
 
 @router_echo.message(~F.text.startswith("/"))
 async def echo_echo(message):
-    await message.reply(f"Такой команды нет: {message.text}\n"
-                        f"Нажмите /start, чтобы посмотреть весь список команд")
+    await message.reply(
+        f"Такой команды нет: {message.text}\n"
+        f"Нажмите /start, чтобы посмотреть весь список команд"
+    )

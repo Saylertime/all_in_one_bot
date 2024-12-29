@@ -14,8 +14,10 @@ class HistoryState(StatesGroup):
 
 @router_history.message(Command("history"))
 async def history(message, state):
-    await message.answer("Введи имя автора (как в таблице) и через запятую месяц и год. Пример:"
-                                           "\n\nПаша, Январь 2024")
+    await message.answer(
+        "Введи имя автора (как в таблице) и через запятую месяц и год. Пример:"
+        "\n\nПаша, Январь 2024"
+    )
     await state.set_state(HistoryState.response)
 
 

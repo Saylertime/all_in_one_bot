@@ -13,7 +13,9 @@ async def free_texts(message):
     if free_briefs:
         messages = split_message_by_paragraphs(f"Сейчас свободны: \n\n{free_briefs}")
         for msg in messages:
-            await message.answer(msg, parse_mode="Markdown", disable_web_page_preview=True)
+            await message.answer(
+                msg, parse_mode="Markdown", disable_web_page_preview=True
+            )
     else:
         msg = "Ого, всё раздали! Чмаффки <333!"
         await message.answer(msg, parse_mode="Markdown")

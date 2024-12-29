@@ -2,7 +2,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 def create_markup(buttons):
-    """ Создает кнопки для ответа """
+    """Создает кнопки для ответа"""
     inline_keyboard = []
     for text, callback_data in buttons:
         button = InlineKeyboardButton(text=text, callback_data=callback_data)

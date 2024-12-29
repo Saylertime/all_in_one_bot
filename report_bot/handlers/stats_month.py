@@ -14,8 +14,9 @@ class StatsMonthState(StatesGroup):
 
 @router_stats_month.message(Command("stats_month"))
 async def stats_month(message, state):
-    await message.answer("Введи месяц с большой буквы и год через пробел. Пример:"
-                                           "\n\nЯнварь 2024")
+    await message.answer(
+        "Введи месяц с большой буквы и год через пробел. Пример:" "\n\nЯнварь 2024"
+    )
     await state.set_state(StatsMonthState.response)
 
 

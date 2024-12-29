@@ -25,9 +25,13 @@ async def receipt(message, state):
     name_in_db = await find_author(username)
     if name_in_db:
         await state.set_state(ReceiptState.response)
-        await message.answer("Закинь сюда ссылку на чек. Больше ничего не надо — ни имени, ни месяца")
+        await message.answer(
+            "Закинь сюда ссылку на чек. Больше ничего не надо — ни имени, ни месяца"
+        )
     else:
-        await message.answer("Тебя нет в базе данных... Обратись к @saylertime, чтобы он порешал")
+        await message.answer(
+            "Тебя нет в базе данных... Обратись к @saylertime, чтобы он порешал"
+        )
 
 
 @router_receipt.message(F.text, ReceiptState.response)
@@ -38,9 +42,11 @@ async def upload_link(message, state):
         await new_list(full_name, message.text)
         await message.answer("Спасибо, всё получилось")
     else:
-        await message.answer("Это точно ссылка? Не вижу в ней .ru. Начни всё заново /receipt")
+        await message.answer(
+            "Это точно ссылка? Не вижу в ней .ru. Начни всё заново /receipt"
+        )
 
 
 def contains_ru_domain(url):
-    ru_pattern = re.compile(r'\.ru\b', re.IGNORECASE)
+    ru_pattern = re.compile(r"\.ru\b", re.IGNORECASE)
     return re.search(ru_pattern, url) is not None

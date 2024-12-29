@@ -24,14 +24,18 @@ async def unique(message, state):
 
     name_in_db = await find_author(username)
     if name_in_db:
-        msg = ('Введи ссылку в формате \n\n'
-               'https://docs.google.com/document/d/'
-               '1Q33XaT68BhrUPYPkOQPuzTZCATiNn0QnV3bxu74_bug/edit')
+        msg = (
+            "Введи ссылку в формате \n\n"
+            "https://docs.google.com/document/d/"
+            "1Q33XaT68BhrUPYPkOQPuzTZCATiNn0QnV3bxu74_bug/edit"
+        )
         await state.set_state(UniqueState.response)
         await message.answer(msg)
     else:
-        await message.answer(f"{username}, тебя пока нет в базе данных ;( Напиши @saylertime, чтобы добавил",
-                         parse_mode="HTML")
+        await message.answer(
+            f"{username}, тебя пока нет в базе данных ;( Напиши @saylertime, чтобы добавил",
+            parse_mode="HTML",
+        )
 
 
 @router_unique.message(F.text, UniqueState.response)
@@ -44,17 +48,22 @@ async def unique_answer(message, state):
         left_symbs = await symbols_left()
         symb = int(left_symbs.replace(",", ""))
         if not len(full_text) > symb:
-            await message.answer("Нужно подождать..... Если текст большой, проверка займёт пару минут")
+            await message.answer(
+                "Нужно подождать..... Если текст большой, проверка займёт пару минут"
+            )
             result = await text_unique_check(full_text)
             msg += str(result)
             if len(msg) > 3999:
                 await message.answer(
-                                 "Очень много ссылок, откуда скопировано. Я не резиновый, чтобы все их вывести...")
+                    "Очень много ссылок, откуда скопировано. Я не резиновый, чтобы все их вывести..."
+                )
             else:
                 await message.answer(msg)
         else:
             await message.answer("У меня заканчиваются символы, извени(((99")
 
     except Exception as error:
-        await message.answer("Похоже, ссылкая кривая, не тот формат или закрыт доступ для редактирования")
+        await message.answer(
+            "Похоже, ссылкая кривая, не тот формат или закрыт доступ для редактирования"
+        )
         error = str(error) + f"\n\n{message.from_user.username}\n\n{message.text}"

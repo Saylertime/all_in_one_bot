@@ -46,16 +46,6 @@
 #             data['date2'] = result
 
 
-
-
-
-
-
-
-
-
-
-
 # from db_maker import *
 # from loader import bot
 # from telegram_bot_calendar import DetailedTelegramCalendar
@@ -104,5 +94,3 @@
 #             buttons = [('Посмотреть статистику', 'statistics')]
 #             markup = create_markup(buttons)
 #             bot.send_message(c.from_user.id, 'Посмотреть статистику', reply_markup=markup)
-
-

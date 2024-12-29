@@ -11,17 +11,20 @@ from middlewares.logging_middleware import LoggingMiddleware
 
 
 LOCAL_ENV = config.LOCAL_ENV
-BASE_URL = 'https://glinkin.pro'
+BASE_URL = "https://glinkin.pro"
 BOT_TOKEN = config.BOT_TOKEN
-WEBHOOK_PATH = '/webhook_report'
+WEBHOOK_PATH = "/webhook_report"
 PORT = 5003
-HOST = '0.0.0.0'
+HOST = "0.0.0.0"
 
 
 # Функция для установки командного меню для бота
 async def set_commands():
     # Создаем список команд, которые будут доступны пользователям
-    commands = [BotCommand(command=cmd, description=desc) for cmd, desc in config.DEFAULT_COMMANDS]
+    commands = [
+        BotCommand(command=cmd, description=desc)
+        for cmd, desc in config.DEFAULT_COMMANDS
+    ]
     # Устанавливаем эти команды как дефолтные для всех пользователей
     await bot.set_my_commands(commands, scope=BotCommandScopeDefault())
 
@@ -32,12 +35,12 @@ async def on_startup() -> None:
     await set_commands()
     # Устанавливаем вебхук для приема сообщений через заданный URL
     await bot.set_webhook(f"{BASE_URL}{WEBHOOK_PATH}")
-    await bot.send_message(chat_id=68086662, text='Бот запущен на вебхуках!')
+    await bot.send_message(chat_id=68086662, text="Бот запущен на вебхуках!")
 
 
 # Функция, которая будет вызвана при остановке бота
 async def on_shutdown() -> None:
-    await bot.send_message(chat_id=68086662, text='Бот остановлен!')
+    await bot.send_message(chat_id=68086662, text="Бот остановлен!")
     # Удаляем вебхук и, при необходимости, очищаем ожидающие обновления
     await bot.delete_webhook(drop_pending_updates=True)
     # Закрываем сессию бота, освобождая ресурсы
@@ -64,8 +67,7 @@ def main_webhook() -> None:
 
     # Настраиваем обработчик запросов для работы с вебхуком
     webhook_requests_handler = SimpleRequestHandler(
-        dispatcher=dp,  # Передаем диспетчер
-        bot=bot  # Передаем объект бота
+        dispatcher=dp, bot=bot  # Передаем диспетчер  # Передаем объект бота
     )
     # Регистрируем обработчик запросов на определенном пути
     webhook_requests_handler.register(app, path=WEBHOOK_PATH)
@@ -87,6 +89,7 @@ async def main():
 
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
+
 
 if __name__ == "__main__":
     if LOCAL_ENV == "local":

@@ -46,16 +46,6 @@
 #             data['date2'] = result
 
 
-
-
-
-
-
-
-
-
-
-
 from db_maker import *
 from loader import bot
 from telegram_bot_calendar import DetailedTelegramCalendar
@@ -64,45 +54,58 @@ from states.reminders import ReminderState
 
 
 def show_calendar(bot, chat_id, arrive_or_not, min_date):
-    """ Вызывает календарь """
+    """Вызывает календарь"""
 
     max_date = datetime.date.today()
-    calendar, step = DetailedTelegramCalendar(locale='ru', min_date=min_date, max_date=max_date).build()
-    bot.send_message(chat_id,
-                     f"Выберите дату",
-                     reply_markup=calendar)
+    calendar, step = DetailedTelegramCalendar(
+        locale="ru", min_date=min_date, max_date=max_date
+    ).build()
+    bot.send_message(chat_id, f"Выберите дату", reply_markup=calendar)
 
 
 @bot.callback_query_handler(func=DetailedTelegramCalendar.func())
 def cal(c):
-    """ Проверяет колбэк-дату и отправляет пользователя дальше """
+    """Проверяет колбэк-дату и отправляет пользователя дальше"""
 
-    result, key, step = DetailedTelegramCalendar(locale='ru').process(c.data)
+    result, key, step = DetailedTelegramCalendar(locale="ru").process(c.data)
     bot.set_state(c.message.from_user.id, ReminderState.final)
 
     with bot.retrieve_data(c.from_user.id) as data:
         if not result and key:
-            bot.edit_message_text(f"Выберите дату",
-                                  c.message.chat.id,
-                                  c.message.message_id,
-                                  reply_markup=key)
+            bot.edit_message_text(
+                f"Выберите дату",
+                c.message.chat.id,
+                c.message.message_id,
+                reply_markup=key,
+            )
 
-        elif result is not None and data.get('first') is None:
-            bot.edit_message_text(f"Вы выбрали {result}.\nТеперь выберите дату окончания.",
-                                  c.message.chat.id,
-                                  c.message.message_id)
-            data['first'] = result
-            show_calendar(bot, c.message.chat.id, '', result)
+        elif result is not None and data.get("first") is None:
+            bot.edit_message_text(
+                f"Вы выбрали {result}.\nТеперь выберите дату окончания.",
+                c.message.chat.id,
+                c.message.message_id,
+            )
+            data["first"] = result
+            show_calendar(bot, c.message.chat.id, "", result)
 
-        elif result is not None and data.get('first') is not None and data.get('second') is None:
-            bot.edit_message_text(f"Вы выбрали {data['first']} - {result}.",
-                                  c.message.chat.id,
-                                  c.message.message_id)
-            data['second'] = result
-            bot.send_message(c.message.chat.id, f"Вы выбрали период с {data['first']} по {data['second']}.")
+        elif (
+            result is not None
+            and data.get("first") is not None
+            and data.get("second") is None
+        ):
+            bot.edit_message_text(
+                f"Вы выбрали {data['first']} - {result}.",
+                c.message.chat.id,
+                c.message.message_id,
+            )
+            data["second"] = result
+            bot.send_message(
+                c.message.chat.id,
+                f"Вы выбрали период с {data['first']} по {data['second']}.",
+            )
             bot.set_state(c.from_user.id, ReminderState.final)
-            buttons = [('Посмотреть статистику', 'statistics')]
+            buttons = [("Посмотреть статистику", "statistics")]
             markup = create_markup(buttons)
-            bot.send_message(c.from_user.id, 'Посмотреть статистику', reply_markup=markup)
-
-
+            bot.send_message(
+                c.from_user.id, "Посмотреть статистику", reply_markup=markup
+            )
