@@ -6,6 +6,7 @@ from googleapiclient.errors import HttpError
 from pg_maker import all_authors, find_author, find_author_name
 from utils.calendar import current_month, current_day, next_month
 from collections import defaultdict
+import aiofiles
 import os
 
 
@@ -29,7 +30,8 @@ if not creds or not creds.valid:
     with open("token.json", "w") as token:
         token.write(creds.to_json())
 
-def get_sheet_names(spreadsheet_id):
+
+async def get_sheet_names(spreadsheet_id):
     try:
         service = build("sheets", "v4", credentials=creds)
 
@@ -43,7 +45,8 @@ def get_sheet_names(spreadsheet_id):
         print(err)
         return None
 
-def get_data_from_sheet(month, spreadsheet_id):
+
+async def get_data_from_sheet(month, spreadsheet_id):
     SAMPLE_RANGE_NAME = f"{month}!A2:M"
 
     try:
@@ -68,8 +71,8 @@ def get_data_from_sheet(month, spreadsheet_id):
         return None
 
 
-def rep_month(month):
-    values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
+async def rep_month(month):
+    values = await get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
     if not values:
         return
 
@@ -114,7 +117,7 @@ def rep_month(month):
     sorted_dct = sorted(dct.items(), key=lambda item: (item[1][0], item[1][2]), reverse=True)
     for author, (summa, count, general_bonus) in sorted_dct:
         try:
-            author_name = find_author_name(author)[0]
+            author_name = await find_author_name(author)[0]
         except:
             author_name = author
 
@@ -141,11 +144,10 @@ def rep_month(month):
     return msg
 
 
-def rep_name_and_month(name, month='Январь 2024'):
-    values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
+async def rep_name_and_month(name, month, sber_data=None):
+    values = await get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
     if not values:
         return
-
     try:
         dct = dict()
         dct_texts = dict()
@@ -153,9 +155,14 @@ def rep_name_and_month(name, month='Январь 2024'):
         texts_in_work[name] = []
         dict_with_addons = {}
 
+        if sber_data:
+            dct.update(sber_data['dct'])
+            dct_texts.update(sber_data['dct_texts'])
+            texts_in_work[name].extend(sber_data['texts_in_work'].get(name, []))
+
         for row in values:
             try:
-                title = f"{row[0]} — {row[6]} руб. {row[1]}"
+                title = f"\n— <a href='{row[1]}'>{row[0]}</a> — {row[6]} руб.\n"
                 money = int(row[6])
                 link = row[1]
                 brief = str(row[3])
@@ -196,7 +203,7 @@ def rep_name_and_month(name, month='Январь 2024'):
                         general_bonus += 1
                         dct[name] = (value_money + money, current_count, general_bonus)
                     else:
-                        dct[name] = (money, 0, 1)
+                        dct[name] = (money, 0, 0)
             except:
                 pass
 
@@ -226,13 +233,13 @@ def rep_name_and_month(name, month='Январь 2024'):
 
         msg_texts = '<b>Все сданные тексты:</b> \n'
         for title in dct_texts[name]:
-            msg_texts += f"\n— {title}\n"
+            msg_texts += title
         msg += msg_texts
 
         if texts_in_work[name]:
-            msg_texts_in_work = '\n\n<b>Тексты в работе: </b>\n'
+            msg_texts_in_work = '\n\n<b>Тексты в работе:</b>'
             for title in texts_in_work[name]:
-                msg_texts_in_work += f"\n— <a href='{title[1]}'>{title[0]}</a>\n"
+                msg_texts_in_work += f"\n<a href='{title[1]}'>{title[0]}</a>"
             msg += msg_texts_in_work
 
         if dict_with_addons:
@@ -242,17 +249,17 @@ def rep_name_and_month(name, month='Январь 2024'):
             msg += msg_addons
 
         if len(msg) > 4090:
-            msg_file = create_and_return_file(name, 'last_month', msg)
+            msg_file = await create_and_return_file(name, 'last_month', msg)
             return msg_file
         else:
             return msg
 
     except Exception as e:
-        msg = str(e)
+        msg = f'Кажется, у тебя пока ничего не написано...'
         return msg
 
-def rep_name_and_month_sber(month=current_month()):
-    values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_SBER)
+async def rep_name_and_month_sber(month=current_month()):
+    values = await get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_SBER)
     if not values:
         return
 
@@ -282,8 +289,9 @@ def rep_name_and_month_sber(month=current_month()):
     sorted_dct = sorted(dct.items(), key=lambda item: (item[1][0], item[1][2]), reverse=True)
     for author, (summa, count, general_bonus) in sorted_dct:
         try:
-            author_name = find_author_name(author)[0]
-            author_card = find_author_name(author)[1]
+            name_and_card = await find_author_name(author)
+            author_name = name_and_card[0]
+            author_card = name_and_card[1]
         except:
             author_name = author
             author_card = ""
@@ -301,13 +309,13 @@ def rep_name_and_month_sber(month=current_month()):
     msg += f"\nВСЕГО: {all_money}"
     return msg
 
-def who_is_free():
-    values = get_data_from_sheet(current_month(), SAMPLE_SPREADSHEET_ID_ELDO)
+async def who_is_free():
+    values = await get_data_from_sheet(current_month(), SAMPLE_SPREADSHEET_ID_ELDO)
     if not values:
         return
 
-    all_nicknames = [(i[1], i[2]) for i in all_authors()]
-    all_nicknames_2 = [(i[1], i[2]) for i in all_authors()]
+    all_nicknames = [(i[1], i[2]) for i in await all_authors()]
+    all_nicknames_2 = [(i[1], i[2]) for i in await all_authors()]
     count_dict = defaultdict(int)
     for row in values:
         try:
@@ -330,11 +338,11 @@ def who_is_free():
     return all_nicknames, nicknames_2, nicknames_3
 
 
-def brief_is_free():
+async def brief_is_free():
     now_and_next_month = [current_month(), next_month()]
     all_briefs = []
     for month in now_and_next_month:
-        values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
+        values = await get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
         if not values:
             return
 
@@ -367,8 +375,8 @@ def brief_is_free():
     return msg
 
 
-def stats_for_month(month):
-    values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
+async def stats_for_month(month):
+    values = await get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
     if not values:
         return
 
@@ -411,8 +419,8 @@ def stats_for_month(month):
     return msg
 
 
-def in_work_today():
-    values = get_data_from_sheet(current_month(), SAMPLE_SPREADSHEET_ID_ELDO)
+async def in_work_today():
+    values = await get_data_from_sheet(current_month(), SAMPLE_SPREADSHEET_ID_ELDO)
     if not values:
         return
     today, tomorrow = current_day()
@@ -452,14 +460,15 @@ def in_work_today():
     return msg
 
 
-def all_texts_of_author(name):
-    all_months = get_sheet_names(SAMPLE_SPREADSHEET_ID_ELDO)
+async def all_texts_of_author(name_in_db):
+
+    all_months = await get_sheet_names(SAMPLE_SPREADSHEET_ID_ELDO)
     temp_eldo = ""
     temp_mvideo = ""
     recording_mvideo = False
 
     for month in all_months:
-        values = get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
+        values = await get_data_from_sheet(month, SAMPLE_SPREADSHEET_ID_ELDO)
         if not values:
             return
 
@@ -471,7 +480,7 @@ def all_texts_of_author(name):
             try:
                 title = f"{row[0]} — {row[1]}"
                 link = row[1]
-                if name == row[2] and link:
+                if name_in_db == row[2] and link:
                     if recording_mvideo:
                         msg_texts_mvideo += f"\n{title}\n"
                     else:
@@ -484,20 +493,23 @@ def all_texts_of_author(name):
 
         recording_mvideo = False
 
-    temp_file_eldo = create_and_return_file(name, 'eldo', temp_eldo)
-    temp_file_mvideo = create_and_return_file(name, 'mvideo', temp_mvideo)
+    temp_file_eldo = await create_and_return_file(name_in_db, 'eldo', temp_eldo)
+    temp_file_mvideo = await create_and_return_file(name_in_db, 'mvideo', temp_mvideo)
+
+    temp_eldo = ''
+    temp_mvideo = ''
 
     return temp_file_eldo, temp_file_mvideo
 
 
-def create_and_return_file(name, blog, content):
+async def create_and_return_file(name, blog, content):
     current_directory = os.path.dirname(os.path.abspath(__file__))
-    temp_directory = os.path.join(current_directory, "report_bot", "temp")
+    temp_directory = os.path.join(current_directory, "temp")
     os.makedirs(temp_directory, exist_ok=True)
     file_path = os.path.join(temp_directory, f"{name}_{blog}.txt")
-    with open(file_path, "a") as file:
-        if content:
-            file.write(content)
-            return file_path
-        else:
-            return ''
+    if content:
+        async with aiofiles.open(file_path, "w") as file:
+            await file.write(content)
+        return file_path
+    return ''
+

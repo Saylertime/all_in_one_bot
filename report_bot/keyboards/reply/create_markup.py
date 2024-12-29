@@ -1,5 +1,6 @@
 from telebot import types
 
+
 def create_markup(buttons):
     """ Создает кнопки для ответа """
 

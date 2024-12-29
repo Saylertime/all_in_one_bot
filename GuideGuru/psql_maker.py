@@ -1,5 +1,4 @@
 from config_data import config
-import psycopg2
 import asyncpg
 
 dbname = config.DB_NAME

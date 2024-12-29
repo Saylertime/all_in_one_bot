@@ -1,9 +1,11 @@
-from loader import bot
-from utils.logger import logger
+from aiogram import Router
+from aiogram.filters import CommandStart
 
-@bot.message_handler(commands=['start'])
-def start_message(message):
-    logger.warning(f'{message.from_user.username} — команда START')
+router_start = Router()
+
+
+@router_start.message(CommandStart())
+async def start_message(message):
 
     msg = f"Ультимативный бот для сотрудников ГейГуру \n\n" \
           f"/free_authors — Свободные авторы \n\n" \
@@ -16,4 +18,4 @@ def start_message(message):
           f"/money — Гонорары за месяц\n\n"\
           f"/stats_month — Статистика за месяц\n\n"
 
-    bot.send_message(message.chat.id, msg)
+    await message.answer(msg)

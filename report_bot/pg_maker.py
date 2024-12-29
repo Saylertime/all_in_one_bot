@@ -1,8 +1,10 @@
-from config_data import config
 from datetime import datetime
 from utils.calendar import current_day
-import psycopg2
 import pytz
+
+from config_data import config
+import psycopg2
+import asyncpg
 
 dbname = config.DB_NAME
 user = config.DB_USER
@@ -10,51 +12,63 @@ password = config.DB_PASSWORD
 host = config.DB_HOST
 
 
-def connect_to_db():
-    conn = psycopg2.connect(dbname=dbname, user=user, password=password, host=host)
-    cursor = conn.cursor()
-    conn.autocommit = True
-    return conn, cursor
+async def connect_to_db():
+    """Создаёт асинхронное подключение к базе данных."""
+    conn = await asyncpg.connect(
+        database=dbname,
+        user=user,
+        password=password,
+        host=host
+    )
+    return conn
 
 
-def close_db_connection(conn, cursor):
-    cursor.close()
-    conn.close()
+async def close_db_connection(conn):
+    """Закрывает асинхронное подключение к базе данных."""
+    await conn.close()
 
 
-def add_author(name, nickname, name_in_db, about='', phone=''):
-    conn, cursor = connect_to_db()
-    sql = f"INSERT INTO public.authors (name, nickname, name_in_db, about, phone) " \
-          f"VALUES ('{name}', '{nickname}', '{name_in_db}', '{about}', '{phone}')"
-    cursor.execute(sql)
-    print(f"{nickname} добавлен")
-    close_db_connection(conn, cursor)
+async def add_author(name, nickname, name_in_db, about="", phone=""):
+    conn = await connect_to_db()
+    try:
+        sql = "INSERT INTO public.authors (name, nickname, name_in_db, about, phone) " \
+              "VALUES ($1, $2, $3, $4, $5)"
+        await conn.execute(sql, name, nickname, name_in_db, about, phone)
+        print(f"{nickname} добавлен")
+    finally:
+        await conn.close()
 
 
-def delete_author(name_in_db):
-    conn, cursor = connect_to_db()
-    sql = f"""DELETE from public.authors WHERE name_in_db=%s"""
-    cursor.execute(sql, (name_in_db, ))
-    close_db_connection(conn, cursor)
-    return cursor.rowcount
+async def delete_author(name_in_db):
+    conn = await connect_to_db()
+    try:
+        sql = "DELETE from public.authors WHERE name_in_db=$1"
+        result = await conn.execute(sql, name_in_db)
+        rows_deleted = int(result.split(" ")[-1])
+        return rows_deleted
+    finally:
+        await conn.close()
 
 
-def all_authors():
-    conn, cursor = connect_to_db()
-    sql = "SELECT name, nickname, name_in_db FROM public.authors WHERE vacation = False"
-    cursor.execute(sql)
-    authors = cursor.fetchall()
-    close_db_connection(conn, cursor)
-    return authors
+async def all_authors():
+    """Возвращает список всех авторов."""
+    conn = await connect_to_db()
+    try:
+        sql = "SELECT name, nickname, name_in_db FROM public.authors"
+        authors = await conn.fetch(sql)
+        return authors
+    finally:
+        await conn.close()
 
 
-def authors_on_vacation():
-    conn, cursor = connect_to_db()
-    sql = "SELECT name, nickname, name_in_db FROM public.authors WHERE vacation = True"
-    cursor.execute(sql)
-    authors = cursor.fetchall()
-    close_db_connection(conn, cursor)
-    return authors
+async def authors_on_vacation():
+    conn = await connect_to_db()
+    try:
+        sql = "SELECT name, nickname, name_in_db FROM public.authors WHERE vacation = True"
+        authors = await conn.fetch(sql)
+        return authors
+    finally:
+        await conn.close()
 
 
 def create_db():
@@ -124,13 +138,14 @@ def find_author(name):
     return author
 
 
-def find_author_name(name_in_db):
-    conn, cursor = connect_to_db()
-    sql = f"SELECT name, about FROM public.authors WHERE name_in_db = '{name_in_db}'"
-    cursor.execute(sql)
-    author = cursor.fetchone()
-    close_db_connection(conn, cursor)
-    return author
+async def find_author_name(name_in_db):
+    conn = await connect_to_db()
+    try:
+        sql = f"SELECT name, about FROM public.authors WHERE name_in_db = ($1)"
+        author = await conn.fetchrow(sql, name_in_db)
+        return author
+    finally:
+        await conn.close()
 
 
 def drop_table(table_name):

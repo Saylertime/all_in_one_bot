@@ -1,18 +1,22 @@
-from loader import bot
-from utils.sheets import brief_is_free
-from utils.logger import logger
+from aiogram import Router
+from aiogram.filters import Command
 
-@bot.message_handler(commands=['free_texts'])
-def free_texts(message):
-    logger.warning(f'{message.from_user.username} — команда FREE_TEXTS')
-    free_briefs = brief_is_free()
+from utils.sheets import brief_is_free
+
+
+router_free_texts = Router()
+
+
+@router_free_texts.message(Command("free_texts"))
+async def free_texts(message):
+    free_briefs = await brief_is_free()
     if free_briefs:
         messages = split_message_by_paragraphs(f"Сейчас свободны: \n\n{free_briefs}")
         for msg in messages:
-            bot.send_message(message.from_user.id, msg, parse_mode='Markdown', disable_web_page_preview=True)
+            await message.answer(msg, parse_mode="Markdown", disable_web_page_preview=True)
     else:
-        msg = 'Ого, всё раздали! Чмаффки <333!'
-        bot.send_message(message.chat.id, msg, parse_mode='Markdown')
+        msg = "Ого, всё раздали! Чмаффки <333!"
+        await message.answer(msg, parse_mode="Markdown")
 
 
 def split_message_by_paragraphs(message, max_length=4500):
