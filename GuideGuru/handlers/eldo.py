@@ -2,14 +2,15 @@ from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import CallbackQuery
 
+from filters.is_author import IsAuthorFilter
 from keyboards.reply.create_markup import create_markup_with_url
 
 
 router_eldo = Router()
 
 
-@router_eldo.callback_query(F.data == "eldo")
-@router_eldo.message(Command("eldo"))
+@router_eldo.callback_query(F.data == "eldo", IsAuthorFilter())
+@router_eldo.message(Command("eldo"), IsAuthorFilter())
 async def eldo(message):
     if isinstance(message, CallbackQuery):
         message = message.message

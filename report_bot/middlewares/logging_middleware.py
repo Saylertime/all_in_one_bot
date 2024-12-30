@@ -22,5 +22,6 @@ class LoggingMiddleware(BaseMiddleware):
                 )
                 logger.warning(f"{username}: callback {event.data.upper()}")
         except Exception as e:
-            logger.error(f"Error in LoggingMiddleware: {e}")
+            # logger.error(f"Error in LoggingMiddleware: {e}")
+            pass
         return await handler(event, data)

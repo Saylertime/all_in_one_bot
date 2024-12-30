@@ -1,41 +1,32 @@
 from aiogram import Router, F
 from aiogram.filters import Command
-from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import CallbackQuery
 
+from filters.is_author import IsAuthorFilter
+from states.overall import OverallState
 from utils.content_watch import content_watch_check
 from utils.docs import get_content, check_text
-from psql_maker import find_author
 
 
 router_content_watch = Router()
 
 
-class WatchState(StatesGroup):
-    response = State()
-
-
-@router_content_watch.callback_query(F.data == "content_watch")
-@router_content_watch.message(Command("content_watch"))
+@router_content_watch.callback_query(F.data == "content_watch", IsAuthorFilter())
+@router_content_watch.message(Command("content_watch"), IsAuthorFilter())
 async def content_watch(message, state):
-    username = "@" + message.from_user.username
     if isinstance(message, CallbackQuery):
         message = message.message
 
-    name_in_db = await find_author(username)
-    if name_in_db:
-        msg = (
-            "Введи ссылку в формате \n\n"
-            "https://docs.google.com/document/d/"
-            "1Q33XaT68BhrUPYPkOQPuzTZCATiNn0QnV3bxu74_bug/edit"
-        )
-        await state.set_state(WatchState.response)
-    else:
-        msg = f"{username}, тебя пока нет в базе данных ;( Напиши @saylertime, чтобы добавил"
+    msg = (
+        "Введи ссылку в формате \n\n"
+        "https://docs.google.com/document/d/"
+        "1Q33XaT68BhrUPYPkOQPuzTZCATiNn0QnV3bxu74_bug/edit"
+    )
+    await state.set_state(OverallState.content_watch)
     await message.answer(msg)
 
 
-@router_content_watch.message(F.text, WatchState.response)
+@router_content_watch.message(OverallState.content_watch)
 async def content_watch_answer(message, state):
     await state.clear()
     try:
@@ -58,5 +49,4 @@ async def content_watch_answer(message, state):
         await message.answer(
             "Похоже, ссылкая кривая, не тот формат или закрыт доступ для редактирования"
         )
-        error = str(error) + f"\n\n{message.from_user.username}\n\n{message.text}"
-        await message.answer(error)
+        # error = str(error) + f"\n\n{message.from_user.username}\n\n{message.text}"

@@ -117,7 +117,8 @@ async def rep_month(month):
     )
     for author, (summa, count, general_bonus) in sorted_dct:
         try:
-            author_name = await find_author_name(author)[0]
+            author_name_result = await find_author_name(author)
+            author_name = author_name_result[0]
         except:
             author_name = author
 
@@ -326,7 +327,10 @@ async def rep_name_and_month_sber(month=current_month()):
 
 
 async def who_is_free():
-    values = await get_data_from_sheet(current_month(), SAMPLE_SPREADSHEET_ID_ELDO)
+    current_month_values = await get_data_from_sheet(current_month(), SAMPLE_SPREADSHEET_ID_ELDO)
+    next_month_values = await get_data_from_sheet(next_month(), SAMPLE_SPREADSHEET_ID_ELDO)
+    values = (current_month_values or []) + (next_month_values or [])
+
     if not values:
         return
 
@@ -392,7 +396,8 @@ async def brief_is_free():
                     all_briefs.append(temp_row)
 
             except Exception as e:
-                print(f"Error: {e}")
+                pass
+                # print(f"Error: {e}")
 
     msg = ""
     for num, brief in enumerate(all_briefs, start=1):

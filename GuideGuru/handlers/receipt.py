@@ -1,40 +1,29 @@
 from aiogram import Router, F
 from aiogram.filters import Command
-from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import CallbackQuery
 
 import re
+from filters.is_author import IsAuthorFilter
+from states.overall import OverallState
 from utils.receipt_sheets import get_data_from_sheet, new_list
-from psql_maker import find_author
 
 
 router_receipt = Router()
 
 
-class ReceiptState(StatesGroup):
-    response = State()
-
-
-@router_receipt.callback_query(F.data == "receipt")
-@router_receipt.message(Command("receipt"))
+@router_receipt.callback_query(F.data == "receipt", IsAuthorFilter())
+@router_receipt.message(Command("receipt"), IsAuthorFilter())
 async def receipt(message, state):
-    username = "@" + message.from_user.username
     if isinstance(message, CallbackQuery):
         message = message.message
 
-    name_in_db = await find_author(username)
-    if name_in_db:
-        await state.set_state(ReceiptState.response)
-        await message.answer(
-            "Закинь сюда ссылку на чек. Больше ничего не надо — ни имени, ни месяца"
-        )
-    else:
-        await message.answer(
-            "Тебя нет в базе данных... Обратись к @saylertime, чтобы он порешал"
-        )
+    await state.set_state(OverallState.receipt)
+    await message.answer(
+        "Закинь сюда ссылку на чек. Больше ничего не надо — ни имени, ни месяца"
+    )
 
 
-@router_receipt.message(F.text, ReceiptState.response)
+@router_receipt.message(OverallState.receipt)
 async def upload_link(message, state):
     await state.clear()
     if contains_ru_domain(message.text):

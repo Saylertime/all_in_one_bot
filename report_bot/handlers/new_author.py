@@ -1,15 +1,11 @@
-from aiogram import F, Router
+from aiogram import Router
 from aiogram.filters import Command
-from aiogram.fsm.state import State, StatesGroup
 
+from states.overall import OverallState
 from pg_maker import add_author
 
 
 router_new_author = Router()
-
-
-class NewAuthorState(StatesGroup):
-    response = State()
 
 
 @router_new_author.message(Command("new_author"))
@@ -19,10 +15,10 @@ async def new_author(message, state):
         "Всё через запятую с пробелом. Пример: \n\n"
         "Паша Ручкин, @pekron, Паша"
     )
-    await state.set_state(NewAuthorState.response)
+    await state.set_state(OverallState.new_author)
 
 
-@router_new_author.message(F.text, NewAuthorState.response)
+@router_new_author.message(OverallState.new_author)
 async def add_author_to_db(message, state):
     await state.clear()
     try:

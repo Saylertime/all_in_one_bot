@@ -1,15 +1,11 @@
-from aiogram import F, Router
+from aiogram import Router
 from aiogram.filters import Command
-from aiogram.fsm.state import State, StatesGroup
 
+from states.overall import OverallState
 from utils.sheets import rep_name_and_month
 
 
 router_history = Router()
-
-
-class HistoryState(StatesGroup):
-    response = State()
 
 
 @router_history.message(Command("history"))
@@ -18,10 +14,10 @@ async def history(message, state):
         "Введи имя автора (как в таблице) и через запятую месяц и год. Пример:"
         "\n\nПаша, Январь 2024"
     )
-    await state.set_state(HistoryState.response)
+    await state.set_state(OverallState.history)
 
 
-@router_history.message(F.text, HistoryState.response)
+@router_history.message(OverallState.history)
 async def answer(message, state):
     await state.clear()
     try:

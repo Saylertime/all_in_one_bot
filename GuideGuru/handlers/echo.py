@@ -1,6 +1,8 @@
 import aiofiles
 from aiogram import Router, F
+from aiogram.types import CallbackQuery
 
+from filters.is_author import IsAuthorFilter
 from psql_maker import (
     new_table_stop_words,
     insert_new_word,
@@ -51,6 +53,16 @@ async def delete_word(message):
 async def stop_words(message):
     msg = str(", ".join([i for i in await all_stop_words()]))[4000:]
     await message.answer(msg)
+
+
+@router_echo.message(~IsAuthorFilter())
+async def echo_not_author(message):
+    if isinstance(message, CallbackQuery):
+        message = message.message
+    await message.reply(
+        f"@{message.from_user.username}, тебя пока нет в базе данных ;( Напиши @saylertime, чтобы добавил",
+        parse_mode="HTML",
+    )
 
 
 @router_echo.message(~F.text.startswith("/"))

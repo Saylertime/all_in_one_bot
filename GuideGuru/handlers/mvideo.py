@@ -2,14 +2,15 @@ from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import CallbackQuery
 
+from filters.is_author import IsAuthorFilter
 from keyboards.reply.create_markup import create_markup_with_url
 
 
 router_mvideo = Router()
 
 
-@router_mvideo.callback_query(F.data == "mvideo")
-@router_mvideo.message(Command("mvideo"))
+@router_mvideo.callback_query(F.data == "mvideo", IsAuthorFilter())
+@router_mvideo.message(Command("mvideo"), IsAuthorFilter())
 async def mvideo(message):
     if isinstance(message, CallbackQuery):
         message = message.message

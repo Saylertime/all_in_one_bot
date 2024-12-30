@@ -1,44 +1,32 @@
 from aiogram import Router, F
 from aiogram.filters import Command
-from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import CallbackQuery
 
+from filters.is_author import IsAuthorFilter
+from states.overall import OverallState
 from utils.docs import get_content, check_text
 from utils.text_ru import text_unique_check, symbols_left
-from psql_maker import find_author
 
 
 router_unique = Router()
 
 
-class UniqueState(StatesGroup):
-    response = State()
-
-
-@router_unique.callback_query(F.data == "unique")
-@router_unique.message(Command("unique"))
+@router_unique.callback_query(F.data == "unique", IsAuthorFilter())
+@router_unique.message(Command("unique"), IsAuthorFilter())
 async def unique(message, state):
-    username = "@" + message.from_user.username
     if isinstance(message, CallbackQuery):
         message = message.message
 
-    name_in_db = await find_author(username)
-    if name_in_db:
-        msg = (
-            "Введи ссылку в формате \n\n"
-            "https://docs.google.com/document/d/"
-            "1Q33XaT68BhrUPYPkOQPuzTZCATiNn0QnV3bxu74_bug/edit"
-        )
-        await state.set_state(UniqueState.response)
-        await message.answer(msg)
-    else:
-        await message.answer(
-            f"{username}, тебя пока нет в базе данных ;( Напиши @saylertime, чтобы добавил",
-            parse_mode="HTML",
-        )
+    msg = (
+        "Введи ссылку в формате \n\n"
+        "https://docs.google.com/document/d/"
+        "1Q33XaT68BhrUPYPkOQPuzTZCATiNn0QnV3bxu74_bug/edit"
+    )
+    await state.set_state(OverallState.unique)
+    await message.answer(msg)
 
 
-@router_unique.message(F.text, UniqueState.response)
+@router_unique.message(OverallState.unique)
 async def unique_answer(message, state):
     await state.clear()
     try:

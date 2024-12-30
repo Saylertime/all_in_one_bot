@@ -1,8 +1,9 @@
 from aiogram import Router, F
 from aiogram.filters import Command
-from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import CallbackQuery
 
+from states.overall import OverallState
+from filters.is_author import IsAuthorFilter
 from utils.docs import get_content_with_links
 import re
 
@@ -10,12 +11,8 @@ import re
 router_get_ids = Router()
 
 
-class GetState(StatesGroup):
-    response = State()
-
-
-@router_get_ids.callback_query(F.data == "get_ids")
-@router_get_ids.message(Command("get_ids"))
+@router_get_ids.callback_query(F.data == "get_ids", IsAuthorFilter())
+@router_get_ids.message(Command("get_ids"), IsAuthorFilter())
 async def get_ids(message, state):
     if isinstance(message, CallbackQuery):
         message = message.message
@@ -25,10 +22,10 @@ async def get_ids(message, state):
         "Ссылка должна выглядеть так.\n\n"
         "https://docs.google.com/document/d/136QHaIF8G_w6fJzTJIstoA0sKRwNElsTAzzXyJ0xwj8/edit"
     )
-    await state.set_state(GetState.response)
+    await state.set_state(OverallState.get_ids)
 
 
-@router_get_ids.message(F.text, GetState.response)
+@router_get_ids.message(OverallState.get_ids)
 async def get_ids_answer(message, state):
     await state.clear()
     try:
