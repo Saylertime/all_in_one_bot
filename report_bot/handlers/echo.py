@@ -43,6 +43,14 @@ async def new_sber_func(message):
     await message.answer(str(data))
 
 
+@router_echo.message(F.text == "lol")
+async def echo_lol(message):
+    from loader import bot
+
+    user = await bot.get_chat(7908689039)
+    await message.reply(f"{user.username}")
+
+
 @router_echo.message(~F.text.startswith("/"))
 async def echo_echo(message):
     await message.reply(

@@ -3,7 +3,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from pg_maker import all_authors, find_author, find_author_name
+from pg_maker import all_authors, find_author_name
 from utils.calendar import current_month, current_day, next_month
 from collections import defaultdict
 import aiofiles
@@ -327,8 +327,12 @@ async def rep_name_and_month_sber(month=current_month()):
 
 
 async def who_is_free():
-    current_month_values = await get_data_from_sheet(current_month(), SAMPLE_SPREADSHEET_ID_ELDO)
-    next_month_values = await get_data_from_sheet(next_month(), SAMPLE_SPREADSHEET_ID_ELDO)
+    current_month_values = await get_data_from_sheet(
+        current_month(), SAMPLE_SPREADSHEET_ID_ELDO
+    )
+    next_month_values = await get_data_from_sheet(
+        next_month(), SAMPLE_SPREADSHEET_ID_ELDO
+    )
     values = (current_month_values or []) + (next_month_values or [])
 
     if not values:

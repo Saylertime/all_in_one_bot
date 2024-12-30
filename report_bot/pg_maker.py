@@ -1,9 +1,9 @@
-from datetime import datetime
-from utils.calendar import current_day
-import pytz
+# from datetime import datetime
+# from utils.calendar import current_day
+# import pytz
 
+from contextlib import asynccontextmanager
 from config_data import config
-import psycopg2
 import asyncpg
 
 dbname = config.DB_NAME
@@ -12,30 +12,26 @@ password = config.DB_PASSWORD
 host = config.DB_HOST
 
 
-async def connect_to_db():
-    """Создаёт асинхронное подключение к базе данных."""
+@asynccontextmanager
+async def db_connection():
+    """Контекстный менеджер для асинхронного подключения к базе данных."""
     conn = await asyncpg.connect(
         database=dbname, user=user, password=password, host=host
     )
-    return conn
-
-
-async def close_db_connection(conn):
-    """Закрывает асинхронное подключение к базе данных."""
-    await conn.close()
+    try:
+        yield conn
+    finally:
+        await conn.close()
 
 
 async def add_author(name, nickname, name_in_db, about="", phone=""):
-    conn = await connect_to_db()
-    try:
+    async with db_connection() as conn:
         sql = (
             "INSERT INTO public.authors (name, nickname, name_in_db, about, phone) "
             "VALUES ($1, $2, $3, $4, $5)"
         )
         await conn.execute(sql, name, nickname, name_in_db, about, phone)
         print(f"{nickname} добавлен")
-    finally:
-        await conn.close()
 
 
 async def delete_author(name_in_db):
@@ -51,163 +47,154 @@ async def delete_author(name_in_db):
 
 async def all_authors():
     """Возвращает список всех авторов."""
-    conn = await connect_to_db()
-    try:
+    async with db_connection() as conn:
         sql = "SELECT name, nickname, name_in_db FROM public.authors"
         authors = await conn.fetch(sql)
         return authors
-    finally:
-        await conn.close()
 
 
 async def authors_on_vacation():
-    conn = await connect_to_db()
-    try:
+    async with db_connection() as conn:
         sql = "SELECT name, nickname, name_in_db FROM public.authors WHERE vacation = True"
         authors = await conn.fetch(sql)
         return authors
-    finally:
-        await conn.close()
-
-
-def create_db():
-    conn, cursor = connect_to_db()
-    sql = """
-    CREATE TABLE IF NOT EXISTS public.authors (
-        name VARCHAR NOT NULL,
-        nickname VARCHAR,
-        name_in_db VARCHAR,
-        phone VARCHAR,
-        about VARCHAR,
-        vacation BOOLEAN DEFAULT FALSE
-    );
-    """
-    cursor.execute(sql)
-    close_db_connection(conn, cursor)
-
-
-def refresh_db():
-    conn, cursor = connect_to_db()
-    try:
-        cursor.execute("DROP TABLE public.authors;")
-    except:
-        pass
-    create_db()
-    insert_data_sql = """
-        INSERT INTO public.authors (name, nickname, name_in_db)
-        VALUES (%s, %s, %s)
-    """
-
-    authors_data = [
-        ("Кирилл Мироненко", "@quir1ll", "Кирилл"),
-        ("Кирилл Моралес", "@kirill_morales", "Моралес"),
-        ("Саша Никитенко", "@isaywheee", "Саша"),
-        ("Артем Вайс", "@Vice_Mallow", "Артем"),
-        ("Екатерина Генералова", "@Catygen", "Генералова"),
-        ("Дина Скворцова", "@interneuronic", "Дина"),
-        ("Егор Бабин", "@baego", "Егор"),
-        ("Арсений Мирный", "@ArseniyMirniy", "Арсений"),
-        ("Вадим Макаренко", "@Mkarow", "Вадим"),
-        ("Ирина Гродзинская", "@Irina_Grodzinskaya", "Ира"),
-        ("Анна Османова", "@annacalico", "Анна"),
-        ("Шамиль Алиуллов", "@aliullov_sh", "Шамиль"),
-        ("Ана Бартенева", "@the_barteneva", "Ана"),
-        ("Борис Стародубцев", "@johnyscreams", "Бо"),
-        ("Вика Баранова", "@barvikki", "Вика"),
-        ("Сергей Рыбалко", "@pescadotravel", "Сергей"),
-        ("Алина Орлова", "@suspicious_fox", "Алина"),
-        ("Фил Кучканов", "@kuchkanov", "Фил"),
-        ("Ксения Седна", "@Sedn04ka", "Седна"),
-        ("Никита Баранов", "@Hurtson", "Никита"),
-        ("Дмитрий Корниенко", "@dimkor42", "Дима"),
-        ("Дарья Роман", "@drrmmn", "Дарья"),
-        ("Роман Шумялов", "@marabouto", "Рома"),
-        ("Ксения Бурыгина", "@vegur", "Ксения"),
-    ]
-    cursor.executemany(insert_data_sql, authors_data)
-    close_db_connection(conn, cursor)
-
-
-def find_author(name):
-    conn, cursor = connect_to_db()
-    sql = f"SELECT nickname FROM public.authors WHERE name_in_db = '{name}'"
-    cursor.execute(sql)
-    author = cursor.fetchone()
-    close_db_connection(conn, cursor)
-    return author
 
 
 async def find_author_name(name_in_db):
-    conn = await connect_to_db()
-    try:
+    async with db_connection() as conn:
         sql = f"SELECT name, about FROM public.authors WHERE name_in_db = ($1)"
         author = await conn.fetchrow(sql, name_in_db)
         return author
-    finally:
-        await conn.close()
 
 
-def drop_table(table_name):
-    conn, cursor = connect_to_db()
-    sql = f"""DROP TABLE IF EXISTS {table_name};"""
-    cursor.execute(sql)
-    close_db_connection(conn, cursor)
+# def create_db():
+#     conn, cursor = connect_to_db()
+#     sql = """
+#     CREATE TABLE IF NOT EXISTS public.authors (
+#         name VARCHAR NOT NULL,
+#         nickname VARCHAR,
+#         name_in_db VARCHAR,
+#         phone VARCHAR,
+#         about VARCHAR,
+#         vacation BOOLEAN DEFAULT FALSE
+#     );
+#     """
+#     cursor.execute(sql)
+#     close_db_connection(conn, cursor)
 
 
-def new_table():
-    conn, cursor = connect_to_db()
-    sql = """CREATE TABLE IF NOT EXISTS public.notifications 
-    (
-    user_id INTEGER, 
-    n_date VARCHAR, 
-    n_time VARCHAR,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-    text VARCHAR, 
-    is_sent BOOL DEFAULT FALSE
-    );
-    """
-    cursor.execute(sql)
-    close_db_connection(conn, cursor)
+# def refresh_db():
+#     conn, cursor = connect_to_db()
+#     try:
+#         cursor.execute("DROP TABLE public.authors;")
+#     except:
+#         pass
+#     create_db()
+#     insert_data_sql = """
+#         INSERT INTO public.authors (name, nickname, name_in_db)
+#         VALUES (%s, %s, %s)
+#     """
+#
+#     authors_data = [
+#         ("Кирилл Мироненко", "@quir1ll", "Кирилл"),
+#         ("Кирилл Моралес", "@kirill_morales", "Моралес"),
+#         ("Саша Никитенко", "@isaywheee", "Саша"),
+#         ("Артем Вайс", "@Vice_Mallow", "Артем"),
+#         ("Екатерина Генералова", "@Catygen", "Генералова"),
+#         ("Дина Скворцова", "@interneuronic", "Дина"),
+#         ("Егор Бабин", "@baego", "Егор"),
+#         ("Арсений Мирный", "@ArseniyMirniy", "Арсений"),
+#         ("Вадим Макаренко", "@Mkarow", "Вадим"),
+#         ("Ирина Гродзинская", "@Irina_Grodzinskaya", "Ира"),
+#         ("Анна Османова", "@annacalico", "Анна"),
+#         ("Шамиль Алиуллов", "@aliullov_sh", "Шамиль"),
+#         ("Ана Бартенева", "@the_barteneva", "Ана"),
+#         ("Борис Стародубцев", "@johnyscreams", "Бо"),
+#         ("Вика Баранова", "@barvikki", "Вика"),
+#         ("Сергей Рыбалко", "@pescadotravel", "Сергей"),
+#         ("Алина Орлова", "@suspicious_fox", "Алина"),
+#         ("Фил Кучканов", "@kuchkanov", "Фил"),
+#         ("Ксения Седна", "@Sedn04ka", "Седна"),
+#         ("Никита Баранов", "@Hurtson", "Никита"),
+#         ("Дмитрий Корниенко", "@dimkor42", "Дима"),
+#         ("Дарья Роман", "@drrmmn", "Дарья"),
+#         ("Роман Шумялов", "@marabouto", "Рома"),
+#         ("Ксения Бурыгина", "@vegur", "Ксения"),
+#     ]
+#     cursor.executemany(insert_data_sql, authors_data)
+#     close_db_connection(conn, cursor)
+#
+#
+# def find_author(name):
+#     conn, cursor = connect_to_db()
+#     sql = f"SELECT nickname FROM public.authors WHERE name_in_db = '{name}'"
+#     cursor.execute(sql)
+#     author = cursor.fetchone()
+#     close_db_connection(conn, cursor)
+#     return author
 
 
-def new_notifications(user_id, n_date, n_time, text):
-    conn, cursor = connect_to_db()
-    sql = """INSERT INTO public.notifications 
-    (
-    user_id, 
-    n_date, 
-    n_time, 
-    text
-    )
-    VALUES (%s, %s, %s::TIME, %s)"""
-    values = (user_id, n_date, n_time, text)
-    cursor.execute(sql, values)
-    close_db_connection(conn, cursor)
+# def drop_table(table_name):
+#     conn, cursor = connect_to_db()
+#     sql = f"""DROP TABLE IF EXISTS {table_name};"""
+#     cursor.execute(sql)
+#     close_db_connection(conn, cursor)
 
 
-def find_notifications(user_id):
-    conn, cursor = connect_to_db()
-    sql = f"SELECT * FROM public.notifications WHERE user_id={user_id}"
-    cursor.execute(sql)
-    notifications = cursor.fetchall()
-    close_db_connection(conn, cursor)
-    return notifications
+# def new_table():
+#     conn, cursor = connect_to_db()
+#     sql = """CREATE TABLE IF NOT EXISTS public.notifications
+#     (
+#     user_id INTEGER,
+#     n_date VARCHAR,
+#     n_time VARCHAR,
+#     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+#     text VARCHAR,
+#     is_sent BOOL DEFAULT FALSE
+#     );
+#     """
+#     cursor.execute(sql)
+#     close_db_connection(conn, cursor)
 
-
-def find_for_tasks():
-    new_table()
-    desired_timezone = pytz.timezone("Europe/Moscow")
-    today, tomorrow = current_day()
-    conn, cursor = connect_to_db()
-    sql = """
-        SELECT user_id, n_time, text
-        FROM public.notifications
-        WHERE is_sent=False 
-        AND n_date=%s
-        AND n_time=%s;
-        """
-    current_time = datetime.now(desired_timezone).replace(second=0).strftime("%H:%M:%S")
-    cursor.execute(sql, (today, current_time))
-    notifications = cursor.fetchall()
-    close_db_connection(conn, cursor)
-    return notifications
+#
+# def new_notifications(user_id, n_date, n_time, text):
+#     conn, cursor = connect_to_db()
+#     sql = """INSERT INTO public.notifications
+#     (
+#     user_id,
+#     n_date,
+#     n_time,
+#     text
+#     )
+#     VALUES (%s, %s, %s::TIME, %s)"""
+#     values = (user_id, n_date, n_time, text)
+#     cursor.execute(sql, values)
+#     close_db_connection(conn, cursor)
+#
+#
+# def find_notifications(user_id):
+#     conn, cursor = connect_to_db()
+#     sql = f"SELECT * FROM public.notifications WHERE user_id={user_id}"
+#     cursor.execute(sql)
+#     notifications = cursor.fetchall()
+#     close_db_connection(conn, cursor)
+#     return notifications
+#
+#
+# def find_for_tasks():
+#     new_table()
+#     desired_timezone = pytz.timezone("Europe/Moscow")
+#     today, tomorrow = current_day()
+#     conn, cursor = connect_to_db()
+#     sql = """
+#         SELECT user_id, n_time, text
+#         FROM public.notifications
+#         WHERE is_sent=False
+#         AND n_date=%s
+#         AND n_time=%s;
+#         """
+#     current_time = datetime.now(desired_timezone).replace(second=0).strftime("%H:%M:%S")
+#     cursor.execute(sql, (today, current_time))
+#     notifications = cursor.fetchall()
+#     close_db_connection(conn, cursor)
+#     return notifications
