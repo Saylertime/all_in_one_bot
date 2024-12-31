@@ -35,20 +35,17 @@ async def add_author(name, nickname, name_in_db, about="", phone=""):
 
 
 async def delete_author(name_in_db):
-    conn = await connect_to_db()
-    try:
+    async with db_connection() as conn:
         sql = "DELETE from public.authors WHERE name_in_db=$1"
         result = await conn.execute(sql, name_in_db)
         rows_deleted = int(result.split(" ")[-1])
         return rows_deleted
-    finally:
-        await conn.close()
 
 
 async def all_authors():
     """Возвращает список всех авторов."""
     async with db_connection() as conn:
-        sql = "SELECT name, nickname, name_in_db FROM public.authors"
+        sql = "SELECT name, nickname, name_in_db FROM public.authors WHERE vacation = True"
         authors = await conn.fetch(sql)
         return authors
 
