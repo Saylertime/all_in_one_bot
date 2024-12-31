@@ -45,7 +45,7 @@ async def delete_author(name_in_db):
 async def all_authors():
     """Возвращает список всех авторов."""
     async with db_connection() as conn:
-        sql = "SELECT name, nickname, name_in_db FROM public.authors WHERE vacation = True"
+        sql = "SELECT name, nickname, name_in_db FROM public.authors WHERE vacation = False"
         authors = await conn.fetch(sql)
         return authors
 
