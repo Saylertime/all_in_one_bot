@@ -17,8 +17,9 @@ class NoHTTPFilter(logging.Filter):
             "Bad request syntax",
             "Bad HTTP/0.9 request type",
             "Invalid HTTP version",
-            "code 400",
-            "code 505",
+            "aiohttp.http_exceptions.BadStatusLine",
+            "can only concatenate str (not \"NoneType\") to str",
+            "Invalid method encountered",
         ]
         return not any(phrase in message for phrase in unwanted_phrases)
 
