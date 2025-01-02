@@ -10,7 +10,7 @@ class MoscowTimeFormatter(logging.Formatter):
         return dt.strftime(datefmt or "%m-%d %H:%M")
 
 
-class NoHTTPFilter(logging.Filter):
+class ExcludeErrorsFilter(logging.Filter):
     def filter(self, record):
         message = record.getMessage()
         unwanted_phrases = [
@@ -27,22 +27,24 @@ class NoHTTPFilter(logging.Filter):
 logger = logging.getLogger()
 logger.setLevel(logging.WARNING)
 
-
+# File handler для логов
 file_handler = logging.FileHandler("bot.log", mode="a")
 file_handler.setFormatter(
     MoscowTimeFormatter(fmt="%(asctime)s - %(message)s", datefmt="%m-%d %H:%M")
 )
-file_handler.addFilter(NoHTTPFilter())
+file_handler.addFilter(ExcludeErrorsFilter())
 
-
+# Console handler для вывода в терминал
 console_handler = logging.StreamHandler()
 console_handler.setFormatter(
     logging.Formatter(fmt="%(asctime)s - %(message)s", datefmt="%m-%d %H:%M")
 )
+console_handler.addFilter(ExcludeErrorsFilter())
 
-
+# Добавление обработчиков
 logger.addHandler(file_handler)
 logger.addHandler(console_handler)
 
-
+# Настройка для сторонних логгеров
 logging.getLogger("werkzeug").setLevel(logging.ERROR)
+logging.getLogger("aiogram").setLevel(logging.WARNING)  # Настройка aiogram
