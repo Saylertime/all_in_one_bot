@@ -24,10 +24,11 @@ class ExcludeErrorsFilter(logging.Filter):
         return not any(phrase in message for phrase in unwanted_phrases)
 
 
+# Главный логгер
 logger = logging.getLogger()
 logger.setLevel(logging.WARNING)
 
-# File handler для логов
+# File handler для записи в файл
 file_handler = logging.FileHandler("bot.log", mode="a")
 file_handler.setFormatter(
     MoscowTimeFormatter(fmt="%(asctime)s - %(message)s", datefmt="%m-%d %H:%M")
@@ -41,10 +42,20 @@ console_handler.setFormatter(
 )
 console_handler.addFilter(ExcludeErrorsFilter())
 
-# Добавление обработчиков
+# Добавляем обработчики
 logger.addHandler(file_handler)
 logger.addHandler(console_handler)
 
-# Настройка для сторонних логгеров
+# Настройка сторонних логгеров
 logging.getLogger("werkzeug").setLevel(logging.ERROR)
-logging.getLogger("aiogram").setLevel(logging.WARNING)  # Настройка aiogram
+logging.getLogger("aiogram").setLevel(logging.WARNING)
+
+# Настройка aiohttp
+aiohttp_logger = logging.getLogger("aiohttp.server")
+aiohttp_logger.setLevel(logging.ERROR)  # Исключаем сообщения уровня ERROR
+aiohttp_logger.addFilter(ExcludeErrorsFilter())
+
+# Для исключения "BadStatusLine" из aiohttp добавляем обработчик для уровня ERROR
+aiohttp_logger.handlers.clear()  # Убираем обработчики aiohttp
+aiohttp_logger.addHandler(file_handler)
+aiohttp_logger.addHandler(console_handler)
