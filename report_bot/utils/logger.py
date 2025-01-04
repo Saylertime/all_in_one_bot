@@ -52,10 +52,8 @@ logging.getLogger("aiogram").setLevel(logging.WARNING)
 
 # Настройка aiohttp
 aiohttp_logger = logging.getLogger("aiohttp.server")
-aiohttp_logger.setLevel(logging.ERROR)  # Исключаем сообщения уровня ERROR
+aiohttp_logger.setLevel(logging.ERROR)
 aiohttp_logger.addFilter(ExcludeErrorsFilter())
-
-# Для исключения "BadStatusLine" из aiohttp добавляем обработчик для уровня ERROR
-aiohttp_logger.handlers.clear()  # Убираем обработчики aiohttp
+aiohttp_logger.handlers.clear()
 aiohttp_logger.addHandler(file_handler)
 aiohttp_logger.addHandler(console_handler)
