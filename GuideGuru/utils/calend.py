@@ -4,9 +4,11 @@ from datetime import datetime, timedelta
 
 def previous_month():
     current_date = datetime.now()
-    previous_month_date = current_date - timedelta(days=current_date.day)
-    previous_month_name = calendar.month_name[previous_month_date.month]
-    month = f"{months_dict[previous_month_name]} {current_date.year}"
+    first_day_of_current_month = datetime(current_date.year, current_date.month, 1)
+    last_day_of_previous_month = first_day_of_current_month - timedelta(days=1)
+    previous_month_name = calendar.month_name[last_day_of_previous_month.month]
+    previous_month_year = last_day_of_previous_month.year
+    month = f"{months_dict[previous_month_name]} {previous_month_year}"
     return month
 
 

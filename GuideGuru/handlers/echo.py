@@ -19,7 +19,8 @@ router_echo = Router()
 async def history_log(message):
     async with aiofiles.open("bot.log", mode="r") as file:
         lines = await file.readlines()
-        msg = "\n".join(lines[-30:])
+        filtered_lines = [line for line in lines if "@" in line]
+        msg = "\n".join(filtered_lines[-30:])
         await message.answer(f"{msg}")
 
 
