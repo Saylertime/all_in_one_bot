@@ -13,15 +13,14 @@ class LoggingMiddleware(BaseMiddleware):
                     if event.from_user.username
                     else f"ID: {event.from_user.id}"
                 )
-                logger.warning(f"{username}: команда {event.text.upper()}")
+                logger.warning(f"{username}: команда {event.text}")
             elif isinstance(event, CallbackQuery):
                 username = (
                     f"@{event.from_user.username}"
                     if event.from_user.username
                     else f"ID: {event.from_user.id}"
                 )
-                logger.warning(f"{username}: callback {event.data.upper()}")
+                logger.warning(f"{username}: callback {event.data}")
         except Exception as e:
-            # logger.error(f"Error in LoggingMiddleware: {e}")
-            pass
+            logger.error(f"Error in LoggingMiddleware: {e}")
         return await handler(event, data)
