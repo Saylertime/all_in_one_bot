@@ -18,7 +18,7 @@ class ExcludeErrorsFilter(logging.Filter):
             "Bad HTTP/0.9 request type",
             "Invalid HTTP version",
             "aiohttp.http_exceptions.BadStatusLine",
-            "can only concatenate str (not \"NoneType\") to str",
+            'can only concatenate str (not "NoneType") to str',
             "Invalid method encountered",
         ]
         return not any(phrase in message for phrase in unwanted_phrases)

@@ -1,6 +1,7 @@
 import aiofiles
+import os
 from aiogram import Router, F
-from aiogram.types import CallbackQuery
+from aiogram.types import CallbackQuery, FSInputFile
 
 from filters.is_author import IsAuthorFilter
 from psql_maker import (
@@ -10,6 +11,7 @@ from psql_maker import (
     all_stop_words,
 )
 from utils.text_ru import symbols_left
+from utils.sheets import rep_name_and_month, rep_name_and_month_sber
 
 
 router_echo = Router()
@@ -19,7 +21,9 @@ router_echo = Router()
 async def history_log(message):
     async with aiofiles.open("bot.log", mode="r") as file:
         lines = await file.readlines()
-        filtered_lines = [line for line in lines if "@" in line and "история" not in line.lower()]
+        filtered_lines = [
+            line for line in lines if "@" in line and "история" not in line.lower()
+        ]
         msg = "\n".join(filtered_lines[-30:])
         await message.answer(f"{msg}")
 
@@ -54,6 +58,20 @@ async def delete_word(message):
 async def stop_words(message):
     msg = str(", ".join([i for i in await all_stop_words()]))[4000:]
     await message.answer(msg)
+
+
+@router_echo.message(F.text.lower().startswith("автор"))
+async def author(message):
+    name_in_db = message.text.split()[1]
+    month = f"{message.text.split()[2]} {message.text.split()[3]}"
+    sber_data = await rep_name_and_month_sber(name_in_db, month=month)
+    msg = await rep_name_and_month(name_in_db, month=month, sber_data=sber_data)
+
+    if os.path.isfile(msg):
+        file = FSInputFile(msg)
+        await message.answer_document(file)
+    else:
+        await message.answer(msg)
 
 
 @router_echo.message(~IsAuthorFilter())
