@@ -7,7 +7,7 @@ class MoscowTimeFormatter(logging.Formatter):
     def formatTime(self, record, datefmt=None):
         moscow_tz = pytz.timezone("Europe/Moscow")
         dt = datetime.fromtimestamp(record.created, tz=moscow_tz)
-        return dt.strftime(datefmt or "%m-%d %H:%M")
+        return dt.strftime(datefmt or "%d-%m %H:%M")
 
 
 class ExcludeErrorsFilter(logging.Filter):
