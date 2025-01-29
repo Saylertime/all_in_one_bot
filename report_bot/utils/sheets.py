@@ -3,7 +3,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from pg_maker import all_authors, find_author_name
+from pg_maker import all_active_authors, find_author_name
 from utils.calendar import current_month, current_day, next_month
 from collections import defaultdict
 import aiofiles
@@ -338,8 +338,8 @@ async def who_is_free():
     if not values:
         return
 
-    all_nicknames = [(i[1], i[2]) for i in await all_authors()]
-    all_nicknames_2 = [(i[1], i[2]) for i in await all_authors()]
+    all_nicknames = [(i[1], i[2]) for i in await all_active_authors()]
+    all_nicknames_2 = [(i[1], i[2]) for i in await all_active_authors()]
     count_dict = defaultdict(int)
     for row in values:
         try:
