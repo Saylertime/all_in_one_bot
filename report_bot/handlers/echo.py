@@ -42,7 +42,8 @@ async def sber_func(message):
 
 @router_echo.message(F.text == "СБЕР")
 async def new_sber_func(message):
-    data = await rep_name_and_month_sber()
+    from utils.calendar import current_month
+    data = await rep_name_and_month_sber(month=current_month())
     await message.answer(str(data))
 
 

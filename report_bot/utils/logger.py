@@ -31,14 +31,14 @@ logger.setLevel(logging.WARNING)
 # File handler для записи в файл
 file_handler = logging.FileHandler("bot.log", mode="a")
 file_handler.setFormatter(
-    MoscowTimeFormatter(fmt="%(asctime)s - %(message)s", datefmt="%m-%d %H:%M")
+    MoscowTimeFormatter(fmt="%(asctime)s - %(message)s", datefmt="%d-%m %H:%M")
 )
 file_handler.addFilter(ExcludeErrorsFilter())
 
 # Console handler для вывода в терминал
 console_handler = logging.StreamHandler()
 console_handler.setFormatter(
-    logging.Formatter(fmt="%(asctime)s - %(message)s", datefmt="%m-%d %H:%M")
+    logging.Formatter(fmt="%(asctime)s - %(message)s", datefmt="%d-%m %H:%M")
 )
 console_handler.addFilter(ExcludeErrorsFilter())
 
