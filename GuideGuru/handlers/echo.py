@@ -14,6 +14,7 @@ from psql_maker import (
     all_stop_words,
     all_authors,
     find_author,
+    update_money_status,
 )
 from utils.text_ru import symbols_left
 from utils.sheets import rep_name_and_month, rep_name_and_month_sber
@@ -46,6 +47,8 @@ async def zarplata_pridet(callback):
 
     if callback.data == "yes":
         msg = "Ура, мы и не сомневались!!"
+        await update_money_status(username)
+
     else:
         msg = "Поняли, тормошим любимых бухов"
         flag = False
@@ -54,6 +57,15 @@ async def zarplata_pridet(callback):
 
     await callback.message.edit_text(msg)
     await bot.send_message(chat_id=68086662, text=msg_for_admins)
+
+
+@router_echo.message(F.text.lower() == "зп")
+async def get_unpaid(message):
+    authors = await all_authors()
+    msg = "НЕ ПОЛУЧИЛИ: \n\n"
+    for author in authors:
+        msg += f"{author['name_in_db']} — {author['nickname']}\n"
+    await message.answer(msg)
 
 
 @router_echo.message(F.text.lower() == "история")

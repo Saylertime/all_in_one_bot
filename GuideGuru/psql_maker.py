@@ -29,7 +29,7 @@ async def update_author_with_id(user_id, nickname):
 async def all_authors():
     """Возвращает список всех авторов."""
     async with db_connection() as conn:
-        sql = "SELECT name, nickname, name_in_db, user_id FROM public.authors"
+        sql = "SELECT name, nickname, name_in_db, user_id FROM public.authors WHERE got_money = False AND is_active = True"
         authors = await conn.fetch(sql)
         return authors
 
@@ -56,6 +56,14 @@ async def update_vacation_status(nickname, status):
                  SET vacation = $1 
                  WHERE nickname = $2;"""
         await conn.execute(sql, status, f"@{nickname}")
+
+
+async def update_money_status(nickname):
+    async with db_connection() as conn:
+        sql = """UPDATE public.authors 
+                 SET got_money = True 
+                 WHERE nickname = $1;"""
+        await conn.execute(sql, nickname)
 
 
 async def new_table_stop_words():
