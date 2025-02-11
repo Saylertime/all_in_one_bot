@@ -20,10 +20,16 @@ async def db_connection():
         await conn.close()
 
 
+async def update_author_with_id(user_id, nickname):
+    async with db_connection() as conn:
+        sql = "UPDATE public.authors SET user_id = $1 WHERE nickname = $2 AND user_id is NULL"
+        await conn.execute(sql, user_id, nickname)
+
+
 async def all_authors():
     """Возвращает список всех авторов."""
     async with db_connection() as conn:
-        sql = "SELECT name, nickname, name_in_db FROM public.authors"
+        sql = "SELECT name, nickname, name_in_db, user_id FROM public.authors"
         authors = await conn.fetch(sql)
         return authors
 

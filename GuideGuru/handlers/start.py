@@ -1,5 +1,5 @@
 from filters.is_author import IsAuthorFilter
-from psql_maker import author_on_vacation
+from psql_maker import author_on_vacation, update_author_with_id
 from keyboards.reply.create_markup import create_markup
 
 
@@ -10,6 +10,9 @@ router_start = Router()
 
 
 async def handle_start(message, edit=False):
+    await update_author_with_id(
+        user_id=str(message.from_user.id), nickname=f"@{message.from_user.username}"
+    )
     vacation = await author_on_vacation(message.from_user.username)
     if edit:
         message = message.message

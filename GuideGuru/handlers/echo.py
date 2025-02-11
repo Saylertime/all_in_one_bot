@@ -3,18 +3,57 @@ import os
 from aiogram import Router, F
 from aiogram.types import CallbackQuery, FSInputFile
 
+
+from loader import bot
 from filters.is_author import IsAuthorFilter
+from keyboards.reply.create_markup import create_markup
 from psql_maker import (
     new_table_stop_words,
     insert_new_word,
     delete_stop_word,
     all_stop_words,
+    all_authors,
+    find_author,
 )
 from utils.text_ru import symbols_left
 from utils.sheets import rep_name_and_month, rep_name_and_month_sber
 
 
 router_echo = Router()
+
+
+@router_echo.message(F.text.lower() == "зарплата")
+async def gde_zarplata(message):
+    authors = await all_authors()
+    buttons = [("ДА!!!", "yes"), ("ЕЩЕ НЕТ((((", "no")]
+    markup = create_markup(buttons)
+    for author in authors:
+        try:
+            await bot.send_message(
+                chat_id=int(author["user_id"]),
+                text="Тебе уже пришел гонорар за этот месяц?",
+                reply_markup=markup,
+            )
+        except Exception as e:
+            print(e)
+
+
+@router_echo.callback_query(F.data.in_({"yes", "no"}))
+async def zarplata_pridet(callback):
+    username = f"@{callback.from_user.username}"
+    name_in_db = await find_author(username)
+    flag = True
+
+    if callback.data == "yes":
+        msg = "Ура, мы и не сомневались!!"
+    else:
+        msg = "Поняли, тормошим любимых бухов"
+        flag = False
+
+    msg_for_admins = f"{name_in_db} {'ПОКА НЕ' if not flag else 'УЖЕ'} получил зарплату"
+
+    await callback.message.edit_text(msg)
+    await bot.send_message(chat_id=68086662, text=msg_for_admins)
 
 
 @router_echo.message(F.text.lower() == "история")
