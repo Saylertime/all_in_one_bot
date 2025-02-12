@@ -42,11 +42,13 @@ async def unique_answer(message, state):
             result = await text_unique_check(full_text)
             msg += str(result)
             if len(msg) > 3999:
-                await message.answer(
-                    "Очень много ссылок, откуда скопировано. Я не резиновый, чтобы все их вывести..."
-                )
-            else:
-                await message.answer(msg)
+            #     await message.answer(
+            #         "Очень много ссылок, откуда скопировано. Я не резиновый, чтобы все их вывести..."
+            #     )
+            # else:
+                msg = msg[0:3999]
+
+            await message.answer(msg)
         else:
             await message.answer("У меня заканчиваются символы, извени(((99")
 
