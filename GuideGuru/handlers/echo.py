@@ -62,7 +62,7 @@ async def zarplata_pridet(callback):
 @router_echo.message(F.text.lower() == "zp")
 async def got_zarplata(message):
     authors = await all_authors()
-    buttons = [(name['name_in_db'], f"zp__{name['nickname']}") for name in authors]
+    buttons = [(name["name_in_db"], f"zp__{name['nickname']}") for name in authors]
     markup = create_markup(buttons, columns=3)
     await message.answer("lol?", reply_markup=markup)
 

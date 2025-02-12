@@ -109,8 +109,11 @@ async def rep_name_and_month(name, month, sber_data=None):
                         else:
                             texts_in_work[name].append((title, brief))
                     else:
-                        dct[name] = (money, 1, bonus_pts)
-                        dct_texts[name] = [title]
+                        if link:
+                            dct[name] = (money, 1, bonus_pts)
+                            dct_texts[name] = [title]
+                        else:
+                            texts_in_work[name].append((title, brief))
             except Exception as e:
                 pass
 
