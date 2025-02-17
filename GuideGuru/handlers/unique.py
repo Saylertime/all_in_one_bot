@@ -35,17 +35,13 @@ async def unique_answer(message, state):
         msg = await check_text(url) + "\n\n _____________________ \n\n"
         left_symbs = await symbols_left()
         symb = int(left_symbs.replace(",", ""))
-        if not len(full_text) > symb:
+        if not len(full_text["full_text"]) > symb:
             await message.answer(
                 "Нужно подождать..... Если текст большой, проверка займёт пару минут"
             )
-            result = await text_unique_check(full_text)
+            result = await text_unique_check(full_text["full_text"])
             msg += str(result)
             if len(msg) > 3999:
-                #     await message.answer(
-                #         "Очень много ссылок, откуда скопировано. Я не резиновый, чтобы все их вывести..."
-                #     )
-                # else:
                 msg = msg[0:3999]
 
             await message.answer(msg)

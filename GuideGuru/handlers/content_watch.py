@@ -32,12 +32,13 @@ async def content_watch_answer(message, state):
     try:
         url = message.text.split("/")[5]
         full_text = await get_content(url)
-        first_check = await check_text(url)
-        msg = first_check + "\n\n _____________________ \n\n"
+        print(full_text)
+        first_check = await check_text(url, is_content_watch=True)
+        msg = first_check + "\n\n_____________________ \n\n"
         await message.answer(
             "Нужно подождать..... Если текст большой, проверка займёт пару минут"
         )
-        checking = await content_watch_check(full_text)
+        checking = await content_watch_check(full_text["full_text"])
         msg += checking
         if len(msg) > 3999:
             await message.answer(
@@ -49,4 +50,3 @@ async def content_watch_answer(message, state):
         await message.answer(
             "Похоже, ссылкая кривая, не тот формат или закрыт доступ для редактирования"
         )
-        # error = str(error) + f"\n\n{message.from_user.username}\n\n{message.text}"
