@@ -6,8 +6,6 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-from googleapiclient.http import HttpRequest
 
 SCOPES = ["https://www.googleapis.com/auth/documents.readonly"]
 
@@ -96,23 +94,16 @@ async def check_text(doc_id, is_content_watch=False):
     coloured_text = content["colored_fragments"]
     has_headings = content["has_headings"]
 
-    stop_count = 0
-    e_count = 0
-    words = []
     msg = ""
 
-    for word in all_content.split():
-        if word.lower() in stop_words:
-            words.append(word)
-            stop_count += 1
-        elif "ё" in word.lower() or "Ё" in word.lower():
-            e_count += 1
+    words = [word for word in all_content.split() if word.lower() in stop_words]
+    e_count = all_content.lower().count("ё")
 
-    if stop_count == 0 and e_count == 0 and coloured_text:
+    if len(words) == 0 and e_count == 0 and coloured_text:
         msg = "Стоп-слов нет, ты молодчуля ;)"
 
-    elif stop_count:
-        msg = f"Стоп-слов в тексте: {stop_count}. Вот они, слева направо:\n\n"
+    elif words:
+        msg = f"Стоп-слов в тексте: {len(words)}. Вот они, слева направо:\n\n"
         msg += ", ".join(words)
 
     if e_count and not is_content_watch:
