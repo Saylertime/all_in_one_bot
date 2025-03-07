@@ -486,9 +486,11 @@ async def in_work_today():
 
             if deadline and title and brief and not link:
                 if deadline == today:
-                    deadline_today += f"- <a href='{brief}'>{title}</a> — {author} {find_author(author)[0]}\n\n"
+                    deadline_today += f"- <a href='{brief}'>{title}</a> — {author}\n\n"
                 if deadline == tomorrow:
-                    deadline_tomorrow += f"- <a href='{brief}'>{title}</a> — {author} {find_author(author)[0]}\n\n"
+                    deadline_tomorrow += (
+                        f"- <a href='{brief}'>{title}</a> — {author}\n\n"
+                    )
         except:
             pass
 
