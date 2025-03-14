@@ -38,7 +38,7 @@ async def turgenev_answer(message, state):
         await message.answer(
             "Нужно подождать..... Если текст большой, проверка займёт пару минут"
         )
-        result = await check_text_in_turgenev(full_text)
+        result = await check_text_in_turgenev(full_text["full_text"])
         await message.answer(result, parse_mode="HTML")
 
     except Exception as error:
