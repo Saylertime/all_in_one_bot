@@ -79,4 +79,4 @@ async def mvideo(message):
         ("⬆⬆⬆ НАЗАД В МЕНЮ ⬆⬆⬆", None, "start"),
     ]
     markup = create_markup_with_url(buttons)
-    await message.answer("Выберите, что хотите", reply_markup=markup)
+    await message.answer("Мклик", reply_markup=markup)
