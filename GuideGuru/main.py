@@ -80,10 +80,15 @@ def main_webhook() -> None:
     setup_application(app, dp, bot=bot)
 
     # Отправляем напоминалки по дедлайнам
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    scheduler = AsyncIOScheduler(event_loop=loop, timezone=timezone("Europe/Moscow"))
-    scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=15)
+    # loop = asyncio.new_event_loop()
+    # asyncio.set_event_loop(loop)
+    # scheduler = AsyncIOScheduler(event_loop=loop, timezone=timezone("Europe/Moscow"))
+    # scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=15)
+    # scheduler.start()
+
+    scheduler = AsyncIOScheduler(timezone=timezone("Europe/Moscow"))
+    scheduler.add_job(deadlines_today, trigger="interval", seconds=30)
+    # scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=15)
     scheduler.start()
 
     # Запускаем веб-сервер на указанном хосте и порте

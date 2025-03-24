@@ -2,10 +2,14 @@ from loader import bot
 from utils.sheets import deadlines
 from psql_maker import find_authors_id
 from collections import defaultdict
-from config_data import config
+from datetime import datetime
+from pytz import timezone
 
 
 async def deadlines_today():
+    print("🔔 Функция deadlines_today() запущена!")
+    print("Текущее время на сервере:", datetime.now())
+    print("Текущее время по Москве:", datetime.now(timezone("Europe/Moscow")))
     msg = "<b>НАПОМИНАЛКА</b>: у тебя сегодня дедлайн:\n\n — "
     authors_with_deadlines = await deadlines()
     authors_in_tg = defaultdict(str)
