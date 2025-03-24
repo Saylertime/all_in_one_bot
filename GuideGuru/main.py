@@ -14,6 +14,7 @@ from middlewares.logging_middleware import LoggingMiddleware
 from pytz import timezone
 
 
+
 LOCAL_ENV = config.LOCAL_ENV
 BASE_URL = "https://glinkin.pro"
 BOT_TOKEN = config.BOT_TOKEN
@@ -21,6 +22,7 @@ WEBHOOK_PATH = "/webhook_guideguru"
 PORT = 5002
 HOST = "0.0.0.0"
 
+scheduler = AsyncIOScheduler(timezone=timezone("Europe/Moscow"))
 
 # Функция для установки командного меню для бота
 async def set_commands():
@@ -40,6 +42,18 @@ async def on_startup() -> None:
     # Устанавливаем вебхук для приема сообщений через заданный URL
     await bot.set_webhook(f"{BASE_URL}{WEBHOOK_PATH}")
     await bot.send_message(chat_id=68086662, text="Бот запущен на вебхуках!")
+
+    async def on_startup() -> None:
+        await set_commands()
+        await bot.set_webhook(f"{BASE_URL}{WEBHOOK_PATH}")
+        await bot.send_message(chat_id=68086662, text="Бот запущен на вебхуках!")
+
+        # Планировщик задач
+        # scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=15)
+        # Для теста — каждые 30 секунд:
+        scheduler.add_job(deadlines_today, trigger="interval", seconds=30)
+
+        scheduler.start()
 
 
 # Функция, которая будет вызвана при остановке бота
@@ -80,15 +94,10 @@ def main_webhook() -> None:
     setup_application(app, dp, bot=bot)
 
     # Отправляем напоминалки по дедлайнам
-    # loop = asyncio.new_event_loop()
-    # asyncio.set_event_loop(loop)
-    # scheduler = AsyncIOScheduler(event_loop=loop, timezone=timezone("Europe/Moscow"))
-    # scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=15)
-    # scheduler.start()
-
-    scheduler = AsyncIOScheduler(timezone=timezone("Europe/Moscow"))
-    scheduler.add_job(deadlines_today, trigger="interval", seconds=30)
-    # scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=15)
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    scheduler = AsyncIOScheduler(event_loop=loop)
+    scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=00)
     scheduler.start()
 
     # Запускаем веб-сервер на указанном хосте и порте
