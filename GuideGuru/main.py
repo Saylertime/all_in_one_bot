@@ -43,12 +43,8 @@ async def on_startup() -> None:
     await bot.set_webhook(f"{BASE_URL}{WEBHOOK_PATH}")
     await bot.send_message(chat_id=68086662, text="Бот запущен на вебхуках!")
 
-
     # Планировщик задач
-    # scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=15)
-    # Для теста — каждые 30 секунд:
-    scheduler.add_job(deadlines_today, trigger="interval", seconds=30)
-
+    scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=15)
     scheduler.start()
 
 
@@ -93,7 +89,7 @@ def main_webhook() -> None:
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     scheduler = AsyncIOScheduler(event_loop=loop)
-    scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=00)
+    scheduler.add_job(deadlines_today, trigger="cron", hour=14, minute=25)
     scheduler.start()
 
     # Запускаем веб-сервер на указанном хосте и порте
