@@ -43,17 +43,13 @@ async def on_startup() -> None:
     await bot.set_webhook(f"{BASE_URL}{WEBHOOK_PATH}")
     await bot.send_message(chat_id=68086662, text="Бот запущен на вебхуках!")
 
-    async def on_startup() -> None:
-        await set_commands()
-        await bot.set_webhook(f"{BASE_URL}{WEBHOOK_PATH}")
-        await bot.send_message(chat_id=68086662, text="Бот запущен на вебхуках!")
 
-        # Планировщик задач
-        # scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=15)
-        # Для теста — каждые 30 секунд:
-        scheduler.add_job(deadlines_today, trigger="interval", seconds=30)
+    # Планировщик задач
+    # scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=15)
+    # Для теста — каждые 30 секунд:
+    scheduler.add_job(deadlines_today, trigger="interval", seconds=30)
 
-        scheduler.start()
+    scheduler.start()
 
 
 # Функция, которая будет вызвана при остановке бота
