@@ -341,7 +341,9 @@ async def deadlines():
                 if deadline == today:
                     if author not in authors_with_deadline:
                         authors_with_deadline[author] = []
-                    authors_with_deadline[author].append(f"<a href='{brief}'>{title}</a>")
+                    authors_with_deadline[author].append(
+                        f"<a href='{brief}'>{title}</a>"
+                    )
 
         except:
             pass

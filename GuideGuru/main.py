@@ -11,6 +11,8 @@ from handlers import routers
 from loader import bot, dp
 from middlewares.logging_middleware import LoggingMiddleware
 
+from pytz import timezone
+
 
 LOCAL_ENV = config.LOCAL_ENV
 BASE_URL = "https://glinkin.pro"
@@ -80,8 +82,8 @@ def main_webhook() -> None:
     # Отправляем напоминалки по дедлайнам
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    scheduler = AsyncIOScheduler(event_loop=loop)
-    scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=00)
+    scheduler = AsyncIOScheduler(event_loop=loop, timezone=timezone("Europe/Moscow"))
+    scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=15)
     scheduler.start()
 
     # Запускаем веб-сервер на указанном хосте и порте
