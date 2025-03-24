@@ -3,7 +3,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from utils.calend import current_month, next_month
+from utils.calend import current_month, next_month, current_day
 import os
 import aiofiles
 
@@ -321,3 +321,29 @@ async def brief_is_free():
         msg += f"{num}. {brief}"
 
     return msg
+
+
+async def deadlines():
+    values = await get_data_from_sheet(current_month(), SAMPLE_SPREADSHEET_ID_ELDO)
+    if not values:
+        return
+    today, tomorrow = current_day()
+    authors_with_deadline = {}
+    for row in values:
+        try:
+            title = row[0]
+            link = row[1]
+            brief = row[3]
+            deadline = row[7]
+            author = row[2]
+
+            if deadline and title and brief and not link:
+                if deadline == today:
+                    if author not in authors_with_deadline:
+                        authors_with_deadline[author] = []
+                    authors_with_deadline[author].append(f"<a href='{brief}'>{title}</a>")
+
+        except:
+            pass
+
+    return authors_with_deadline

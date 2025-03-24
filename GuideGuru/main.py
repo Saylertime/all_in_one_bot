@@ -1,4 +1,6 @@
 import asyncio
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from utils.notifications import deadlines_today
 
 from aiogram.types import BotCommand, BotCommandScopeDefault
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
@@ -74,6 +76,13 @@ def main_webhook() -> None:
 
     # Настраиваем приложение и связываем его с диспетчером и ботом
     setup_application(app, dp, bot=bot)
+
+    # Отправляем напоминалки по дедлайнам
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    scheduler = AsyncIOScheduler(event_loop=loop)
+    scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=00)
+    scheduler.start()
 
     # Запускаем веб-сервер на указанном хосте и порте
     web.run_app(app, host=HOST, port=PORT)

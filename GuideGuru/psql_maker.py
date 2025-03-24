@@ -43,6 +43,15 @@ async def find_author(nickname):
         return None
 
 
+async def find_authors_id(name_in_db):
+    async with db_connection() as conn:
+        sql = f"SELECT user_id FROM public.authors WHERE name_in_db = '{name_in_db}'"
+        record = await conn.fetchrow(sql)
+        if record:
+            return record["user_id"]
+        return None
+
+
 async def author_on_vacation(nickname):
     async with db_connection() as conn:
         sql = f"SELECT vacation FROM public.authors WHERE nickname = '@{nickname}';"
