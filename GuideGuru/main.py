@@ -44,8 +44,8 @@ async def on_startup() -> None:
     await bot.send_message(chat_id=68086662, text="Бот запущен на вебхуках!")
 
     # Планировщик задач
-    scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=15)
-    scheduler.start()
+    # scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=15)
+    # scheduler.start()
 
 
 # Функция, которая будет вызвана при остановке бота
@@ -85,12 +85,12 @@ def main_webhook() -> None:
     # Настраиваем приложение и связываем его с диспетчером и ботом
     setup_application(app, dp, bot=bot)
 
-    # Отправляем напоминалки по дедлайнам
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    scheduler = AsyncIOScheduler(event_loop=loop)
-    scheduler.add_job(deadlines_today, trigger="cron", hour=14, minute=25)
-    scheduler.start()
+    # # Отправляем напоминалки по дедлайнам
+    # loop = asyncio.new_event_loop()
+    # asyncio.set_event_loop(loop)
+    # scheduler = AsyncIOScheduler(event_loop=loop)
+    # scheduler.add_job(deadlines_today, trigger="cron", hour=14, minute=25)
+    # scheduler.start()
 
     # Запускаем веб-сервер на указанном хосте и порте
     web.run_app(app, host=HOST, port=PORT)
