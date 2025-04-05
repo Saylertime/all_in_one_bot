@@ -14,7 +14,6 @@ from middlewares.logging_middleware import LoggingMiddleware
 from pytz import timezone
 
 
-
 LOCAL_ENV = config.LOCAL_ENV
 BASE_URL = "https://glinkin.pro"
 BOT_TOKEN = config.BOT_TOKEN
@@ -23,6 +22,7 @@ PORT = 5002
 HOST = "0.0.0.0"
 
 scheduler = AsyncIOScheduler(timezone=timezone("Europe/Moscow"))
+
 
 # Функция для установки командного меню для бота
 async def set_commands():
@@ -44,8 +44,8 @@ async def on_startup() -> None:
     await bot.send_message(chat_id=68086662, text="Бот запущен на вебхуках!")
 
     # Планировщик задач
-    # scheduler.add_job(deadlines_today, trigger="cron", hour=13, minute=15)
-    # scheduler.start()
+    scheduler.add_job(deadlines_today, trigger="cron", hour=12, minute=00)
+    scheduler.start()
 
 
 # Функция, которая будет вызвана при остановке бота
@@ -90,6 +90,7 @@ def main_webhook() -> None:
     # asyncio.set_event_loop(loop)
     # scheduler = AsyncIOScheduler(event_loop=loop)
     # scheduler.add_job(deadlines_today, trigger="cron", hour=14, minute=25)
+    # scheduler.add_job(deadlines_today, trigger="interval", seconds=3)
     # scheduler.start()
 
     # Запускаем веб-сервер на указанном хосте и порте
