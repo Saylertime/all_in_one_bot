@@ -1,6 +1,6 @@
 from filters.is_author import IsAuthorFilter
 from psql_maker import author_on_vacation, update_author_with_id
-from keyboards.reply.create_markup import create_markup
+from keyboards.reply.create_markup import create_markup_with_url
 
 
 from aiogram import F, Router
@@ -18,25 +18,26 @@ async def handle_start(message, edit=False):
         message = message.message
 
     buttons = [
-        ("Правила оформления Эльдо", "eldo"),
-        ("Правила оформления МВидео", "mvideo"),
-        ("Проверить текст на стоп-слова", "check"),
-        ("Проверить текст на уникальность в text.ru", "unique"),
-        ("Проверить текст на уникальность в content_watch", "content_watch"),
-        ("Проверить текст на в Turgenev", "turgenev"),
-        ("Получить ID товаров в МВидео", "get_ids"),
-        ("Загрузить чек", "receipt"),
-        ("Тексты за этот месяц", "history"),
-        ("Тексты за прошлый месяц", "last_month"),
-        ("Все твои тексты с ноября 2023", "all_texts"),
-        ("Свободные брифы", "free_texts"),
+        ("Wiki гуравторов",
+         "https://octagonal-roadway-041.notion.site/1d98f2cd29ea806b978ad969d9cc5445?v=1d98f2cd29ea8016beb6000c23dbf175",
+            None),
+        ("Проверить текст на стоп-слова", None, "check"),
+        ("Проверить текст на уникальность в text.ru", None, "unique"),
+        ("Проверить текст на уникальность в content_watch", None, "content_watch"),
+        ("Проверить текст на в Turgenev", None, "turgenev"),
+        ("Получить ID товаров в МВидео", None, "get_ids"),
+        ("Загрузить чек", None, "receipt"),
+        ("Тексты за этот месяц", None, "history"),
+        ("Тексты за прошлый месяц", None, "last_month"),
+        ("Все твои тексты с ноября 2023", None, "all_texts"),
+        ("Свободные брифы", None, "free_texts"),
         (
-            f'{"Хочу снова работать!!!" if vacation[0]["vacation"] else "Иду в отпуск"}',
+            f'{"Хочу снова работать!!!" if vacation[0]["vacation"] else "Иду в отпуск"}', None,
             "vacation",
         ),
     ]
 
-    markup = create_markup(buttons)
+    markup = create_markup_with_url(buttons)
 
     if edit:
         await message.edit_text(
