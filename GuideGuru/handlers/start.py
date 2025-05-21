@@ -1,12 +1,13 @@
 from filters.is_author import IsAuthorFilter
 from psql_maker import author_on_vacation, update_author_with_id
 from keyboards.reply.create_markup import create_markup_with_url
-
+from config_data import config
 
 from aiogram import F, Router
 from aiogram.filters import CommandStart
 
 router_start = Router()
+admins = config.ADMINS
 
 
 async def handle_start(message, edit=False):
@@ -36,6 +37,9 @@ async def handle_start(message, edit=False):
             "vacation",
         ),
     ]
+
+    if str(message.from_user.id) in admins:
+        buttons.append(("Оповещение", None, "button"))
 
     markup = create_markup_with_url(buttons)
 

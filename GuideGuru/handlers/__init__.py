@@ -11,10 +11,13 @@ from .start import router_start
 from .turgenev_check import router_turgenev
 from .unique import router_unique
 from .vacation import router_vacation
+from .button import router_button
+from .wiki import router_wiki
 from .echo import router_echo
 
 routers = [
     router_all_text,
+    router_wiki,
     router_check,
     router_content_watch,
     router_eldo,
@@ -27,5 +30,6 @@ routers = [
     router_turgenev,
     router_unique,
     router_vacation,
+    router_button,
     router_echo,
 ]

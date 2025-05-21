@@ -33,6 +33,11 @@ async def all_authors():
         authors = await conn.fetch(sql)
         return authors
 
+async def all_authors_without_anything():
+    async with db_connection() as conn:
+        sql = "SELECT name, nickname, name_in_db, user_id FROM public.authors"
+        authors = await conn.fetch(sql)
+        return authors
 
 async def find_author(nickname):
     async with db_connection() as conn:
