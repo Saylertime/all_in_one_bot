@@ -18,12 +18,15 @@ async def button(message):
     authors = await all_authors_without_anything()
     free_briefs = await brief_is_free()
     if free_briefs:
-        messages = split_message_by_paragraphs(f"Сейчас свободны: \n\n{free_briefs}")
+        messages = split_message_by_paragraphs(f"Мы добавили новые брифы! "
+                                               f"На момент появления этого сообщения, появились такие задачи: "
+                                               f"\n\n{free_briefs}")
 
     else:
         messages = ["Всё разобрали! Ждём новых поступлений"]
 
-    print(authors)
+    markup_buttons = [("Обновить список", "free_texts")]
+    markup = create_markup(buttons=markup_buttons, columns=1)
     for author in authors:
         try:
             for msg in messages:
@@ -31,7 +34,8 @@ async def button(message):
                     chat_id=int(author["user_id"]),
                     text=msg,
                     parse_mode="Markdown",
-                    disable_web_page_preview=True
+                    disable_web_page_preview=True,
+                    reply_markup=markup
                 )
         except Exception as e:
             print(e)
