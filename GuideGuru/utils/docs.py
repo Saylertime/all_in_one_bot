@@ -87,7 +87,7 @@ async def get_content(doc_id):
         return {"error": str(e)}
 
 
-async def check_text(doc_id, is_content_watch=False):
+async def check_text(doc_id, is_content_watch=False, is_check_for_admins=False):
     stop_words = await all_stop_words()
     content = await get_content(doc_id)
     all_content = content["full_text"]
@@ -99,7 +99,7 @@ async def check_text(doc_id, is_content_watch=False):
     words = [word for word in all_content.split() if word.lower() in stop_words]
     e_count = all_content.lower().count("ё")
 
-    if len(words) == 0 and e_count == 0 and coloured_text:
+    if len(words) == 0 and e_count == 0 and (coloured_text or is_check_for_admins):
         msg = "Стоп-слов нет, ты молодчуля ;)"
 
     elif words:
@@ -109,7 +109,7 @@ async def check_text(doc_id, is_content_watch=False):
     if e_count and not is_content_watch:
         msg += f"\n\nУбери буквы Ё. У тебя в тексте их {e_count}"
 
-    if not coloured_text:
+    if not coloured_text and not is_check_for_admins:
         msg += "\n\nЕсли это СЕО, то нужно выделить ключевики и LSI — их не хватает"
 
     if not has_headings:

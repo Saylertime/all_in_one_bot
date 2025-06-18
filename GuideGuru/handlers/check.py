@@ -31,7 +31,7 @@ async def check_answer(message, state):
     await state.clear()
     try:
         url = message.text.split("/")[-2]
-        answer = await check_text(url, is_content_watch=False)
+        answer = await check_text(url)
         await message.answer(answer)
     except Exception as e:
         await message.answer(

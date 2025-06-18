@@ -10,3 +10,4 @@ class OverallState(StatesGroup):
     get_ids = State()
     receipt = State()
     turgenev = State()
+    send_text = State()
