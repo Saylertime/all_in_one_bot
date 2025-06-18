@@ -41,3 +41,4 @@ watchdog
 asyncpg
 aiogram
 gspread_asyncio
+aiogram_calendar==0.6.0

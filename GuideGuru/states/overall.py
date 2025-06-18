@@ -11,3 +11,4 @@ class OverallState(StatesGroup):
     receipt = State()
     turgenev = State()
     send_text = State()
+    see_texts = State()

@@ -39,8 +39,15 @@ async def handle_start(message, edit=False):
         ),
     ]
 
+    buttons_for_admins = [
+        ("Оповещение", None, "button"),
+        ("Посмотреть присланные тексты за день", None, "see_texts_one_day"),
+        ("Посмотреть присланные тексты за период", None, "see_texts_period"),
+    ]
+
     if str(message.from_user.id) in admins:
-        buttons.append(("Оповещение", None, "button"))
+        for button in buttons_for_admins:
+            buttons.append(button)
 
     markup = create_markup_with_url(buttons)
 

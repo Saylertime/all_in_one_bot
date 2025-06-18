@@ -8,6 +8,7 @@ from loader import bot
 from states.overall import OverallState
 from utils.docs import check_text
 from psql_maker import find_author
+from datetime import datetime
 
 
 router_send_text = Router()
@@ -38,6 +39,9 @@ async def send_answer(message, state):
         url = message.text.split("/")[-2]
         answer = await check_text(url, is_check_for_admins=True)
         if answer == "Стоп-слов нет, ты молодчуля ;)":
+            with open("texts.txt", "a") as file:
+                file.write(str(datetime.today()) + " " + message.text + " " + author + " @" + message.from_user.username + "\n")
+
             for admin in admins:
                 await bot.send_message(admin, author_msg + message.text)
             await message.answer("Всё хорошо, текст ушёл на проверку!")
