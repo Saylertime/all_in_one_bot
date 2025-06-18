@@ -24,6 +24,7 @@ ADMINS = os.getenv("ADMINS").split(",")
 DEFAULT_COMMANDS = [
     ("start", "Запустить бота"),
     ("wiki", "Wiki"),
+    ("send_text", "Отправить текст редактору"),
     ("free_texts", "Свободные брифы"),
     ("check", "Проверить текст на стоп-слова"),
     ("unique", "Проверить текст на уникальность в text.ru"),
