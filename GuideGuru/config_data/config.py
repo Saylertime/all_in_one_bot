@@ -20,6 +20,10 @@ DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_HOST = os.getenv("DB_HOST")
 ADMINS = os.getenv("ADMINS").split(",")
+proxy_host = os.getenv("proxy_host")
+proxy_port = os.getenv("proxy_port")
+proxy_user = os.getenv("proxy_user")
+proxy_pass = os.getenv("proxy_pass")
 
 
 DEFAULT_COMMANDS = [

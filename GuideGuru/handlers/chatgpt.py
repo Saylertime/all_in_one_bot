@@ -16,8 +16,18 @@ from filters.is_author import IsAuthorFilter
 from states.overall import OverallState
 
 
+proxy_host = config.proxy_host
+proxy_port = config.proxy_port
+proxy_user = config.proxy_user
+proxy_pass = config.proxy_pass
+proxy_url = f"http://{proxy_user}:{proxy_pass}@{proxy_host}:{proxy_port}"
+
+os.environ["HTTP_PROXY"]  = proxy_url
+os.environ["HTTPS_PROXY"] = proxy_url
+
 CHATGPT_API_KEY = config.CHATGPT_API_KEY
 openai.api_key = CHATGPT_API_KEY
+openai.proxy = {"http": proxy_url, "https": proxy_url}
 
 router_chatgpt = Router()
 
