@@ -37,14 +37,15 @@ router_chatgpt = Router()
 async def chatgpt(message, state):
     if isinstance(message, CallbackQuery):
         message = message.message
-    await message.answer("Задавай вопрос")
+    await message.answer("Задавай вопрос. Но отвечаю только по работе!")
     await state.set_state(OverallState.chatgpt)
 
 
 @router_chatgpt.message(OverallState.chatgpt)
-async def chatgpt_answer(message):
+async def chatgpt_answer(message, state):
     result = query_instruction(message.text)
     await message.answer(result)
+    await state.clear()
 
 
 def load_html_texts(folder_path):
