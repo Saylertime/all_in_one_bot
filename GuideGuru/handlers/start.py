@@ -23,6 +23,7 @@ async def handle_start(message, edit=False):
          "https://octagonal-roadway-041.notion.site/1d98f2cd29ea806b978ad969d9cc5445?v=1d98f2cd29ea8016beb6000c23dbf175",
             None),
         ("Отправить текст редактору", None, "send_text"),
+        ("Задать вопрос по работе", None, "chatgpt"),
         ("Проверить текст на стоп-слова", None, "check"),
         ("Проверить текст на уникальность в text.ru", None, "unique"),
         ("Проверить текст на уникальность в content_watch", None, "content_watch"),
