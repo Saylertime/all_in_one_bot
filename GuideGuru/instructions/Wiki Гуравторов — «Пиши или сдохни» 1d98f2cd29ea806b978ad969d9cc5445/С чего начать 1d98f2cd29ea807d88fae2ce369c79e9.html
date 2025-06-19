@@ -1,0 +1,686 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>С чего начать</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1d98f2cd-29ea-807d-88fa-e2ce369c79e9" class="page sans"><header><div class="page-header-icon undefined"><img class="icon" src="https://www.notion.so/icons/question-mark_lightgray.svg"/></div><h1 class="page-title">С чего начать</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-person"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesPerson"><path d="M10.9536 7.90088C12.217 7.90088 13.2559 6.79468 13.2559 5.38525C13.2559 4.01514 12.2114 2.92017 10.9536 2.92017C9.70142 2.92017 8.65137 4.02637 8.65698 5.39087C8.6626 6.79468 9.69019 7.90088 10.9536 7.90088ZM4.4231 8.03003C5.52368 8.03003 6.42212 7.05859 6.42212 5.83447C6.42212 4.63843 5.51245 3.68945 4.4231 3.68945C3.33374 3.68945 2.41846 4.64966 2.41846 5.84009C2.42407 7.05859 3.32251 8.03003 4.4231 8.03003ZM1.37964 13.168H5.49561C4.87231 12.292 5.43384 10.6074 6.78711 9.51807C6.18628 9.14746 5.37769 8.87231 4.4231 8.87231C1.95239 8.87231 0.262207 10.6917 0.262207 12.1628C0.262207 12.7974 0.548584 13.168 1.37964 13.168ZM7.50024 13.168H14.407C15.4009 13.168 15.7322 12.8423 15.7322 12.2864C15.7322 10.8489 13.8679 8.88354 10.9536 8.88354C8.04492 8.88354 6.17505 10.8489 6.17505 12.2864C6.17505 12.8423 6.50635 13.168 7.50024 13.168Z"></path></svg></span>Owner</th><td><span class="user"><span class="icon text-icon user-icon"><span class="user-icon-inner">S</span></span>SednaBrown</span></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesMultipleSelect"><path d="M1.91602 4.83789C2.44238 4.83789 2.87305 4.40723 2.87305 3.87402C2.87305 3.34766 2.44238 2.91699 1.91602 2.91699C1.38281 2.91699 0.952148 3.34766 0.952148 3.87402C0.952148 4.40723 1.38281 4.83789 1.91602 4.83789ZM5.1084 4.52344H14.3984C14.7607 4.52344 15.0479 4.23633 15.0479 3.87402C15.0479 3.51172 14.7607 3.22461 14.3984 3.22461H5.1084C4.74609 3.22461 4.45898 3.51172 4.45898 3.87402C4.45898 4.23633 4.74609 4.52344 5.1084 4.52344ZM1.91602 9.03516C2.44238 9.03516 2.87305 8.60449 2.87305 8.07129C2.87305 7.54492 2.44238 7.11426 1.91602 7.11426C1.38281 7.11426 0.952148 7.54492 0.952148 8.07129C0.952148 8.60449 1.38281 9.03516 1.91602 9.03516ZM5.1084 8.7207H14.3984C14.7607 8.7207 15.0479 8.43359 15.0479 8.07129C15.0479 7.70898 14.7607 7.42188 14.3984 7.42188H5.1084C4.74609 7.42188 4.45898 7.70898 4.45898 8.07129C4.45898 8.43359 4.74609 8.7207 5.1084 8.7207ZM1.91602 13.2324C2.44238 13.2324 2.87305 12.8018 2.87305 12.2686C2.87305 11.7422 2.44238 11.3115 1.91602 11.3115C1.38281 11.3115 0.952148 11.7422 0.952148 12.2686C0.952148 12.8018 1.38281 13.2324 1.91602 13.2324ZM5.1084 12.918H14.3984C14.7607 12.918 15.0479 12.6309 15.0479 12.2686C15.0479 11.9062 14.7607 11.6191 14.3984 11.6191H5.1084C4.74609 11.6191 4.45898 11.9062 4.45898 12.2686C4.45898 12.6309 4.74609 12.918 5.1084 12.918Z"></path></svg></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><p id="1da8f2cd-29ea-8017-add5-d2d6806ab2fc" class="">Привет, коллега! Ты уже пообщался с Лёшей, прошел тест, внес первые правки и готов взять первое «боевое» задание. Сейчас коротко поясним основы нашей работы.</p><p id="1da8f2cd-29ea-80e9-a5fc-f66bba213279" class="">
+</p><nav id="1da8f2cd-29ea-8065-bbc7-f7311250d0d1" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1da8f2cd-29ea-8058-836d-db4a99bd8633">Подключение к каналу и боту</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1da8f2cd-29ea-80ee-b4a2-c6b8b9210baa">Знакомство с редакторами</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1da8f2cd-29ea-80e6-8612-e909192945e1">Изучение Wiki</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1da8f2cd-29ea-802c-8b4a-dab25c732d26">Первый бриф</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1da8f2cd-29ea-8096-a727-eb56f0b251e6">Как выбрать свой первый бриф?</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1da8f2cd-29ea-80c5-952a-e83fbbb85dd4">Как писать текст?</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1da8f2cd-29ea-8083-b88d-fb43d8798ad3">Текст готов. Что дальше?</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1da8f2cd-29ea-803e-a464-d2cbc7537e30">А если будут правки?</a></div></nav><h1 id="1da8f2cd-29ea-8058-836d-db4a99bd8633" class="">Подключение к каналу и боту</h1><p id="1da8f2cd-29ea-80c8-8665-da0063bb5ca9" class="">Для начала надо получить права на канал и бота. </p><p id="1da8f2cd-29ea-801d-8b1d-e706d2c64a4d" class="">На канале «Гуравторы» мы раздаем срочные задания, объявляем о новых брифах и сообщаем обо всяких нововведениях. Лучше канал не глушить и не переносить в архив.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1da8f2cd-29ea-8043-a22c-edbcafe6c1dc"><div style="font-size:1.5em"><span class="icon">🗣</span></div><div style="width:100%"><p id="1da8f2cd-29ea-80cc-aa7f-f6a5d1ae5345" class=""><a href="%D0%97%D0%B0%D1%87%D0%B5%D0%BC%20%D0%BD%D1%83%D0%B6%D0%B5%D0%BD%20%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%20%D0%B2%20%D0%A2%D0%93%201d98f2cd29ea807cb17ae9c5d12fb0c4.html">О канале мы рассказали тут!</a></p></div></figure><p id="1da8f2cd-29ea-8057-96a1-e3889b652446" class="">Бот нужен для того, чтобы смотреть актуальные свободные брифы, проверять уникальность и прочее.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1da8f2cd-29ea-8035-b406-d41e8fe79047"><div style="font-size:1.5em"><span class="icon">🤖</span></div><div style="width:100%"><p id="1da8f2cd-29ea-8015-9259-d9da97935456" class=""><a href="%D0%9F%D1%80%D0%BE%20%D0%B1%D0%BE%D1%82%D0%B0%201d98f2cd29ea806b9fbce99cc345df10.html">О боте мы рассказали тут!</a></p></div></figure><p id="1da8f2cd-29ea-8004-ac8b-f73c75bb807f" class="">Рекомендуем в «Телеграме» создать отдельную папку и переместить туда канал, бота и контакты редакторов, чтобы было удобнее реагировать на сообщения.</p><h1 id="1da8f2cd-29ea-80ee-b4a2-c6b8b9210baa" class="">Знакомство с редакторами</h1><p id="1da8f2cd-29ea-8017-a236-fa632c573a9c" class="">Сейчас в нашей команде редакторов четыре человека: Лёша, Седна, Никита, Аня.</p><p id="1da8f2cd-29ea-809a-ad40-e0e0914774f7" class="">Скорее всего, вы уже познакомились с <strong>Лёшей</strong>. Он босс боссов, решает вопросы с деньгами и самозанятостью. Периодически дает подработку вне группы «МВидео-Эльдорадо». Его не надо дергать по пустякам и текстам.</p><p id="1da8f2cd-29ea-8025-acb3-c8ff70849b1b" class="">А вот больше всего вы будете взаимодействовать с <strong>Седной</strong>. Это наш главред и менеджер, который больше всех общается с клиентом. Она выдает брифы, проставляет гонорары, обсуждает задания, оставляет правки, пишет правила и многое другое. Поэтому вторым этапом после подключения к боту и каналу вы будете знакомиться с ней. Лёша оставит контакт.</p><p id="1da8f2cd-29ea-8096-860f-ed499b53aaf6" class=""><strong>Никита </strong>и <strong>Аня </strong>— редакторы. Они проверяют тексты, оставляют правки и что-то слегка переписывают. Брифы не выдают.</p><h1 id="1da8f2cd-29ea-80e6-8612-e909192945e1" class="">Изучение Wiki</h1><p id="1da8f2cd-29ea-80bb-b52f-ce98b82f856f" class="">Перед первым брифом рекомендуем прочитать нашу Wiki. Тут вы найдете 99% ответов на свои вопросы. На сайте можно пользоваться поисковиком — идеально, если у вас есть какой-то конкретный запрос.</p><h1 id="1da8f2cd-29ea-802c-8b4a-dab25c732d26" class="">Первый бриф</h1><p id="1da8f2cd-29ea-800c-9101-ea5423b1f6a7" class="">Когда вы примерно поняли фронт работы, можно начать писать. Тут три варианта развития событий:</p><ol type="1" id="1da8f2cd-29ea-8003-abcf-f410ce387672" class="numbered-list" start="1"><li>Лёша первый предложит несколько простых брифов;</li></ol><ol type="1" id="1da8f2cd-29ea-80ae-8e7a-f5fab33d5f61" class="numbered-list" start="2"><li>Вы познакомитесь с Седной, она у вас поспрашивает примерные навыки и предложит бриф;</li></ol><ol type="1" id="1da8f2cd-29ea-8049-bd4a-edb147a083e2" class="numbered-list" start="3"><li>Вы запустите бота, посмотрите доступные задания, напишете Седне, чтобы она одобрила ваш выбор.</li></ol><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1da8f2cd-29ea-80b6-a5fc-d1700e3ba419"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1da8f2cd-29ea-806f-a6dd-d33af599b8be" class="">Совет:<br/><br/><a href="%D0%9A%D0%B0%D0%BA%20%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B8%D1%82%D1%8C%20%D0%B1%D1%80%D0%B8%D1%84%201d98f2cd29ea8066a4bbd87c70b84f8a.html">Кстати, мы уже написали материал «Как получить бриф»!</a></p></div></figure><h2 id="1da8f2cd-29ea-8096-a727-eb56f0b251e6" class="">Как выбрать свой первый бриф?</h2><p id="1da8f2cd-29ea-80e8-b004-d3573c625d33" class="">Не надо геройствовать и пытаться впечатлить кого-то.</p><ol type="1" id="1da8f2cd-29ea-8078-b006-fea394bc1dc0" class="numbered-list" start="1"><li><strong>Учитывайте ваши навыки и знания</strong>. Если вы всегда писали про бытовую технику, то не лезьте в ноутбуки и подборки фильмов. Лучше сейчас потренироваться на чем-то более знакомом. Потом, когда уже привыкните, переходите к смежным темам. А дальше можно и открывать талант игрового критика или типа того.</li></ol><ol type="1" id="1da8f2cd-29ea-8033-a51d-c5c00bb3e827" class="numbered-list" start="2"><li><strong>Берите что-то маленькое до 7к знаков</strong>. Первый текст всегда несуразный и с правками. Это нормально — вы привыкаете к новой работе.</li></ol><ol type="1" id="1da8f2cd-29ea-80db-a03f-e435b587e6b9" class="numbered-list" start="3"><li>Если говорить о дедлайнах, то <strong>не пытайтесь сдать завтра / не растягивайте на неделю</strong>. На каждое задание мы выделяем несколько дней. Если это маленький текст, то даем два дня. Если большой (от 20к знаков) — четыре. Это усредненные сроки. Седна при вручении брифа обозначит все ддл.</li></ol><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1da8f2cd-29ea-80e5-aede-fa47462a8956"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1da8f2cd-29ea-80d8-ba71-e33e29508d1e" class=""><em>Как выглядит выдача брифа:</em></p><figure id="1da8f2cd-29ea-8029-ae47-ebe5a4ddff8f" class="image"><a href="%D0%A1%20%D1%87%D0%B5%D0%B3%D0%BE%20%D0%BD%D0%B0%D1%87%D0%B0%D1%82%D1%8C%201d98f2cd29ea807d88fae2ce369c79e9/image.png"><img style="width:644.3875122070312px" src="%D0%A1%20%D1%87%D0%B5%D0%B3%D0%BE%20%D0%BD%D0%B0%D1%87%D0%B0%D1%82%D1%8C%201d98f2cd29ea807d88fae2ce369c79e9/image.png"/></a></figure><p id="1da8f2cd-29ea-8078-b9c0-e3f59e7ee3c7" class="">Название, ссылка на бриф, гонорар, дедлайн, блог клиента.</p></div></figure><h1 id="1da8f2cd-29ea-80c5-952a-e83fbbb85dd4" class="">Как писать текст?</h1><p id="1da8f2cd-29ea-80c7-9e7a-e6fb855d4b32" class="">Пишите простым языком. Без воды, завихрений и повышенной экспертности. Представьте, что рассказываете своей бабушке про новую духовку. Или отцу про интересный фильм, который глянули в эти выходные.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1da8f2cd-29ea-8055-bba9-cacc2473f6c7"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1da8f2cd-29ea-800f-adae-cbc84f07b4a7" class=""><em>Вся Wiki посвящена нашей работе, но все же покажем главные разделы для начала:</em></p><ul id="1da8f2cd-29ea-8097-904a-efac192881b4" class="bulleted-list"><li style="list-style-type:disc"><a href="%D0%AD%D0%BB%D1%8C%D0%B4%D0%BE%D0%B1%D0%BB%D0%BE%D0%B3%201d98f2cd29ea808e9ef2c2bc55617fe5.html">Шаблоны и оформление Эльдоблога</a></li></ul><ul id="1da8f2cd-29ea-809c-816f-e5e941400430" class="bulleted-list"><li style="list-style-type:disc"><a href="%D0%9C%D0%9A%D0%BB%D0%B8%D0%BA%201d98f2cd29ea801bbb7acc7700beeebe.html">Шаблоны и оформление Мклика</a></li></ul><ul id="1da8f2cd-29ea-803e-b028-ff154bc4e15f" class="bulleted-list"><li style="list-style-type:disc"><a href="%D0%97%D0%BD%D0%B0%D0%BA%D0%B8%20%D0%B8%20%D0%BF%D1%80%D0%B5%D0%B2%D1%8B%D1%88%D0%B5%D0%BD%D0%B8%D1%8F%201d98f2cd29ea805b862acfe3d55cd342.html">Знаки и превышения</a></li></ul><ul id="1da8f2cd-29ea-80ee-bec5-d606ef1efb1d" class="bulleted-list"><li style="list-style-type:disc"><a href="%D0%A1%D1%82%D0%BE%D0%BF-%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%20%D0%B8%20%D1%88%D1%82%D0%B0%D0%BC%D0%BF%D1%8B%201d98f2cd29ea8054a4f9ece01fcae5ea.html">Стоп-слова и штампы</a></li></ul><ul id="1da8f2cd-29ea-8098-be2b-f7d18afaadea" class="bulleted-list"><li style="list-style-type:disc"><a href="%D0%9D%D0%B0%D0%B4%D0%BE%20%D0%BB%D0%B8%20%D0%B2%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D1%8F%D1%82%D1%8C%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%201d98f2cd29ea80379500cd57ad93bf70.html">Надо ли вставлять товары</a></li></ul><ul id="1da8f2cd-29ea-80bd-81be-c29589e0fc92" class="bulleted-list"><li style="list-style-type:disc"><a href="%D0%9A%D0%B0%D0%BA%20%D0%BF%D0%BE%D0%B4%D0%B1%D0%B8%D1%80%D0%B0%D1%82%D1%8C%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%201d98f2cd29ea80fc949ecdc01cd8ce2a.html">Как подбирать товары</a></li></ul><ul id="1da8f2cd-29ea-80bb-b20d-c7da1ad16c57" class="bulleted-list"><li style="list-style-type:disc"><a href="%D0%A7%D1%82%D0%BE%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B5%20%C2%AB%D0%9A%D0%B0%D1%80%D1%83%D1%81%D0%B5%D0%BB%D1%8C%C2%BB%201d98f2cd29ea80e6ba01ddbb1fe3b6d0.html">Что такое «Карусель»</a></li></ul><ul id="1da8f2cd-29ea-80d8-a500-e722fbfb45c2" class="bulleted-list"><li style="list-style-type:disc"><a href="%D0%92%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0%20%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BE%D0%BA%201d98f2cd29ea808d980ce7c565101c68.html">Вставка картинок</a></li></ul><ul id="1da8f2cd-29ea-80f9-8852-ce22468eb91a" class="bulleted-list"><li style="list-style-type:disc"><a href="%D0%A7%D1%82%D0%BE%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B5%20%C2%AB%D0%98%D0%BC%D0%B3%D1%83%D1%80%C2%BB%201d98f2cd29ea80b79d02efefa2ce6e18.html">Что такое «Имгур»</a></li></ul><ul id="1da8f2cd-29ea-807e-92a2-c9050ab047ac" class="bulleted-list"><li style="list-style-type:disc"><a href="%D0%92%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0%20%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE%201d98f2cd29ea80a9a93cefee92970c7d.html">Вставка видео</a></li></ul><ul id="1da8f2cd-29ea-8046-9bb2-f530b7d70764" class="bulleted-list"><li style="list-style-type:disc"><a href="%D0%9F%D1%80%D0%BE%20%D0%B4%D0%B2%D0%BE%D0%B8%CC%86%D0%BD%D1%8B%D0%B5%20%D0%BE%D1%82%D1%81%D1%82%D1%83%D0%BF%D1%8B%201d98f2cd29ea8083863fdd2468964a44.html">Про двойные отступы</a></li></ul><p id="1da8f2cd-29ea-803e-9196-c956fa90ac87" class="">Может показаться, что тут о-о-очень много инфы. Но мы вас не заставляем ее заучивать. Достаточно открыть, подглядеть что-то и закрыть.</p></div></figure><h1 id="1da8f2cd-29ea-8083-b88d-fb43d8798ad3" class="">Текст готов. Что дальше?</h1><p id="1da8f2cd-29ea-800e-814c-f9efcf818f32" class="">Красава. Теперь инструкция следующая:</p><ol type="1" id="1da8f2cd-29ea-80d1-8bc1-e0fd2614139d" class="numbered-list" start="1"><li>Назовите документ (как написано в брифе);</li></ol><ol type="1" id="1da8f2cd-29ea-8038-b1b9-f15384e9d3bb" class="numbered-list" start="2"><li>Откройте доступ к тексту;</li></ol><ol type="1" id="1da8f2cd-29ea-80c1-a881-f59605656842" class="numbered-list" start="3"><li>Запустите бота;</li></ol><ol type="1" id="1da8f2cd-29ea-8038-9de9-de7c9b00f150" class="numbered-list" start="4"><li>Проверьте <a href="%D0%A3%D0%BD%D0%B8%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D1%8C%201d98f2cd29ea8033b815f397b78788e3.html">уникальность</a> и читаемость текста через «Тургенева»;</li></ol><ol type="1" id="1da8f2cd-29ea-80c4-b30f-ed31da047850" class="numbered-list" start="5"><li>Если все окей, перешлите текст и результаты бота Седне. </li></ol><p id="1da8f2cd-29ea-80e6-a49e-e6153d301a08" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1da8f2cd-29ea-804b-bb3b-c5f6f913becb"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1da8f2cd-29ea-80c1-b3ad-ee8980305eff" class=""><em>Совет!</em></p><p id="1da8f2cd-29ea-801c-98ad-ecc786b61c39" class="">Текст лучше сдавать в день дедлайна, а не раньше. Перечитайте свою работу, перепроверьте ее. Не гонитесь пока за сроками.</p><p id="1da8f2cd-29ea-8012-b582-c84b823baaf3" class="">Готовый текст Седна принимает <strong>с 10:00 до 13:00.</strong> Если вы опаздываете, оповестите ее — не отмалчивайтесь.</p></div></figure><h1 id="1da8f2cd-29ea-803e-a464-d2cbc7537e30" class="">А если будут правки?</h1><p id="1da8f2cd-29ea-807c-872e-e05684517819" class="">Они точно будут. Если вы все писали по нашему руководству, то минимальные. Главное — не нервничать и не торопиться. Возможно, вы останетесь с нами надолго. Период адаптации в первый месяц — самый важный. Мы привыкаем друг к другу, поэтому омрачать знакомство нервным срывом не надо.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1da8f2cd-29ea-80b5-8dc5-eb29ee56bcee"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1da8f2cd-29ea-80ca-a076-fd3742c947bd" class=""><em>Совет!</em></p><p id="1da8f2cd-29ea-8087-8111-db5a5245b7c5" class=""><a href="%D0%A0%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%20%D1%81%20%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0%D0%BC%D0%B8%201d98f2cd29ea80568273f2a60b91f707.html">Про правки мы подробно рассказывали тут!</a></p></div></figure><p id="1da8f2cd-29ea-80f8-ae23-d437e8d2eda0" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

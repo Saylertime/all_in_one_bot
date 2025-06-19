@@ -1,0 +1,683 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Обзор смартфона/планшета</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1dd8f2cd-29ea-805e-91da-e733c47fb51a" class="page sans"><header><h1 class="page-title">Обзор смартфона/планшета</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-person"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesPerson"><path d="M10.9536 7.90088C12.217 7.90088 13.2559 6.79468 13.2559 5.38525C13.2559 4.01514 12.2114 2.92017 10.9536 2.92017C9.70142 2.92017 8.65137 4.02637 8.65698 5.39087C8.6626 6.79468 9.69019 7.90088 10.9536 7.90088ZM4.4231 8.03003C5.52368 8.03003 6.42212 7.05859 6.42212 5.83447C6.42212 4.63843 5.51245 3.68945 4.4231 3.68945C3.33374 3.68945 2.41846 4.64966 2.41846 5.84009C2.42407 7.05859 3.32251 8.03003 4.4231 8.03003ZM1.37964 13.168H5.49561C4.87231 12.292 5.43384 10.6074 6.78711 9.51807C6.18628 9.14746 5.37769 8.87231 4.4231 8.87231C1.95239 8.87231 0.262207 10.6917 0.262207 12.1628C0.262207 12.7974 0.548584 13.168 1.37964 13.168ZM7.50024 13.168H14.407C15.4009 13.168 15.7322 12.8423 15.7322 12.2864C15.7322 10.8489 13.8679 8.88354 10.9536 8.88354C8.04492 8.88354 6.17505 10.8489 6.17505 12.2864C6.17505 12.8423 6.50635 13.168 7.50024 13.168Z"></path></svg></span>Owner</th><td><span class="user"><span class="icon text-icon user-icon"><span class="user-icon-inner">S</span></span>SednaBrown</span></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesMultipleSelect"><path d="M1.91602 4.83789C2.44238 4.83789 2.87305 4.40723 2.87305 3.87402C2.87305 3.34766 2.44238 2.91699 1.91602 2.91699C1.38281 2.91699 0.952148 3.34766 0.952148 3.87402C0.952148 4.40723 1.38281 4.83789 1.91602 4.83789ZM5.1084 4.52344H14.3984C14.7607 4.52344 15.0479 4.23633 15.0479 3.87402C15.0479 3.51172 14.7607 3.22461 14.3984 3.22461H5.1084C4.74609 3.22461 4.45898 3.51172 4.45898 3.87402C4.45898 4.23633 4.74609 4.52344 5.1084 4.52344ZM1.91602 9.03516C2.44238 9.03516 2.87305 8.60449 2.87305 8.07129C2.87305 7.54492 2.44238 7.11426 1.91602 7.11426C1.38281 7.11426 0.952148 7.54492 0.952148 8.07129C0.952148 8.60449 1.38281 9.03516 1.91602 9.03516ZM5.1084 8.7207H14.3984C14.7607 8.7207 15.0479 8.43359 15.0479 8.07129C15.0479 7.70898 14.7607 7.42188 14.3984 7.42188H5.1084C4.74609 7.42188 4.45898 7.70898 4.45898 8.07129C4.45898 8.43359 4.74609 8.7207 5.1084 8.7207ZM1.91602 13.2324C2.44238 13.2324 2.87305 12.8018 2.87305 12.2686C2.87305 11.7422 2.44238 11.3115 1.91602 11.3115C1.38281 11.3115 0.952148 11.7422 0.952148 12.2686C0.952148 12.8018 1.38281 13.2324 1.91602 13.2324ZM5.1084 12.918H14.3984C14.7607 12.918 15.0479 12.6309 15.0479 12.2686C15.0479 11.9062 14.7607 11.6191 14.3984 11.6191H5.1084C4.74609 11.6191 4.45898 11.9062 4.45898 12.2686C4.45898 12.6309 4.74609 12.918 5.1084 12.918Z"></path></svg></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><p id="1df8f2cd-29ea-8020-866a-d24eed94d3de" class="">Имя автора + Бриф с гиперссылкой</p><h1 id="1df8f2cd-29ea-800f-a7d3-edad6eadbd7d" class="">[название смартфона] — новый король доступных смартфонов или переоцененный гаджет?</h1><h1 id="1df8f2cd-29ea-80f7-9a13-ce791834aad3" class="">Новый смартфон от [название смартфона]. Чем он лучше и лучше ли вообще?</h1><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-80d7-b483-f9bfe420fdcb"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-80e0-b423-c1c95a7d2f2b" class=""><em>Напиши лид. Пример:</em></p></div></figure><p id="1df8f2cd-29ea-8098-a438-ecb062b7fdac" class="">В этой статье мы поговорим о смартфоне, который не просто следует трендам, но и задает их. Этот смартфон — не просто следующий шаг в эволюции мобильных технологий, это — революция в вашем кармане. Благодаря ИИ, динамику на 9999 дБ, вибромассажеру и прочему. Встречайте [название смартфона], устройство, которое изменит ваше представление о том, как должен работать смартфон.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-8011-934f-fa0ce7b7110d"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-80d3-82f4-e08699a44c95" class=""><em>Вставь </em><em><a href="%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE%20%D0%B7%D0%B0%D0%B3%20%D0%BB%D0%B8%D0%B4%20%D0%BF%D0%BE%D0%B4%D0%B7%D0%B0%D0%B3%20%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%201d98f2cd29ea809e9db8e8f1a205fda5.html">структуру</a></em><em>:</em></p></div></figure><p id="1df8f2cd-29ea-8032-ad70-c3159c5ee6fc" class=""><a href="https://docs.google.com/document/d/1MMHw17-4F7-xcdvOrZJYK8r7B-jOWu2ClznL-XbLDl4/edit#heading=h.1ajqy4l5m1uk">[название смартфона] — новый король доступных смартфонов или переоцененный гаджет?</a></p><p id="1df8f2cd-29ea-80ed-b531-ea64166052a9" class=""><a href="https://docs.google.com/document/d/1MMHw17-4F7-xcdvOrZJYK8r7B-jOWu2ClznL-XbLDl4/edit#heading=h.9rytahlw1nmu">Технические характеристики</a></p><p id="1df8f2cd-29ea-8017-98eb-ea5e97d78131" class=""><a href="https://docs.google.com/document/d/1MMHw17-4F7-xcdvOrZJYK8r7B-jOWu2ClznL-XbLDl4/edit#heading=h.1wndm5xjbal0">Дизайн и размер</a></p><p id="1df8f2cd-29ea-80db-892f-ff73b6d494bb" class=""><a href="https://docs.google.com/document/d/1MMHw17-4F7-xcdvOrZJYK8r7B-jOWu2ClznL-XbLDl4/edit#heading=h.we3sldq9e8o">Процессор и память</a></p><p id="1df8f2cd-29ea-8064-b498-ee6c06186f6c" class=""><a href="https://docs.google.com/document/d/1MMHw17-4F7-xcdvOrZJYK8r7B-jOWu2ClznL-XbLDl4/edit#heading=h.iyhmyi4vnt1a">Экран</a></p><p id="1df8f2cd-29ea-80f9-894b-eced967472be" class=""><a href="https://docs.google.com/document/d/1MMHw17-4F7-xcdvOrZJYK8r7B-jOWu2ClznL-XbLDl4/edit#heading=h.u5pffwt641gl">Камера</a></p><p id="1df8f2cd-29ea-80f8-8dd5-f36b7a4dced2" class=""><a href="https://docs.google.com/document/d/1MMHw17-4F7-xcdvOrZJYK8r7B-jOWu2ClznL-XbLDl4/edit#heading=h.qm6wminpmryt">Батарея и зарядка</a></p><p id="1df8f2cd-29ea-8017-a6ac-ee9878ebca1d" class=""><a href="https://docs.google.com/document/d/1MMHw17-4F7-xcdvOrZJYK8r7B-jOWu2ClznL-XbLDl4/edit#heading=h.524htbk720bj">Комплектация</a></p><p id="1df8f2cd-29ea-8096-af18-fcb3c04f37e3" class=""><a href="https://docs.google.com/document/d/1MMHw17-4F7-xcdvOrZJYK8r7B-jOWu2ClznL-XbLDl4/edit#heading=h.4vuuv5okjs9s">Преимущества и недостатки в сравнении с конкурентами</a></p><p id="1df8f2cd-29ea-80ae-900d-ece43fbc7d37" class=""><a href="https://docs.google.com/document/d/1MMHw17-4F7-xcdvOrZJYK8r7B-jOWu2ClznL-XbLDl4/edit#heading=h.yz74sgyghojt">Выводы</a></p><h2 id="1df8f2cd-29ea-80b8-b8dd-feb953982fd6" class=""><strong>Технические характеристики</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-8009-bd00-e3e102d6220a"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-8082-9c32-e21c7b227e90" class=""><em>Вставь сюда таблицу с хар-ми. </em><em><a href="../%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%20%D1%82%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%201d98f2cd29ea801b8934fdc5aa122fca.html">Копируй шаблон отсюда</a></em><em>.</em></p></div></figure><table id="1df8f2cd-29ea-80ef-a456-ed19f8b7b3ed" class="simple-table"><tbody><tr id="1df8f2cd-29ea-8035-acf4-e13ff7d46c8d"><td id="~QuN" class=""><strong>Операционная система</strong></td><td id="vYjh" class="" style="width:532px">iOS 18</td></tr><tr id="1df8f2cd-29ea-80d5-b025-e25add1631e2"><td id="~QuN" class=""><strong>Дисплей</strong></td><td id="vYjh" class="" style="width:532px">Super Retina XDR OLED, 6,1 дюйма, 2532 × 1170 пикселей, яркость до 1200 нит, частота обновления 60 Гц, стекло Ceramic Shield</td></tr><tr id="1df8f2cd-29ea-8009-8f6d-f5f9f81ea12f"><td id="~QuN" class=""><strong>Процессор</strong></td><td id="vYjh" class="" style="width:532px">Apple A18</td></tr><tr id="1df8f2cd-29ea-80c1-a4cf-f8c499bd5153"><td id="~QuN" class=""><strong>Оперативная память</strong></td><td id="vYjh" class="" style="width:532px">8 ГБ</td></tr><tr id="1df8f2cd-29ea-80f2-8848-e682da52ba5d"><td id="~QuN" class=""><strong>Накопитель</strong></td><td id="vYjh" class="" style="width:532px">128/256/512 ГБ</td></tr><tr id="1df8f2cd-29ea-801a-a7ba-fa54fcf78f04"><td id="~QuN" class=""><strong>Аккумулятор</strong></td><td id="vYjh" class="" style="width:532px">3279 мА*ч</td></tr><tr id="1df8f2cd-29ea-801e-aa6e-f2ef9bd29510"><td id="~QuN" class=""><strong>Зарядка</strong></td><td id="vYjh" class="" style="width:532px"><strong>Проводная:</strong> 20 Вт <strong>Беспроводная:</strong> Qi 7,5 Вт</td></tr><tr id="1df8f2cd-29ea-80bc-bf53-d63bf52b4f9e"><td id="~QuN" class=""><strong>Камеры</strong></td><td id="vYjh" class="" style="width:532px"><strong>Широкоугольная:</strong> 48 МП, 26 мм, диафрагма f/1.6, оптическая стабилизация (OIS)<strong>Фронтальная:</strong> 12 МП, f/1.9, датчик глубины и биометрический сенсор<strong>Запись видео:</strong> 4K/1080p при 60 fps, замедленная 1080p при 120/240 fps</td></tr><tr id="1df8f2cd-29ea-8001-9ace-cefd78f60722"><td id="~QuN" class=""><strong>Связь</strong></td><td id="vYjh" class="" style="width:532px">2 nanoSIM или nanoSIM + eSIM (в зависимости от региона), 5G (sub-6 GHz), Wi-Fi 6, Bluetooth 5.3, GPS, GLONASS, Beidou, Galileo, QZSS, NavIC, NFC, USB Type-C</td></tr><tr id="1df8f2cd-29ea-80fd-83b2-d7ab4b5c797e"><td id="~QuN" class=""><strong>Безопасность</strong></td><td id="vYjh" class="" style="width:532px">Сканер лица Face ID</td></tr><tr id="1df8f2cd-29ea-808d-997d-e1edc1e581d2"><td id="~QuN" class=""><strong>Защита от воды</strong></td><td id="vYjh" class="" style="width:532px">IP68</td></tr><tr id="1df8f2cd-29ea-8063-8c95-e5f613d4f170"><td id="~QuN" class=""><strong>Габариты и вес</strong></td><td id="vYjh" class="" style="width:532px">146,7 × 71,5 × 7,8 мм, 167 г</td></tr><tr id="1df8f2cd-29ea-808d-b24f-db31d144dcca"><td id="~QuN" class=""><strong>Прочее</strong></td><td id="vYjh" class="" style="width:532px">Стереодинамики, поддержка спутниковой связи</td></tr></tbody></table><h2 id="1df8f2cd-29ea-8041-b8b2-f27eee2c8beb" class=""><strong>Дизайн и размер</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-8053-9f79-e6a42aa45580"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-80fc-b9c3-d71f7542e0ac" class=""><em>Рассказать про внешку смарта, его особенности, стекло и т.д.</em></p><p id="1df8f2cd-29ea-8076-a4dd-dff8aa2757af" class=""><em>Имгур с фото смартфона. Показать модель с разных сторон (иностранный источник, адрес сайта)</em></p></div></figure><p id="1df8f2cd-29ea-805e-93be-d55cfe3c2ea2" class="">Своим внешним видом iPhone 16e напоминает сразу несколько предшественников из линейки «яблочного» бренда. Передняя панель с «челкой» под селфи-камеру и датчики достались новинке от iPhone 14. На задней панели разместился одинокий сенсор камеры — этим смартфон сильно напоминает iPhone SE 2022 года. Правда, у iPhone 16e более крупный глазок камеры. А вот плоские края рамок металлического корпуса с закруглениями по бокам — наследие последних моделей (iPhone 15 и iPhone 16).</p><h2 id="1df8f2cd-29ea-80be-93b3-c19cef0fd63c" class=""><strong>Процессор и память</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-8079-90f9-e2e9875da1c4"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-8085-991a-e67bd62b1a1f" class=""><em>Чип, сравнение с другими смартами, производительность, поведение в играх, фризы.</em></p><p id="1df8f2cd-29ea-8039-ae51-fa05cd9a6aa3" class=""><em>Подсвети AnTuTu и  Geekbench 6, вставь скриншоты теста.</em></p><p id="1df8f2cd-29ea-8089-a5c2-d3d8bc58c3c8" class=""><em>Имгур с фото смартфона (иностранный источник, адрес сайта)</em></p></div></figure><p id="1df8f2cd-29ea-8005-a01b-f6a9b6d4bf97" class="">Описание характеристик айфона 16е хочется начать с его сердца — <a href="https://nanoreview.net/en/soc/apple-a18">выполненного</a> по 3-нанометровому техпроцессу чипа A18. Процессором с новинкой поделились старшие версии, но, как говорится, есть один нюанс. iPhone 16e получил упрощенный относительно базовой версии чипсет: если у iPhone 16 внутри сидят 5 ядер GPU, то вот у e-версии одно ядро GPU «подрезали». В результате у смартфона получился 4-ядерный GPU. Разница не столь критична, да и обычный пользователь едва ли ее заметит.</p><figure id="1df8f2cd-29ea-80d6-a0d4-fde0578f6746" class="image"><a href="../%D0%9C%D0%9A%D0%BB%D0%B8%D0%BA%201d98f2cd29ea801bbb7acc7700beeebe/%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20%D1%81%D0%BC%D0%B0%D1%80%D1%82%D1%84%D0%BE%D0%BD%D0%B0%20%D0%BF%D0%BB%D0%B0%D0%BD%D1%88%D0%B5%D1%82%D0%B0%201df8f2cd29ea80bd9a8cd157c03aca81/image.png"><img style="width:710px" src="../%D0%9C%D0%9A%D0%BB%D0%B8%D0%BA%201d98f2cd29ea801bbb7acc7700beeebe/%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20%D1%81%D0%BC%D0%B0%D1%80%D1%82%D1%84%D0%BE%D0%BD%D0%B0%20%D0%BF%D0%BB%D0%B0%D0%BD%D1%88%D0%B5%D1%82%D0%B0%201df8f2cd29ea80bd9a8cd157c03aca81/image.png"/></a></figure><p id="1df8f2cd-29ea-8024-9d44-d30c0cb48eec" class="">Показатель тактовой частоты остался без изменений — те же весомые 4,04 ГГц. В тестах на производительность iPhone 16e <a href="https://nanoreview.net/ru/phone/apple-iphone-16e">набирает</a> около 1,6 млн баллов на платформе AnTuTu и более 3000 очков в одноядерном и порядка 8000 очков в многоядерном режиме на <a href="https://browser.geekbench.com/v6/cpu/10659005">Geekbench 6</a>.</p><h2 id="1df8f2cd-29ea-800a-9906-f7b718378987" class=""><strong>Экран</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-80ca-a5be-d750ead9a794"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-8032-a144-f4b3f667d1cc" class=""><em>Базовые хар-ки и фишки смарта.</em></p><p id="1df8f2cd-29ea-80e1-adc1-e7c9cfd6be9c" class=""><em>Имгур с фото экрана смартфона (иностранный источник, адрес сайта)</em></p></div></figure><p id="1df8f2cd-29ea-80f2-9b0e-c7e3d4d55739" class="">У айфона 16е топовый 6,1-дюймовый Super Retina XDR OLED-дисплей. У него высокое разрешение 2532×1170 пикселей и частота обновления 60 Гц, как у базовой модели iPhone 16. Экран проецирует резкую и насыщенную картинку с яркими и сбалансированными цветами.</p><p id="1df8f2cd-29ea-805d-af09-e5e5d76c6585" class="">Пиковая яркость достигает 1200 нит, а плотность пикселей составляет 457 ppi. Смартфон поддерживает технологию HDR 10. Высокая яркость позволяет пользователю без проблем работать с устройством даже под прямыми солнечными лучами и в ярко освещенном помещении. Дисплей не бликует, а изображение не теряет в яркости и четкости.</p><h2 id="1df8f2cd-29ea-800a-971e-f2271dfe9214" class=""><strong>Камера</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-8011-986e-cd5cf97ce873"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-80f7-8a08-e722e17bd2ff" class=""><em>Тут надо не только рассказывать, но и показывать. </em></p><p id="1df8f2cd-29ea-8021-bcfc-c7d8da48b0d9" class=""><em>Имгур с фотографиями снятыми со смартфона с подписью на какую камеру снимали (иностранный источник, адрес сайта)</em></p></div></figure><p id="1df8f2cd-29ea-808d-93ec-c5f6d2bf21d3" class="">В отличие от базовой и Pro-версии iPhone 16, новый Apple iPhone 16e получил лишь один сенсор камеры — тот же самый широкоугольный Fusion на 48 МП от базовой 16-й модели с апертурой f/1.6. У сенсора есть оптическая стабилизация и фазовый автофокус.</p><p id="1df8f2cd-29ea-801b-a018-cbeed6748964" class="">Отдельного «ширика» и телеобъектива у e-версии нет, хотя Apple заявляет, что основной объектив можно использовать как телевик на 12 МП с 2-кратным оптическим зумом. И называет эту технологию «системой 2 в 1». Но в реальности устройство использует 2-кратный цифровой зум, а по качеству снимки получаются такими же, как на 2-кратный оптический зум.</p><h2 id="1df8f2cd-29ea-8094-bbdc-f7db79afa78a" class=""><strong>Батарея и зарядка</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-80a4-93ef-c4ae325a466c"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-8056-8660-c1e8043789a7" class=""><em>Тут покороче, если это не прям главная фишка смарта</em></p></div></figure><p id="1df8f2cd-29ea-8041-85a7-cc7023cbc619" class="">Айфон 16е обзавелся менее емким по сравнению с iPhone 16 аккумулятором — его автономность у новой модели достигает 3279 мА*ч. С мощностью зарядного устройства у e-версии все не так весело: новый айфон поддерживает проводную зарядку 20 Вт и беспроводную зарядку 7,5 Вт. С 0 до 100% устройство заряжается примерно за 1 час 36 минут, зато до 50% заряда дойдет за полчаса. Поддержку MagSafe iPhone 16e не получил.</p><h2 id="1df8f2cd-29ea-80fd-b2b8-c9240612ae80" class=""><strong>Комплектация/звук/цена</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-808c-8ee9-e1c7eaabc96c"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-8003-ad29-e0fe7c844bc9" class=""><em>Если есть чем дополнить — дополни</em></p></div></figure><p id="1df8f2cd-29ea-80ab-acf0-fd1efb3a7d5e" class="">iPhone 16e получил стереодинамики, которые расположены сверху, в районе «челки», и снизу, на нижней грани корпуса. Они поддерживают технологию пространственного звучания Dolby Atmos. Облегченный флагман воспроизводит насыщенный и чистый звук без помех и шумов, слушать музыку можно даже без наушников. Но вот полноценно заменить колонку девайс сможет едва ли.</p><h2 id="1df8f2cd-29ea-8051-95fd-dfd3f27641de" class=""><strong>Преимущества и недостатки в сравнении с конкурентами</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-8094-89d2-f32d9b5b3da9"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-807b-be7d-c0c3fa5920dc" class=""><em>Если есть с чем сравнить, то сравни. Новый флагман? Расскажи чуток про предыдущий в сравнении.</em></p><p id="1df8f2cd-29ea-80e3-a6d5-dab97de8cf25" class=""><em>Имгур с фото смартфона (иностранный источник, адрес сайта)</em></p></div></figure><p id="1df8f2cd-29ea-8075-a357-e22d9a463a51" class="">Из самого заметного: под капотом iPhone 16 скрывается полноценный чипсет A18 с 5 ядрами GPU, в то время как у iPhone 16e Apple забрала одно ядро и оставила с 4 ядрами GPU. Также iPhone 16e может похвастать лишь одной камерой, тогда как у iPhone 16, кроме основного сенсора на 48 МП, есть и полноценный «ультраширик» на 12 МП.</p><p id="1df8f2cd-29ea-8055-9f71-e7834a51a300" class="">Еще iPhone 16e недосчитался целого ряда функций:</p><ul id="1df8f2cd-29ea-805f-9a89-c8d47717c035" class="bulleted-list"><li style="list-style-type:disc">Camera Control;</li></ul><ul id="1df8f2cd-29ea-80ac-b192-d62afdc4a9da" class="bulleted-list"><li style="list-style-type:disc">Dynamic Island;</li></ul><ul id="1df8f2cd-29ea-80fd-9875-c7abcf16fb68" class="bulleted-list"><li style="list-style-type:disc">MagSafe;</li></ul><ul id="1df8f2cd-29ea-8080-b75b-e57762c32bf2" class="bulleted-list"><li style="list-style-type:disc">популярного в США стандарта 5G связи mmWave;</li></ul><ul id="1df8f2cd-29ea-8089-823e-d1dfe705d645" class="bulleted-list"><li style="list-style-type:disc">UWB — поиска других устройств;</li></ul><ul id="1df8f2cd-29ea-804b-a79f-ecce6298aa43" class="bulleted-list"><li style="list-style-type:disc">Thread — управления устройствами умного дома.</li></ul><p id="1df8f2cd-29ea-8031-a327-e4d00d416919" class="">Зато благодаря чипу C1 iPhone 16e получил прирост автономности аккумулятора.</p><h2 id="1df8f2cd-29ea-805b-9f26-d89971303e75" class=""><strong>Выводы</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-8077-8604-cdf9a82c0e7a"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-800b-a04f-cae5bc8a4207" class=""><em>Кому смарт подойдет, чем он лучше и хуже других, стоит ли переплачивать и тд.</em></p></div></figure><p id="1df8f2cd-29ea-80e9-a298-e1e058b20509" class="">iPhone 16e сложно назвать полноценным новым смартфоном — это, скорее, микс моделей и технологических решений разных лет. Главным вопросом перед стартом продаж остается его цена — все-таки сильно облегченное по сравнению с iPhone 16 устройство стоит меньше всего на 200 долларов. И насколько оправданным будет его приобретение?</p><p id="1df8f2cd-29ea-807a-bb85-cb8e0acd626e" class="">Гаджет подойдет для тех пользователей, которые ценят экосистему Apple и хотят получить надежный и проверенный аппарат с классной камерой и мощной начинкой, но при этом не готовы раскошелиться на iPhone 16 и 16 Pro. А благодаря обновленному процессору и поддержке Apple Intelligence новинка смотрится выигрышнее смартфонов прошлых лет. Да и цена на айфон 16е ниже.</p><hr id="1df8f2cd-29ea-80d7-87f2-eae7a90def59"/><p id="1df8f2cd-29ea-80d8-b041-fa427b2d7849" class="block-color-yellow_background">Референсы:</p><p id="1df8f2cd-29ea-80c6-a9be-ef76052426f8" class=""><a href="https://blog.eldorado.ru/publications/iphone-16e-obzor-kharakteristiki-i-tsena-43711">https://blog.eldorado.ru/publications/iphone-16e-obzor-kharakteristiki-i-tsena-43711</a></p><p id="1df8f2cd-29ea-80a1-899d-c6af87ae2e07" class=""><a href="https://blog.eldorado.ru/publications/obzor-samsung-galaxy-s25-ultra-luchshiy-android-smartfon-2025-goda-43534">https://blog.eldorado.ru/publications/obzor-samsung-galaxy-s25-ultra-luchshiy-android-smartfon-2025-goda-43534</a></p><p id="1df8f2cd-29ea-80fb-96f5-d265a6378dc6" class=""><a href="https://blog.eldorado.ru/publications/obzor-samsung-galaxy-s25-pochemu-eto-luchshaya-model-v-serii-43518">https://blog.eldorado.ru/publications/obzor-samsung-galaxy-s25-pochemu-eto-luchshaya-model-v-serii-43518</a></p><p id="1df8f2cd-29ea-8042-8185-fb6b8e89229a" class="block-color-yellow_background">Реф документами:</p><figure id="1df8f2cd-29ea-8067-96d5-fe98bbd6148e"><div class="source">https://docs.google.com/document/d/1GyB4BWzDj_8GD8Ey8GQYyWs8djVUL3M5TN6HbOsWHJg/edit?usp=sharing</div></figure><p id="1df8f2cd-29ea-802a-8db2-f696aab27c77" class="">Вставлять все ключи. LSI можно не все.</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

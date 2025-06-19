@@ -1,0 +1,688 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Wiki Гуравторов — «Пиши или сдохни»</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1d98f2cd-29ea-806b-978a-d969d9cc5445" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">⚡</span></div><h1 class="page-title">Wiki Гуравторов — «Пиши или сдохни»</h1><p class="page-description"></p></header><div class="page-body"><div id="1d98f2cd-29ea-8012-b0df-e3bba1c03f72" class="column-list"><div id="1d98f2cd-29ea-802c-a174-e7a784cc095b" style="width:33.33333333333333%" class="column"><h1 id="1d98f2cd-29ea-80a6-98fc-e36bf9323813" class="block-color-pink_background"><strong>Новым авторам</strong></h1><figure id="1d98f2cd-29ea-807d-88fa-e2ce369c79e9" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%A1%20%D1%87%D0%B5%D0%B3%D0%BE%20%D0%BD%D0%B0%D1%87%D0%B0%D1%82%D1%8C%201d98f2cd29ea807d88fae2ce369c79e9.html"><img class="icon" src="https://www.notion.so/icons/question-mark_lightgray.svg"/>С чего начать</a></figure><figure id="1d98f2cd-29ea-801e-ab90-ed4d857708e4" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%9A%D0%BE%D0%BC%D1%83%20%D0%BC%D1%8B%20%D0%BF%D0%B8%D1%88%D0%B5%D0%BC%201d98f2cd29ea801eab90ed4d857708e4.html"><img class="icon" src="https://www.notion.so/icons/profile_lightgray.svg"/>Кому мы пишем</a></figure><figure id="1d98f2cd-29ea-8066-a4bb-d87c70b84f8a" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%9A%D0%B0%D0%BA%20%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B8%D1%82%D1%8C%20%D0%B1%D1%80%D0%B8%D1%84%201d98f2cd29ea8066a4bbd87c70b84f8a.html"><img class="icon" src="https://www.notion.so/icons/move-document_lightgray.svg"/>Как получить бриф</a></figure><figure id="1d98f2cd-29ea-802f-9b7d-ee6267a23dd5" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%A0%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%BE%D1%80%D1%81%D0%BA%D0%B8%D0%B8%CC%86%20%D1%81%D0%BB%D0%B5%D0%BD%D0%B3%201d98f2cd29ea802f9b7dee6267a23dd5.html"><img class="icon" src="https://www.notion.so/icons/alien_lightgray.svg"/>Редакторский сленг</a></figure><figure id="1d98f2cd-29ea-806b-9fbc-e99cc345df10" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%9F%D1%80%D0%BE%20%D0%B1%D0%BE%D1%82%D0%B0%201d98f2cd29ea806b9fbce99cc345df10.html"><img class="icon" src="https://www.notion.so/icons/robot_lightgray.svg"/>Про бота</a></figure><figure id="1d98f2cd-29ea-807c-b17a-e9c5d12fb0c4" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%97%D0%B0%D1%87%D0%B5%D0%BC%20%D0%BD%D1%83%D0%B6%D0%B5%D0%BD%20%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%20%D0%B2%20%D0%A2%D0%93%201d98f2cd29ea807cb17ae9c5d12fb0c4.html"><img class="icon" src="https://www.notion.so/icons/glasses_lightgray.svg"/>Зачем нужен канал в ТГ</a></figure><p id="1d98f2cd-29ea-8049-9c71-f70d3b733d0c" class="">
+</p></div><div id="1d98f2cd-29ea-808b-9b12-ec8caa0057bb" style="width:29.166666666666664%" class="column"><h1 id="1d98f2cd-29ea-8087-8a7c-d08d839c3bc3" class="block-color-pink_background"><strong>Правила</strong></h1><figure id="1d98f2cd-29ea-8054-a4f9-ece01fcae5ea" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%A1%D1%82%D0%BE%D0%BF-%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%20%D0%B8%20%D1%88%D1%82%D0%B0%D0%BC%D0%BF%D1%8B%201d98f2cd29ea8054a4f9ece01fcae5ea.html"><img class="icon" src="https://www.notion.so/icons/hand_lightgray.svg"/>Стоп-слова и штампы</a></figure><figure id="1d98f2cd-29ea-80a9-a93c-efee92970c7d" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%92%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0%20%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE%201d98f2cd29ea80a9a93cefee92970c7d.html"><img class="icon" src="https://www.notion.so/icons/video-camera_lightgray.svg"/>Вставка видео</a></figure><figure id="1d98f2cd-29ea-808d-980c-e7c565101c68" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%92%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0%20%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BE%D0%BA%201d98f2cd29ea808d980ce7c565101c68.html"><img class="icon" src="https://www.notion.so/icons/photo-landscape_lightgray.svg"/>Вставка картинок</a></figure><figure id="1d98f2cd-29ea-805b-862a-cfe3d55cd342" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%97%D0%BD%D0%B0%D0%BA%D0%B8%20%D0%B8%20%D0%BF%D1%80%D0%B5%D0%B2%D1%8B%D1%88%D0%B5%D0%BD%D0%B8%D1%8F%201d98f2cd29ea805b862acfe3d55cd342.html"><img class="icon" src="https://www.notion.so/icons/arrows-horizontal_lightgray.svg"/>Знаки и превышения</a></figure><figure id="1d98f2cd-29ea-8056-8273-f2a60b91f707" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%A0%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%20%D1%81%20%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0%D0%BC%D0%B8%201d98f2cd29ea80568273f2a60b91f707.html"><img class="icon" src="https://www.notion.so/icons/pencil_lightgray.svg"/>Работа с правками</a></figure><figure id="1d98f2cd-29ea-8033-b815-f397b78788e3" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%A3%D0%BD%D0%B8%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D1%8C%201d98f2cd29ea8033b815f397b78788e3.html"><img class="icon" src="https://www.notion.so/icons/emoji-big-sad_lightgray.svg"/>Уникальность</a></figure><p id="1d98f2cd-29ea-80b7-bba7-de0ddecbbd17" class="">
+</p></div><div id="1d98f2cd-29ea-8032-b898-fd2c821d9b5e" style="width:37.5%" class="column"><h1 id="1d98f2cd-29ea-80c9-b940-e1cb0c7d316c" class="block-color-pink_background">Коммуникация</h1><figure id="1d98f2cd-29ea-80c5-91d1-c45060e02715" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%97%D0%B0%20%D1%87%D1%82%D0%BE%20%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%20%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B8%D1%82%D1%8C%20%D0%B1%D0%B0%D0%BD%201d98f2cd29ea80c591d1c45060e02715.html"><img class="icon" src="https://www.notion.so/icons/skull_lightgray.svg"/>За что можно получить бан</a></figure><figure id="1d98f2cd-29ea-802d-995f-e90d19334d82" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%92%D1%80%D0%B5%D0%BC%D1%8F%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%201d98f2cd29ea802d995fe90d19334d82.html"><img class="icon" src="https://www.notion.so/icons/clock-alternate_lightgray.svg"/>Время работы</a></figure><figure id="1d98f2cd-29ea-808d-91e6-fad42245d370" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%91%D0%BE%D0%BD%D1%83%D1%81%D1%8B%201d98f2cd29ea808d91e6fad42245d370.html"><img class="icon" src="https://www.notion.so/icons/currency-coin_lightgray.svg"/>Бонусы</a></figure><figure id="1d98f2cd-29ea-8022-8c9f-f780af55db7a" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%A1%D0%B0%D0%BC%D0%BE%D0%B7%D0%B0%D0%BD%D1%8F%D1%82%D0%BE%D1%81%D1%82%D1%8C%201d98f2cd29ea80228c9ff780af55db7a.html"><img class="icon" src="https://www.notion.so/icons/cash_lightgray.svg"/>Самозанятость</a></figure><p id="1da8f2cd-29ea-800a-bd1c-fff61c6e1236" class="">
+</p></div></div><div id="1d98f2cd-29ea-80e8-85df-fceae73d1033" class="column-list"><div id="1d98f2cd-29ea-8085-a261-d3f547ab4022" style="width:33.33333333333333%" class="column"><h1 id="1d98f2cd-29ea-80bf-8146-f4d5c9e39b1f" class="block-color-teal_background"><strong>Шаблоны и оформление</strong></h1><figure id="1d98f2cd-29ea-808e-9ef2-c2bc55617fe5" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%AD%D0%BB%D1%8C%D0%B4%D0%BE%D0%B1%D0%BB%D0%BE%D0%B3%201d98f2cd29ea808e9ef2c2bc55617fe5.html"><span class="icon">💚</span>Эльдоблог</a></figure><figure id="1d98f2cd-29ea-801b-bb7a-cc7700beeebe" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%9C%D0%9A%D0%BB%D0%B8%D0%BA%201d98f2cd29ea801bbb7acc7700beeebe.html"><span class="icon">❤️</span>МКлик</a></figure><figure id="1d98f2cd-29ea-801b-8934-fdc5aa122fca" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%20%D1%82%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%201d98f2cd29ea801b8934fdc5aa122fca.html"><img class="icon" src="https://www.notion.so/icons/table_lightgray.svg"/>Шаблон таблиц</a></figure><figure id="1dd8f2cd-29ea-802e-83a1-fc3af59408e5" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%9E%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B4%D0%BE%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0%201dd8f2cd29ea802e83a1fc3af59408e5.html"><img class="icon" src="https://www.notion.so/icons/pill_lightgray.svg"/>Обновление/доработка</a></figure></div><div id="1d98f2cd-29ea-8077-9a23-c4103c947416" style="width:29.166666666666664%" class="column"><h1 id="1d98f2cd-29ea-8070-8b12-fc77f449d1d2" class="block-color-teal_background">Про товары</h1><figure id="1d98f2cd-29ea-8037-9500-cd57ad93bf70" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%9D%D0%B0%D0%B4%D0%BE%20%D0%BB%D0%B8%20%D0%B2%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D1%8F%D1%82%D1%8C%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%201d98f2cd29ea80379500cd57ad93bf70.html"><img class="icon" src="https://www.notion.so/icons/shopping-bag_lightgray.svg"/>Надо ли вставлять товары?</a></figure><figure id="1d98f2cd-29ea-80fc-949e-cdc01cd8ce2a" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%9A%D0%B0%D0%BA%20%D0%BF%D0%BE%D0%B4%D0%B1%D0%B8%D1%80%D0%B0%D1%82%D1%8C%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%201d98f2cd29ea80fc949ecdc01cd8ce2a.html"><img class="icon" src="https://www.notion.so/icons/star_lightgray.svg"/>Как подбирать товары</a></figure><figure id="1d98f2cd-29ea-8068-a8d6-cefb7f3b67e8" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%9A%D0%B0%D0%BA%20%D0%B8%20%D0%BA%D0%BE%D0%B3%D0%B4%D0%B0%20%C2%AB%D0%9E%D0%9A%D0%B0%D1%82%D1%8C%C2%BB%201d98f2cd29ea8068a8d6cefb7f3b67e8.html"><img class="icon" src="https://www.notion.so/icons/bookmark-outline_lightgray.svg"/>Как и когда «ОКать»</a></figure><figure id="1d98f2cd-29ea-80e6-ba01-ddbb1fe3b6d0" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%A7%D1%82%D0%BE%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B5%20%C2%AB%D0%9A%D0%B0%D1%80%D1%83%D1%81%D0%B5%D0%BB%D1%8C%C2%BB%201d98f2cd29ea80e6ba01ddbb1fe3b6d0.html"><img class="icon" src="https://www.notion.so/icons/reorder_lightgray.svg"/>Что такое «Карусель»</a></figure><p id="1d98f2cd-29ea-8066-8041-f05a3b9166cd" class="">
+</p></div><div id="1d98f2cd-29ea-802e-b149-dae654ccbd83" style="width:37.5%" class="column"><h1 id="1d98f2cd-29ea-809f-aea7-c1da7946b0b4" class="block-color-teal_background"><strong>Частые вопросы</strong></h1><figure id="1d98f2cd-29ea-80d4-94fb-c8e38d5064b8" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%9A%D0%B0%D0%BA%20%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C%20%D1%81%D0%B2%D0%BE%D1%8E%20%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D1%83%201d98f2cd29ea80d494fbc8e38d5064b8.html"><img class="icon" src="https://www.notion.so/icons/book_lightgray.svg"/>Как создать свою страницу</a></figure><figure id="1d98f2cd-29ea-8042-8d38-f2d06b2121b2" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20%D0%BA%D0%BE%D1%80%D0%BE%D1%82%D0%BA%D0%B8%D0%B5%20%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8%201d98f2cd29ea80428d38f2d06b2121b2.html"><img class="icon" src="https://www.notion.so/icons/knife-kitchen_lightgray.svg"/>Как делать короткие ссылки</a></figure><figure id="1d98f2cd-29ea-80b7-9d02-efefa2ce6e18" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%A7%D1%82%D0%BE%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B5%20%C2%AB%D0%98%D0%BC%D0%B3%D1%83%D1%80%C2%BB%201d98f2cd29ea80b79d02efefa2ce6e18.html"><img class="icon" src="https://www.notion.so/icons/photo-landscape_lightgray.svg"/>Что такое «Имгур»</a></figure><figure id="1d98f2cd-29ea-80e5-b8c0-f500ab67c481" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%9A%D0%B0%D0%BA%20%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%BB%D1%8F%D1%82%D1%8C%20%C2%AB%D0%9F%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%20%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D1%83%C2%BB%201d98f2cd29ea80e5b8c0f500ab67c481.html"><img class="icon" src="https://www.notion.so/icons/mail_lightgray.svg"/>Как оформлять «Помощь автору»</a></figure><figure id="1d98f2cd-29ea-8083-863f-dd2468964a44" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%9F%D1%80%D0%BE%20%D0%B4%D0%B2%D0%BE%D0%B8%CC%86%D0%BD%D1%8B%D0%B5%20%D0%BE%D1%82%D1%81%D1%82%D1%83%D0%BF%D1%8B%201d98f2cd29ea8083863fdd2468964a44.html"><img class="icon" src="https://www.notion.so/icons/pencil_lightgray.svg"/>Про двойные отступы</a></figure><figure id="1de8f2cd-29ea-80fc-b778-ed14a5ceb1b6" class="link-to-page"><a href="Wiki%20%D0%93%D1%83%D1%80%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%E2%80%94%20%C2%AB%D0%9F%D0%B8%D1%88%D0%B8%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%B4%D0%BE%D1%85%D0%BD%D0%B8%C2%BB%201d98f2cd29ea806b978ad969d9cc5445/%D0%9F%D1%80%D0%BE%20%D0%BD%D0%B5%D0%B8%CC%86%D1%80%D0%BE%D1%81%D0%B5%D1%82%D0%B8%201de8f2cd29ea80fcb778ed14a5ceb1b6.html"><img class="icon" src="https://www.notion.so/icons/robot_lightgray.svg"/>Про нейросети</a></figure></div></div><p id="1d98f2cd-29ea-8024-86e8-fea199d85740" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

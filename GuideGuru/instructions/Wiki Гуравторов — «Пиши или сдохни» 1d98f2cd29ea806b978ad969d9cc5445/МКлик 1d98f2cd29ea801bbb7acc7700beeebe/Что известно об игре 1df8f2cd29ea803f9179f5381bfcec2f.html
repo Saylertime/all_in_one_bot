@@ -1,0 +1,685 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Что известно об игре</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1df8f2cd-29ea-803f-9179-f5381bfcec2f" class="page sans"><header><h1 class="page-title">Что известно об игре</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-person"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesPerson"><path d="M10.9536 7.90088C12.217 7.90088 13.2559 6.79468 13.2559 5.38525C13.2559 4.01514 12.2114 2.92017 10.9536 2.92017C9.70142 2.92017 8.65137 4.02637 8.65698 5.39087C8.6626 6.79468 9.69019 7.90088 10.9536 7.90088ZM4.4231 8.03003C5.52368 8.03003 6.42212 7.05859 6.42212 5.83447C6.42212 4.63843 5.51245 3.68945 4.4231 3.68945C3.33374 3.68945 2.41846 4.64966 2.41846 5.84009C2.42407 7.05859 3.32251 8.03003 4.4231 8.03003ZM1.37964 13.168H5.49561C4.87231 12.292 5.43384 10.6074 6.78711 9.51807C6.18628 9.14746 5.37769 8.87231 4.4231 8.87231C1.95239 8.87231 0.262207 10.6917 0.262207 12.1628C0.262207 12.7974 0.548584 13.168 1.37964 13.168ZM7.50024 13.168H14.407C15.4009 13.168 15.7322 12.8423 15.7322 12.2864C15.7322 10.8489 13.8679 8.88354 10.9536 8.88354C8.04492 8.88354 6.17505 10.8489 6.17505 12.2864C6.17505 12.8423 6.50635 13.168 7.50024 13.168Z"></path></svg></span>Owner</th><td><span class="user"><span class="icon text-icon user-icon"><span class="user-icon-inner">S</span></span>SednaBrown</span></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesMultipleSelect"><path d="M1.91602 4.83789C2.44238 4.83789 2.87305 4.40723 2.87305 3.87402C2.87305 3.34766 2.44238 2.91699 1.91602 2.91699C1.38281 2.91699 0.952148 3.34766 0.952148 3.87402C0.952148 4.40723 1.38281 4.83789 1.91602 4.83789ZM5.1084 4.52344H14.3984C14.7607 4.52344 15.0479 4.23633 15.0479 3.87402C15.0479 3.51172 14.7607 3.22461 14.3984 3.22461H5.1084C4.74609 3.22461 4.45898 3.51172 4.45898 3.87402C4.45898 4.23633 4.74609 4.52344 5.1084 4.52344ZM1.91602 9.03516C2.44238 9.03516 2.87305 8.60449 2.87305 8.07129C2.87305 7.54492 2.44238 7.11426 1.91602 7.11426C1.38281 7.11426 0.952148 7.54492 0.952148 8.07129C0.952148 8.60449 1.38281 9.03516 1.91602 9.03516ZM5.1084 8.7207H14.3984C14.7607 8.7207 15.0479 8.43359 15.0479 8.07129C15.0479 7.70898 14.7607 7.42188 14.3984 7.42188H5.1084C4.74609 7.42188 4.45898 7.70898 4.45898 8.07129C4.45898 8.43359 4.74609 8.7207 5.1084 8.7207ZM1.91602 13.2324C2.44238 13.2324 2.87305 12.8018 2.87305 12.2686C2.87305 11.7422 2.44238 11.3115 1.91602 11.3115C1.38281 11.3115 0.952148 11.7422 0.952148 12.2686C0.952148 12.8018 1.38281 13.2324 1.91602 13.2324ZM5.1084 12.918H14.3984C14.7607 12.918 15.0479 12.6309 15.0479 12.2686C15.0479 11.9062 14.7607 11.6191 14.3984 11.6191H5.1084C4.74609 11.6191 4.45898 11.9062 4.45898 12.2686C4.45898 12.6309 4.74609 12.918 5.1084 12.918Z"></path></svg></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><p id="1df8f2cd-29ea-8070-835b-d0de2ca05e7e" class="">Бриф с гиперссылкой + ссылка на картинки в Диске</p><h1 id="1df8f2cd-29ea-8025-b870-cd9d3e2a0117" class="">«[название игры]»: все, что известно об игре</h1><p id="1df8f2cd-29ea-801f-b70c-e671f425f4ce" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-80d9-a9e0-cf43f9bafd2a"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-80e5-ad5d-fb9649313c97" class=""><em>Напиши лид. Пример:</em></p></div></figure><p id="1df8f2cd-29ea-808f-b5ca-cde299cf7585" class="">Некогда популярный бесстрашный археолог в шляпе после череды не совсем удачных игровых проектов и последних двух фильмов слегка утратил былое величие. Может, франшиза себя изжила или просто приелась почти за сорок лет своего существования. Так или иначе, в 2024 году мы увидим попытку вновь популяризировать дедушку Инди, и не абы кем, а продюсером Тоддом Говардом — руководителем разработки серий The Elder Scrolls и Fallout.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-804c-afda-ca0dea6eb065"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-80fc-997f-eb5b2ec7d6b4" class=""><em>Далее расскажи об игре. Почти всегда структура такая:</em></p></div></figure><h2 id="1df8f2cd-29ea-808e-a12e-d65f08267cb3" class=""><strong>Почему фанаты ждут выхода</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-8053-89e1-e0d3f02820d2"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-80d0-91a2-f24450b2f0d8" class=""><em>Тут надо рассказать вообще про серию, какие у фанатов ожидания. Совпадает ли с реальностью. Можно впихнуть трейлер</em></p></div></figure><p id="1df8f2cd-29ea-80ec-9d80-c2e85b3d8b5e" class="">В 2022 году выход Elden Ring стал настоящей сенсацией. Ролевая игра показывала ранее невиданную вселенную, к созданию которой приложил руку Джордж Мартин — автор книжного цикла «Песнь льда и огня». Мрачный открытый мир поощряет исследование и любознательность, но на пути к новым секретам и лучшему снаряжению будут стоять многочисленные враги. И тут разработчики из японской FromSoftware по максимуму использовали свой опыт. В стане рядовых противников есть разбойники, скелеты, тролли, големы и не только, но все они не чета местным боссам — зачастую гигантским созданиям с уникальными атаками и схемами передвижения.</p><p id="1df8f2cd-29ea-80bd-a8a8-e44552be8cd8" class=""><a href="https://rutube.ru/video/07a7f6cc6b8643ce4c38227f47b393fd/?dist=mvideo&amp;anc=mvideo.ru&amp;tp=web">https://rutube.ru/video/07a7f6cc6b8643ce4c38227f47b393fd/?dist=mvideo&amp;anc=mvideo.ru&amp;tp=web</a></p><h2 id="1df8f2cd-29ea-80fa-bdc8-d3f3a7a0a76c" class=""><strong>Предыстория игры/серии</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-8078-84e7-dece45b268b5"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-80a4-b633-e9e090aac4aa" class=""><em>Коротко и интересно расскажи о создании игры, ее предыдущих частях.</em></p><p id="1df8f2cd-29ea-80e9-b8f9-f381fa7d9ac3" class=""><em>Картинка со скриншотом из игры (указать иностранный источник и ссылку)</em></p></div></figure><p id="1df8f2cd-29ea-8084-823d-cdc75f226731" class="">Ликбез для самых маленьких: Индиана Джонс — американский археолог и впоследствии преподаватель в колледже. Но он не обычный занудный учитель: периодически судьба заносит его в разные отдаленные уголки планеты, где он сталкивается то со зловещими потусторонними силами, то с немецкими нацистами, то с изощренными ловушками в древних руинах. Инди родился в 1899 году, а события основных фильмов проходят незадолго до Второй мировой войны, когда археологу еще не было и сорока лет.</p><p id="1df8f2cd-29ea-800e-a184-f6fd7e7e968b" class="">КАРТИНКА 1 источник <a href="https://geekboards.ru/">https://geekboards.ru/</a> </p><p id="1df8f2cd-29ea-8010-ab45-dbe887dec410" class="">КАРТИНКА 2 источник <a href="https://geekboards.ru/">https://geekboards.ru/</a> </p><p id="1df8f2cd-29ea-8068-a840-d4f0ceb13c19" class="">КАРТИНКА 3 источник <a href="https://geekboards.ru/">https://geekboards.ru/</a> </p><h2 id="1df8f2cd-29ea-8032-af0d-f76dae86d9d9" class=""><strong>Сюжет</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-8056-a1ab-eb560d89bc4d"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-806d-8fa7-c7054d63fb4f" class=""><em>Более подробно расскажи о сюжете. Только без жирных спойлеров.</em></p><p id="1df8f2cd-29ea-805f-8b3d-f98aba5ee5ee" class=""><em>Картинка со скриншотом из игры (указать иностранный источник и ссылку)</em></p><p id="1df8f2cd-29ea-80f5-bbc6-e7cbdce1523d" class=""><em>Трейлер с Рутуба или Вк</em></p></div></figure><p id="1df8f2cd-29ea-801a-88d3-c8c71859a444" class="">Всего через год Инди полетит искать Святой Грааль («Индиана Джонс и последний крестовый поход»), но до этого он успеет поучаствовать в событиях игры, действия которой разворачиваются все в том же 1937 году. Профессор Джонс вернулся домой, где снова спокойно занимается преподаванием любимой дисциплины. Однако даже здесь ему не дадут нормально отдохнуть: прямо из колледжа, где работает протагонист, неизвестные крадут на первый взгляд ничем не примечательный археологический артефакт. Довольно быстро выясняется, что за этим (сюрприз!) стоят нацисты. Индиана снова надевает шляпу, берет в руки хлыст и револьвер и летит в Ватикан, чтобы вернуть украденное и понять, зачем им вообще понадобилась эта безделушка. Герою предстоит посетить все три «злодейские» страны этого периода — Италию, Германию и Японию, а заодно и еще несколько живописных мест.</p><p id="1df8f2cd-29ea-80ac-a7c8-d8a81fb8b5c8" class="">КАРТИНКА 4 источник <a href="https://geekboards.ru/">https://geekboards.ru/</a> </p><p id="1df8f2cd-29ea-808e-9d16-d15cef74801a" class="">КАРТИНКА 5 источник <a href="https://geekboards.ru/">https://geekboards.ru/</a> </p><h2 id="1df8f2cd-29ea-807f-a5fa-ee887ca194ae" class=""><strong>Персонажи</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-8049-b902-f9dec8a83ab2"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-8061-bcd6-f377c426f11c" class=""><em>Покороче расскажи про важных персов и тд.</em></p><p id="1df8f2cd-29ea-80a4-9460-cbd4433120cf" class=""><em>Под каждым персонажем вставь картинки с фотками этих челиксов (указать иностранный источник и ссылку)</em></p></div></figure><p id="1df8f2cd-29ea-80d6-bf64-f4002ce60e2b" class="">Информации немного, но что-то наскрести удалось.</p><ul id="1df8f2cd-29ea-8090-bc64-ed01f26511e1" class="bulleted-list"><li style="list-style-type:disc"><strong>Индиана Джонс</strong> — главный герой и авантюрист, в очередной раз спасающий мир.</li></ul><ul id="1df8f2cd-29ea-80a3-a346-c1f4ac1746e8" class="bulleted-list"><li style="list-style-type:disc"><strong>Репортер Джина</strong> — девушка, которая составит протагонисту компанию.</li></ul><ul id="1df8f2cd-29ea-803f-b98c-d1a36fb56b2c" class="bulleted-list"><li style="list-style-type:disc"><strong>Эммерих Восс</strong> — главный злодей. Нацист, укравший артефакт.</li></ul><p id="1df8f2cd-29ea-80f0-9558-cb9d937b915e" class="">Скорее всего, в The Great Circle появятся и другие эпизодические персонажи из первого и второго фильмов.</p><p id="1df8f2cd-29ea-8043-b575-ef806be19e4d" class="">КАРТИНКА 6 источник <a href="https://geekboards.ru/">https://geekboards.ru/</a> </p><p id="1df8f2cd-29ea-804f-aab2-e165411362c0" class="">КАРТИНКА 7 источник <a href="https://geekboards.ru/">https://geekboards.ru/</a> </p><h2 id="1df8f2cd-29ea-80d7-a680-c27f8262dc5e" class=""><strong>Что надо знать перед прохождением</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-80c3-8e07-fe4a093bdbcc"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-8059-958c-eed86da22eb0" class=""><em>Про механики игры, интересные особенности, боевку, дизайн и все такое.</em></p><p id="1df8f2cd-29ea-8060-a463-f9129c6f0bb0" class=""><em>Картинка со скриншотом из игры (указать иностранный источник и ссылку)</em></p></div></figure><p id="1df8f2cd-29ea-8032-bc10-c86c36cc8227" class="">О сюжете поговорили, настала пора перейти к описанию геймплея самой игры. Хотя продюсером, идейным вдохновителем и главным сценаристом игры выступает небезызвестный Тодд Говард, игры в открытом мире вроде Fallout или The Elder Scrolls ждать точно не стоит. Судя по дневникам разработчиков и представленному трейлеру, приключение скорее будет походить на другой проект Bethesda — Wolfenstein, причем больше всего на Wolfenstein: The Old Blood (2015).</p><p id="1df8f2cd-29ea-80fc-97c4-dea3e372af96" class="">Это значит, что в целом сюжет Indiana Jones: The Great Circle будет линейным. В этом есть свои плюсы и минусы: да, развернуться на полную катушку и почувствовать свободу вряд ли получится, зато история выйдет более цельной и красиво срежиссированной. При этом разработчики уже заявили, что в ряде локаций будет частично свободное перемещение, где игрок сможет по своему желанию исследовать разные места и выполнять задания в произвольном порядке — примерно как в недавно вышедшей RoboCop: Rogue City.</p><p id="1df8f2cd-29ea-806e-91fd-c3caeb7f8d6f" class="">КАРТИНКА 8 источник <a href="https://geekboards.ru/">https://geekboards.ru/</a> </p><p id="1df8f2cd-29ea-80d7-8358-e6b6b7d91baf" class="">КАРТИНКА 9 источник <a href="https://geekboards.ru/">https://geekboards.ru/</a> </p><h2 id="1df8f2cd-29ea-800d-bd77-cfb518f187ac" class=""><strong>Платформа и системные требования</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-804e-b1af-c3d63051c375"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-8001-b8fc-d897aadf5a37" class=""><em>Тут важно упомянуть максимальные и минимальные требования. Тут же сделай </em><em><strong>карусель товаров</strong></em><em> с подходящими ноутбуками!</em></p></div></figure><p id="1df8f2cd-29ea-806c-8b6e-efdae933e218" class="">Владельцы PS будут вынуждены немного погрустить — игра выходит только для ПК и Xbox Series X/S. Что касается компьютеров, то системные требования для них все еще не объявлены. Однако мы знаем, что The Great Circle разрабатывается на id Tech 6, на котором вышла, например, Wolfenstein II: The New Colossus, так что необходимое железо можно примерно прикинуть. Скорее всего, минимально для запуска новинки потребуется процессор Intel Core i5-3570, видеокарта Nvidia GTX 770 4GB и 8 ГБ оперативной памяти. Но лучше не равняться по этой планке, ведь технологии не стоят на месте — аппетиты новых графических фишек на комплектующие вашего ПК только растут.</p><h2 id="1df8f2cd-29ea-8052-88c3-d3b59239e5e2" class=""><strong>Итоги: кому игра будет интересна</strong></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1df8f2cd-29ea-8046-bf72-f19899d50ad1"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1df8f2cd-29ea-80a8-a284-f441b918a817" class=""><em>Ваш вывод. Игру будем продавать, поэтому прям в грязь не втаптывайте.</em></p><p id="1df8f2cd-29ea-80df-94f7-cc1f6f8cf1f4" class=""><em>Картинка со скриншотом из игры (указать иностранный источник и ссылку)</em></p></div></figure><p id="1df8f2cd-29ea-80c1-8412-fe6b29a786d6" class="">The Great Circle, само собой, зайдет всем поклонникам франшизы. Но Bethesda известна тем, что создает новые игры и перерабатывает старые не только для олдов. Вероятно, и те, кто пока с приключениями Инди не знаком, тоже легко вольются в процесс даже без просмотра первого фильма — всю необходимую информацию игра подаст в виде кат-сцен и других источников прямо в процессе прохождения.</p><p id="1df8f2cd-29ea-80d2-a733-fcfc032bf5a0" class="">КАРТИНКА 10 источник <a href="https://geekboards.ru/">https://geekboards.ru/</a> </p><hr id="1df8f2cd-29ea-800e-8146-cc1ba0207584"/><p id="1df8f2cd-29ea-8031-88f0-fde1714a8f71" class="block-color-yellow_background">Референсы:</p><p id="1df8f2cd-29ea-8013-b716-d647640e2e08" class=""><a href="https://www.mvideo.ru/blog/mgame/vojna-mirov-sibir-eshhe-odna-smuta-ili-dobrotnaya-otechestvennaya-igra-chto-izvestno-o-predstoyashhem-proekte">https://www.mvideo.ru/blog/mgame/vojna-mirov-sibir-eshhe-odna-smuta-ili-dobrotnaya-otechestvennaya-igra-chto-izvestno-o-predstoyashhem-proekte</a></p><p id="1df8f2cd-29ea-80a0-8204-c3811819942a" class=""><a href="https://www.mvideo.ru/blog/mgame/maksimalno-sereznyj-obzor-igry-rusy-protiv-yashherov-2-konkurent-vedmaka-i-baldurs-gate-3">https://www.mvideo.ru/blog/mgame/maksimalno-sereznyj-obzor-igry-rusy-protiv-yashherov-2-konkurent-vedmaka-i-baldurs-gate-3</a></p><p id="1df8f2cd-29ea-8008-9ab9-eb2cf1fffed7" class="block-color-yellow_background">Рефы документами:</p><figure id="1df8f2cd-29ea-8063-8716-d7aae6a325dc"><div class="source">https://docs.google.com/document/d/14pLbI7K2DK-muwh3nGcybgyAzKOOcedNKjDzfxzOnVs/edit?tab=t.0</div></figure><figure id="1df8f2cd-29ea-80c2-bf4b-c5fdfea96abb"><div class="source">https://docs.google.com/document/d/17fmkh1UewFYOlJAwZo1M_cblAxP_8hmEuz0DUTy6FHA/edit?tab=t.0</div></figure><figure id="1df8f2cd-29ea-8013-b1b2-def00c944d42"><div class="source">https://docs.google.com/document/d/1bvuoyqb3ABf_y-XZBvOny5qBwERP-RhLK5_MHNMZ5bU/edit?tab=t.0</div></figure><p id="1df8f2cd-29ea-8088-906b-f7d07235a52f" class="">Вставлять все ключи. LSI можно не все.</p><p id="1df8f2cd-29ea-80c1-9654-d8ec65288491" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

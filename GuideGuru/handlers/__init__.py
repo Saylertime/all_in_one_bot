@@ -1,6 +1,7 @@
 from .all_texts import router_all_text
 from .check import router_check
 from .content_watch import router_content_watch
+from .chatgpt import router_chatgpt
 from .eldo import router_eldo
 from .send_text import router_send_text
 from .see_texts import router_see_texts
@@ -20,6 +21,7 @@ from .echo import router_echo
 routers = [
     router_all_text,
     router_wiki,
+    router_chatgpt,
     router_see_texts,
     router_send_text,
     router_check,

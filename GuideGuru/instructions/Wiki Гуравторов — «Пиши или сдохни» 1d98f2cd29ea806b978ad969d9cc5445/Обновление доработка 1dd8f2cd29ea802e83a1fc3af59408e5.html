@@ -1,0 +1,699 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Обновление/доработка</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1dd8f2cd-29ea-802e-83a1-fc3af59408e5" class="page sans"><header><div class="page-header-icon undefined"><img class="icon" src="https://www.notion.so/icons/pill_lightgray.svg"/></div><h1 class="page-title">Обновление/доработка</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-person"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesPerson"><path d="M10.9536 7.90088C12.217 7.90088 13.2559 6.79468 13.2559 5.38525C13.2559 4.01514 12.2114 2.92017 10.9536 2.92017C9.70142 2.92017 8.65137 4.02637 8.65698 5.39087C8.6626 6.79468 9.69019 7.90088 10.9536 7.90088ZM4.4231 8.03003C5.52368 8.03003 6.42212 7.05859 6.42212 5.83447C6.42212 4.63843 5.51245 3.68945 4.4231 3.68945C3.33374 3.68945 2.41846 4.64966 2.41846 5.84009C2.42407 7.05859 3.32251 8.03003 4.4231 8.03003ZM1.37964 13.168H5.49561C4.87231 12.292 5.43384 10.6074 6.78711 9.51807C6.18628 9.14746 5.37769 8.87231 4.4231 8.87231C1.95239 8.87231 0.262207 10.6917 0.262207 12.1628C0.262207 12.7974 0.548584 13.168 1.37964 13.168ZM7.50024 13.168H14.407C15.4009 13.168 15.7322 12.8423 15.7322 12.2864C15.7322 10.8489 13.8679 8.88354 10.9536 8.88354C8.04492 8.88354 6.17505 10.8489 6.17505 12.2864C6.17505 12.8423 6.50635 13.168 7.50024 13.168Z"></path></svg></span>Owner</th><td><span class="user"><span class="icon text-icon user-icon"><span class="user-icon-inner">S</span></span>SednaBrown</span></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesMultipleSelect"><path d="M1.91602 4.83789C2.44238 4.83789 2.87305 4.40723 2.87305 3.87402C2.87305 3.34766 2.44238 2.91699 1.91602 2.91699C1.38281 2.91699 0.952148 3.34766 0.952148 3.87402C0.952148 4.40723 1.38281 4.83789 1.91602 4.83789ZM5.1084 4.52344H14.3984C14.7607 4.52344 15.0479 4.23633 15.0479 3.87402C15.0479 3.51172 14.7607 3.22461 14.3984 3.22461H5.1084C4.74609 3.22461 4.45898 3.51172 4.45898 3.87402C4.45898 4.23633 4.74609 4.52344 5.1084 4.52344ZM1.91602 9.03516C2.44238 9.03516 2.87305 8.60449 2.87305 8.07129C2.87305 7.54492 2.44238 7.11426 1.91602 7.11426C1.38281 7.11426 0.952148 7.54492 0.952148 8.07129C0.952148 8.60449 1.38281 9.03516 1.91602 9.03516ZM5.1084 8.7207H14.3984C14.7607 8.7207 15.0479 8.43359 15.0479 8.07129C15.0479 7.70898 14.7607 7.42188 14.3984 7.42188H5.1084C4.74609 7.42188 4.45898 7.70898 4.45898 8.07129C4.45898 8.43359 4.74609 8.7207 5.1084 8.7207ZM1.91602 13.2324C2.44238 13.2324 2.87305 12.8018 2.87305 12.2686C2.87305 11.7422 2.44238 11.3115 1.91602 11.3115C1.38281 11.3115 0.952148 11.7422 0.952148 12.2686C0.952148 12.8018 1.38281 13.2324 1.91602 13.2324ZM5.1084 12.918H14.3984C14.7607 12.918 15.0479 12.6309 15.0479 12.2686C15.0479 11.9062 14.7607 11.6191 14.3984 11.6191H5.1084C4.74609 11.6191 4.45898 11.9062 4.45898 12.2686C4.45898 12.6309 4.74609 12.918 5.1084 12.918Z"></path></svg></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><p id="1dd8f2cd-29ea-8071-9d12-cc699c05e668" class="">Когда у клиента есть древняя статья, но удалять ее нет смысла из-за просмотров, то он отправляет материал нам на обновление/доработку.</p><p id="1dd8f2cd-29ea-8048-9929-d8ee7bfb5fa2" class="">
+</p><nav id="1dd8f2cd-29ea-8066-bbdc-d8f5b75c4f1f" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1dd8f2cd-29ea-807b-aef5-d5da18c347bc">Как подготовиться к переделке?</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1dd8f2cd-29ea-802a-92ff-dd3c3adc226d"><strong>Что конкретно меняется в статье?</strong></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1dd8f2cd-29ea-80d8-879b-f43020c1b1a0">Как работать со старым текстом?</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1dd8f2cd-29ea-806f-bc48-efac3bf0e766">Дополнительные вопросы</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1dd8f2cd-29ea-8034-b603-c90c934dd06b">А можно в доке написать только новый текст, а старый не вставлять?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1dd8f2cd-29ea-80a0-a134-c43c29d839e6">Можно ли добавить новые категории или разделы, если их не было в исходной статье?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1dd8f2cd-29ea-8041-ba93-ca9575bc8b04">Что делать, если структура в СЕО-брифе не совпадает со структурой в старой статье?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1dd8f2cd-29ea-80dd-b161-f7754fdaa095">Нужно ли переписывать весь текст или только отдельные абзацы?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1dd8f2cd-29ea-80e1-9c3a-f13ddc2b352e">Какой стиль нужно сохранить — оригинальный или можно адаптировать под текущий тон блога?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1dd8f2cd-29ea-8047-a9c4-e3a0d05a58ba">Что делать, если товар пропал, а замены ему в списке нет?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1dd8f2cd-29ea-8097-a902-e56bdc3a6dba">Что делать, если обновленный список не получается дотянуть до нужного количества позиций?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1dd8f2cd-29ea-80be-a183-e2869c3abb2b">Есть ли ограничение по объему текста при обновлении?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1dd8f2cd-29ea-807d-8b84-ff9486914d59">Надо ли заново подбирать фотографии к старым блокам типа «как выбрать технику»?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1dd8f2cd-29ea-8018-a5f4-f859bed05ec1">В брифе попросили вписать ключи и LSI. Точно такие же уже есть в старой части текста, я могу их просто выделить цветом?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1dd8f2cd-29ea-809b-8b56-f020b5ddae50">Нужно ли указать, что я автор? Ведь по сути статью писал другой человек.</a></div></nav><h1 id="1dd8f2cd-29ea-807b-aef5-d5da18c347bc" class="">Как подготовиться к переделке?</h1><p id="1dd8f2cd-29ea-80d5-a4c3-f59768580bd9" class="">Если вас просят переписать топ («99 лучших чайников»), то для начала надо проверить количество пропавших товаров и возможных замен. Бывает, что пропадает настолько много, что на их место даже нечего вставить.</p><ul id="1dd8f2cd-29ea-8093-a1fe-e74363ac5d11" class="bulleted-list"><li style="list-style-type:disc">Если заменить есть чем, то составьте список на <a href="%D0%9A%D0%B0%D0%BA%20%D0%B8%20%D0%BA%D0%BE%D0%B3%D0%B4%D0%B0%20%C2%AB%D0%9E%D0%9A%D0%B0%D1%82%D1%8C%C2%BB%201d98f2cd29ea8068a8d6cefb7f3b67e8.html">ОК</a>.</li></ul><ul id="1dd8f2cd-29ea-808f-bc51-c4e25c65f421" class="bulleted-list"><li style="list-style-type:disc">Если вам не хватает товаров, то пишите редактору и предложите свои идеи.</li></ul><p id="1dd8f2cd-29ea-80ba-b537-cb60653926a7" class="">Только когда вы посчитаете количество замен, уточните примерный объем знаков и согласуете новый список — тогда можно начать писать. Так мы точно поймем, сколько надо платить за эту работу.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1dd8f2cd-29ea-80ad-8db8-e374a7a9177b"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1dd8f2cd-29ea-804e-bbd8-c6952fac66e6" class=""><a href="%D0%9A%D0%B0%D0%BA%20%D0%BF%D0%BE%D0%B4%D0%B1%D0%B8%D1%80%D0%B0%D1%82%D1%8C%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%201d98f2cd29ea80fc949ecdc01cd8ce2a.html">Как подбирать товары</a> и <a href="%D0%9A%D0%B0%D0%BA%20%D0%B8%20%D0%BA%D0%BE%D0%B3%D0%B4%D0%B0%20%C2%AB%D0%9E%D0%9A%D0%B0%D1%82%D1%8C%C2%BB%201d98f2cd29ea8068a8d6cefb7f3b67e8.html">ОКать списки</a> мы уже рассказывали!</p></div></figure><h1 id="1dd8f2cd-29ea-802a-92ff-dd3c3adc226d" class=""><strong>Что конкретно меняется в статье?</strong></h1><ul id="1dd8f2cd-29ea-8071-a65a-dae0a581979c" class="bulleted-list"><li style="list-style-type:disc"><strong>Удаляются</strong> товары, которые исчезли из магазина или остались в количестве 1 штуки.</li></ul><ul id="1dd8f2cd-29ea-80a3-9840-e5fba69f69c1" class="bulleted-list"><li style="list-style-type:disc"><strong>Добавляются</strong> новые позиции из предложенного списка, чтобы итоговое число товаров в подборке оставалось прежним (например, 10 из 10) или изменилось по запросу клиента.</li></ul><ul id="1dd8f2cd-29ea-80eb-b700-f09912811876" class="bulleted-list"><li style="list-style-type:disc"><strong>Переписываются или добавляются</strong> разделы, которые клиенты пометили <mark class="highlight-red">красным цветом</mark> в структуре брифа и/или подписали отдельно комментарием.</li></ul><ul id="1dd8f2cd-29ea-8098-a453-ff5f0ecad032" class="bulleted-list"><li style="list-style-type:disc"><strong>Меняется </strong>год на актуальный.</li></ul><ul id="1dd8f2cd-29ea-801b-8b68-f23887b2cd4d" class="bulleted-list"><li style="list-style-type:disc"><strong>Проверяется </strong>весь текст на артефакты и ошибки.</li></ul><ul id="1dd8f2cd-29ea-806a-a6df-fe280a56db6c" class="bulleted-list"><li style="list-style-type:disc">Видео из YouTube <strong>заменяются </strong>на ролики из RuTube и VK-Видео.</li></ul><ul id="1dd8f2cd-29ea-8097-a75b-ddb58731445b" class="bulleted-list"><li style="list-style-type:disc"><strong>Добавляется </strong>больше <a href="%D0%A7%D1%82%D0%BE%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B5%20%C2%AB%D0%9A%D0%B0%D1%80%D1%83%D1%81%D0%B5%D0%BB%D1%8C%C2%BB%201d98f2cd29ea80e6ba01ddbb1fe3b6d0.html">каруселей</a>.</li></ul><p id="1dd8f2cd-29ea-8033-94e0-ebee0cdb98ea" class=""><div class="indented"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1dd8f2cd-29ea-8090-83b9-d7fd48992f5e"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1dd8f2cd-29ea-806f-9c8a-ded3866b11f2" class=""><em>Как выглядят брифы обновлений:</em></p><figure id="1dd8f2cd-29ea-80a6-a1c9-d4090744360d" class="image"><a href="%D0%9E%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B4%D0%BE%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0%201dd8f2cd29ea802e83a1fc3af59408e5/image.png"><img style="width:644.375px" src="%D0%9E%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B4%D0%BE%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0%201dd8f2cd29ea802e83a1fc3af59408e5/image.png"/></a></figure><p id="1dd8f2cd-29ea-80a3-b688-ef582d8c023c" class=""><em>Бриф выше — не СЕО. Структуру не просят менять. Поэтому достаточно просто заменить товары.</em></p><p id="1dd8f2cd-29ea-8021-9dc0-d12b8691abf1" class="">
+</p><figure id="1dd8f2cd-29ea-8021-8b43-fe69aca61a8d" class="image"><a href="%D0%9E%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B4%D0%BE%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0%201dd8f2cd29ea802e83a1fc3af59408e5/image%201.png"><img style="width:644.3875122070312px" src="%D0%9E%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B4%D0%BE%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0%201dd8f2cd29ea802e83a1fc3af59408e5/image%201.png"/></a></figure><p id="1dd8f2cd-29ea-807f-9525-f538fad0197d" class=""><em>А тут СЕО. И красным выделили то, что надо изменить. То есть все черные разделы остаются неизменными.</em></p></div></figure></div></p><h1 id="1dd8f2cd-29ea-80d8-879b-f43020c1b1a0" class="">Как работать со старым текстом?</h1><ol type="1" id="1dd8f2cd-29ea-807b-9b01-c391bfe88613" class="numbered-list" start="1"><li><strong>Скопируйте из сайта или выданного Гуглдока старый текст в новый документ.</strong><p id="1dd8f2cd-29ea-8028-8eb2-f416f829df1f" class="">Это нужно, чтобы сохранить структуру и видеть, что было написано ранее.</p></li></ol><ol type="1" id="1dd8f2cd-29ea-8023-bf5d-e89864fd1272" class="numbered-list" start="2"><li><strong>Залейте </strong><mark class="highlight-gray_background"><strong>светло-серым фоном</strong></mark><strong> весь старый текст.</strong><p id="1dd8f2cd-29ea-8068-8269-c13bb2d7ca4c" class="">Это визуально отделяет оригинальный материал от новых правок и помогает редактору, автору и корректору быстрее ориентироваться в изменениях.</p></li></ol><ol type="1" id="1dd8f2cd-29ea-802f-885e-c75de5e9038c" class="numbered-list" start="3"><li><strong>Удалите ненужные куски текста.</strong><p id="1dd8f2cd-29ea-801d-b670-fd1b39401305" class="">Не оставляйте его ни в каком виде.</p></li></ol><ol type="1" id="1dd8f2cd-29ea-801d-8a0c-efb0426e7592" class="numbered-list" start="4"><li><strong>Пишите новый текст с обычным белым фоном.</strong><p id="1dd8f2cd-29ea-8090-a8e1-cbeecf76aea8" class="">Новая информация подается в финальном виде — не в режиме подсказок, черновиков или комментариев.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1dd8f2cd-29ea-80db-acdc-c372113e3e59"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1dd8f2cd-29ea-8095-9680-dc7ffa941565" class=""><em>Коротко:</em></p><p id="1dd8f2cd-29ea-807b-ac6d-f2af86a2ac8b" class="">Важное правило доработки — заливка фона. </p><p id="1dd8f2cd-29ea-80b3-9e12-e4e7bb742f15" class="">
+</p><ul id="1dd8f2cd-29ea-80d7-afc4-fe5a7eed3430" class="bulleted-list"><li style="list-style-type:disc">Светло-серый — старый текст.</li></ul><ul id="1dd8f2cd-29ea-8056-b6da-cbe415eabd46" class="bulleted-list"><li style="list-style-type:disc">Белый — новый текст.</li></ul><p id="1dd8f2cd-29ea-801d-90f9-f14ed4537189" class="">
+</p><p id="1dd8f2cd-29ea-80cf-909e-cbf93eafc2be" class=""><em>Как это выглядит: </em></p><figure id="1dd8f2cd-29ea-80f5-9285-cdc333d27308" class="image"><a href="%D0%9E%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B4%D0%BE%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0%201dd8f2cd29ea802e83a1fc3af59408e5/image%202.png"><img style="width:616.3875122070312px" src="%D0%9E%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B4%D0%BE%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0%201dd8f2cd29ea802e83a1fc3af59408e5/image%202.png"/></a></figure></div></figure></li></ol><h2 id="1dd8f2cd-29ea-806f-bc48-efac3bf0e766" class="">Дополнительные вопросы</h2><h3 id="1dd8f2cd-29ea-8034-b603-c90c934dd06b" class="">А можно в доке написать только новый текст, а старый не вставлять?</h3><p id="1dd8f2cd-29ea-8025-b121-dce1a91e6f23" class="">Нет. Мы принимаем только целую статью. Обрывки не нужны.</p><p id="1dd8f2cd-29ea-8015-8cea-f90f4948e7de" class="">
+</p><h3 id="1dd8f2cd-29ea-80a0-a134-c43c29d839e6" class="">Можно ли добавить новые категории или разделы, если их не было в исходной статье?</h3><p id="1dd8f2cd-29ea-80bb-8437-d6ac3f607524" class="">Только по запросу клиента или при обсуждении с редактором.</p><p id="1dd8f2cd-29ea-80b9-9b3b-e546a0dfe6a6" class="">
+</p><h3 id="1dd8f2cd-29ea-8041-ba93-ca9575bc8b04" class="">Что делать, если структура в СЕО-брифе не совпадает со структурой в старой статье?</h3><p id="1dd8f2cd-29ea-8048-b7f5-c93d3772afdb" class="">Допустим, раньше было «5 недорогих чайников», а теперь «5 удобных чайников». Возможно, клиент криво написал бриф — такое бывает. Или клиент хочет, чтобы вы заменили «недорогие чайники» на «удобные». Смотрите на цвет раздела. </p><ul id="1dd8f2cd-29ea-80e9-992d-d5091042e2cf" class="bulleted-list"><li style="list-style-type:disc">Если он <mark class="highlight-red">красный </mark>— это новый раздел, который надо написать. Старый в таком случае удаляется.</li></ul><ul id="1dd8f2cd-29ea-80b5-8b97-c9dd0ad24f4f" class="bulleted-list"><li style="list-style-type:disc">Если <mark class="highlight-default">черный </mark>— пишите редактору, чтобы тот связался с клиентом.</li></ul><p id="1dd8f2cd-29ea-8058-9d76-c254bd67b968" class="">
+</p><h3 id="1dd8f2cd-29ea-80dd-b161-f7754fdaa095" class="">Нужно ли переписывать весь текст или только отдельные абзацы?</h3><p id="1dd8f2cd-29ea-80af-b480-f438eae7fb92" class="">Не надо весь переписывать. Если клиент попросил исправить какой-то конкретный пункт — его и меняйте. </p><p id="1dd8f2cd-29ea-8027-b2de-f158cdeede92" class="">Но если во время изучения материала вы поняли, что огромный кусок текста нечитаемый, то спросите у редактора его мнение и приложите пример.</p><p id="1dd8f2cd-29ea-80b1-a55e-d79ab38d6648" class="">
+</p><h3 id="1dd8f2cd-29ea-80e1-9c3a-f13ddc2b352e" class="">Какой стиль нужно сохранить — оригинальный или можно адаптировать под текущий тон блога?</h3><p id="1dd8f2cd-29ea-8032-aac1-ee7252eb04e6" class="">Лучше под текущий. </p><ul id="1dd8f2cd-29ea-80a0-adb2-cf1206a04d09" class="bulleted-list"><li style="list-style-type:disc">Если вы видите в оригинале стоп-слова и штампы — исправьте их и залейте белым фоном.</li></ul><ul id="1dd8f2cd-29ea-8028-8d80-e4c20deee42e" class="bulleted-list"><li style="list-style-type:disc">Если в оригинальной статье «МКлика» нет блока +/-, то стоит добавить с белым фоном.</li></ul><ul id="1dd8f2cd-29ea-809f-bcd0-c741a20e8713" class="bulleted-list"><li style="list-style-type:disc">Если в топе товаров нет подзаголовков, то надо вставить с белым фоном.</li></ul><p id="1dd8f2cd-29ea-803a-b765-cd61e6e21317" class="">Но если вы сомневаетесь, то спросите у Седны! (я тоже часто сомневаюсь)</p><p id="1dd8f2cd-29ea-8013-ade2-dc84647d6ec0" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1dd8f2cd-29ea-8087-b793-e3fd12306f57"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="1dd8f2cd-29ea-8021-8c8c-e54c2dfe6c79" class=""><em>Пример:</em></p><figure id="1dd8f2cd-29ea-8024-bc80-f2c60a4d4e5d" class="image"><a href="%D0%9E%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B4%D0%BE%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0%201dd8f2cd29ea802e83a1fc3af59408e5/image%203.png"><img style="width:644.4000244140625px" src="%D0%9E%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B4%D0%BE%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0%201dd8f2cd29ea802e83a1fc3af59408e5/image%203.png"/></a></figure></div></figure><p id="1dd8f2cd-29ea-80b3-8ec4-f00c0d0ffd5c" class="">
+</p><h3 id="1dd8f2cd-29ea-8047-a9c4-e3a0d05a58ba" class="">Что делать, если товар пропал, а замены ему в списке нет?</h3><p id="1dd8f2cd-29ea-8067-ba15-d4641ad31890" class="">Поищите на сайте клиента. После предложите редактору. Если и там нет аналога, то сообщите редактору.</p><p id="1dd8f2cd-29ea-805f-bd3d-dda315b58bb8" class="">
+</p><h3 id="1dd8f2cd-29ea-8097-a902-e56bdc3a6dba" class="">Что делать, если обновленный список не получается дотянуть до нужного количества позиций?</h3><p id="1dd8f2cd-29ea-80b2-a147-cba23c16e72e" class="">Сообщить редактору заранее (до сдачи текста, на этапе согласования списка).</p><p id="1dd8f2cd-29ea-8041-a716-f2aef1b70387" class="">
+</p><h3 id="1dd8f2cd-29ea-80be-a183-e2869c3abb2b" class="">Есть ли ограничение по объему текста при обновлении?</h3><p id="1dd8f2cd-29ea-805a-b9f7-f6e478185c99" class="">Обычно пишут в брифе. Если вы заменяете товары, то берите среднее количество знаков за пропавшие товары. Было 500 символов на прошлом фене — оставляете 500 символов на новом.</p><p id="1dd8f2cd-29ea-8069-95e4-e0369fbb3c8f" class="">
+</p><h3 id="1dd8f2cd-29ea-807d-8b84-ff9486914d59" class="">Надо ли заново подбирать фотографии к старым блокам типа «как выбрать технику»?</h3><p id="1dd8f2cd-29ea-8051-9c3c-ca5d2bd66fd1" class="">Если старые фотки гуд, то оставляйте — просто скопируйте ссылку на картинку из оригинальной статьи и вставьте в свой документ. Если они мыльные и уродливые — меняйте. </p><p id="1dd8f2cd-29ea-808d-b16f-fdeba05e42e3" class="">
+</p><h3 id="1dd8f2cd-29ea-8018-a5f4-f859bed05ec1" class="">В брифе попросили вписать ключи и LSI. Точно такие же уже есть в старой части текста, я могу их просто выделить цветом?</h3><p id="1dd8f2cd-29ea-8096-b671-fcfbdbae052a" class="">Да!</p><p id="1dd8f2cd-29ea-8035-bf05-c20d94698e80" class="">
+</p><h3 id="1dd8f2cd-29ea-809b-8b56-f020b5ddae50" class="">Нужно ли указать, что я автор? Ведь по сути статью писал другой человек.</h3><p id="1dd8f2cd-29ea-8009-b65c-da782f0c64fc" class="">Да. Это нужно, чтобы нам было легче ориентироваться в авторах. Обычно переделки сохраняют имя старого автора. Или клиент отдельно спрашивает под кем публиковать. Я, например, не люблю, когда мне приписывают переделки, поэтому прошу отдельно. Могу и вам такое организовать.</p><p id="1dd8f2cd-29ea-80b7-b514-c06417968f91" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

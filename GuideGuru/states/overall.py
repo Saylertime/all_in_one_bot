@@ -12,3 +12,4 @@ class OverallState(StatesGroup):
     turgenev = State()
     send_text = State()
     see_texts = State()
+    chatgpt = State()

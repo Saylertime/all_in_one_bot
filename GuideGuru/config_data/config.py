@@ -13,6 +13,7 @@ LOCAL_ENV = os.getenv("LOCAL_ENV")
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 USERKEY_TEXT_RU = os.getenv("USERKEY_TEXT_RU")
 USERKEY_CONTENT_WATCH = os.getenv("USERKEY_CONTENT_WATCH")
+CHATGPT_API_KEY = os.getenv("CHATGPT_API_KEY")
 TURGENEV_API_KEY = os.getenv("TURGENEV_API_KEY")
 DB_NAME = os.getenv("DB_NAME")
 DB_USER = os.getenv("DB_USER")
@@ -24,6 +25,7 @@ ADMINS = os.getenv("ADMINS").split(",")
 DEFAULT_COMMANDS = [
     ("start", "Запустить бота"),
     ("wiki", "Wiki"),
+    ("chatgpt", "CHATGPT"),
     ("send_text", "Отправить текст редактору"),
     ("free_texts", "Свободные брифы"),
     ("check", "Проверить текст на стоп-слова"),
