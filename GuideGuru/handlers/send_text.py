@@ -6,7 +6,9 @@ from config_data import config
 from filters.is_author import IsAuthorFilter
 from loader import bot
 from states.overall import OverallState
-from utils.docs import check_text
+from utils.docs import check_text, get_content
+from utils.text_ru import text_unique_check
+from utils.turgenev import check_text_in_turgenev
 from psql_maker import find_author
 from datetime import datetime
 
@@ -45,6 +47,18 @@ async def send_answer(message, state):
             for admin in admins:
                 await bot.send_message(admin, author_msg + message.text)
             await message.answer("Всё хорошо, текст ушёл на проверку!")
+
+            try:
+                full_text = await get_content(url)
+                result_turgenev = await check_text_in_turgenev(full_text["full_text"])
+                result_unique = await text_unique_check(full_text["full_text"])
+                result = result_turgenev + "\n\n" + result_unique
+
+                for admin in admins:
+                    if len(result) < 4000:
+                        await bot.send_message(admin, result)
+            except Exception as e:
+                print(e)
         else:
             msg = "<b>ИСПРАВЬ НЕПОТРЕБСТВА И ПОВТОРИ ПОПЫТКУ!!!</b>\n\n"
             await message.answer(msg + answer, parse_mode="HTML")
