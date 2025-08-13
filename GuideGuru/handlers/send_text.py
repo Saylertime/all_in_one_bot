@@ -40,7 +40,7 @@ async def send_answer(message, state):
     try:
         url = message.text.split("/")[-2]
         answer = await check_text(url, is_check_for_admins=True)
-        if answer == "Стоп-слов нет, ты молодчуля ;)":
+        if "Стоп-слов нет, ты молодчуля ;)" in answer:
             with open("texts.txt", "a") as file:
                 file.write(str(datetime.today()) + " " + message.text + " " + author + " @" + message.from_user.username + "\n")
 
