@@ -46,5 +46,5 @@ def get_product_ids(content):
     links = [link for link in content if re.match(pattern, link)]
     if links:
         ids = {link.split("-")[-1].split("/")[0] for link in links}
-        return ", ".join(ids)
+        return "ID товаров: " + ",".join(ids)
     return ""
