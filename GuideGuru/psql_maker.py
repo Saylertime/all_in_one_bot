@@ -80,6 +80,13 @@ async def update_money_status(nickname):
         await conn.execute(sql, nickname)
 
 
+async def update_money_status_for_everyone():
+    async with db_connection() as conn:
+        sql = """UPDATE public.authors 
+                 SET got_money = False;"""
+        await conn.execute(sql)
+
+
 async def new_table_stop_words():
     async with db_connection() as conn:
         sql = """CREATE TABLE IF NOT EXISTS words (word VARCHAR);"""

@@ -43,7 +43,7 @@ async def get_sheet_names(spreadsheet_id):
 
 
 async def get_data_from_sheet(month, spreadsheet_id):
-    SAMPLE_RANGE_NAME = f"{month}!A2:M"
+    SAMPLE_RANGE_NAME = f"{month}!A2:N"
 
     try:
         service = build("sheets", "v4", credentials=creds)
@@ -85,14 +85,16 @@ async def rep_name_and_month(name, month, sber_data=None):
 
         for row in values:
             try:
-                title = f"\n— <a href='{row[1]}'>{row[0]}</a> — {row[6]} руб.\n"
-                money = int(row[6])
-                link = row[1]
-                brief = str(row[3])
                 try:
                     bonus_pts = int(row[9])
                 except:
                     bonus_pts = 1
+
+                money = int(row[6])
+                text_name = row[0]
+                link = row[1]
+                brief = str(row[3])
+                title = f"\n— <a href='{link}'>{text_name}</a> — {money} руб. (Бонус — {bonus_pts}) \n"
 
                 if name == row[2]:
                     if name in dct:
@@ -122,15 +124,19 @@ async def rep_name_and_month(name, month, sber_data=None):
                 if name == row[10]:
                     money = int(row[11])
                     addons = str(row[12])
+                    try:
+                        help_bonus = int(row[13])
+                    except:
+                        help_bonus = 1
 
                     if name in dict_with_addons:
-                        dict_with_addons[name].append((money, addons))
+                        dict_with_addons[name].append((money, addons, help_bonus))
                     else:
-                        dict_with_addons[name] = [(money, addons)]
+                        dict_with_addons[name] = [(money, addons, help_bonus)]
 
                     if name in dct:
                         value_money, current_count, general_bonus = dct[name]
-                        general_bonus += 1
+                        general_bonus += help_bonus
                         dct[name] = (value_money + money, current_count, general_bonus)
                     else:
                         dct[name] = (money, 0, 0)
@@ -155,7 +161,7 @@ async def rep_name_and_month(name, month, sber_data=None):
             if author == "Седна":
                 summa += 80000
 
-            total_money = sum(money for money, _ in dict_with_addons.get(name, []))
+            total_money = sum(item[0] for item in dict_with_addons.get(name, []))
 
             msg += (
                 f"Гонорар за сданные тексты и допы за {month} — {summa + bonus_money}  руб.\n"
@@ -179,7 +185,8 @@ async def rep_name_and_month(name, month, sber_data=None):
         if dict_with_addons:
             msg_addons = "\n\n<b>Дополнительные гонорары: </b>\n"
             for addon in dict_with_addons[name]:
-                msg_addons += f"\n — {addon[1]} — {addon[0]} руб.\n"
+                print(addon)
+                msg_addons += f"\n — {addon[1]} — {addon[0]} руб. (Бонус — {addon[2]})\n"
             msg += msg_addons
 
         if len(msg) > 4090:

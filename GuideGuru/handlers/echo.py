@@ -15,6 +15,7 @@ from psql_maker import (
     all_authors,
     find_author,
     update_money_status,
+    update_money_status_for_everyone
 )
 from utils.text_ru import symbols_left
 from utils.sheets import rep_name_and_month, rep_name_and_month_sber
@@ -63,6 +64,7 @@ async def zarplata_pridet(callback):
 async def got_zarplata(message):
     authors = await all_authors()
     buttons = [(name["name_in_db"], f"zp__{name['nickname']}") for name in authors]
+    buttons.append(("Обнуление", "obnulenie"))
     markup = create_markup(buttons, columns=3)
     await message.answer("lol?", reply_markup=markup)
 
@@ -72,6 +74,14 @@ async def change_salary(callback):
     nickname = callback.data.split("__")[1]
     await update_money_status(nickname)
     await callback.message.edit_text(f"{nickname} получил зарплату")
+    await got_zarplata(callback.message)
+
+
+@router_echo.callback_query(F.data.startswith("obnulenie"))
+async def change_salary_obnulenie(callback):
+    await update_money_status_for_everyone()
+    await callback.message.edit_text("Никто не получил зарплату")
+    await got_zarplata(callback.message)
 
 
 @router_echo.message(F.text.lower() == "зп")
