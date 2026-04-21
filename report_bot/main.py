@@ -11,7 +11,7 @@ from middlewares.logging_middleware import LoggingMiddleware
 
 
 LOCAL_ENV = config.LOCAL_ENV
-BASE_URL = "https://glinkin.pro"
+BASE_URL = config.BASE_URL
 BOT_TOKEN = config.BOT_TOKEN
 WEBHOOK_PATH = "/webhook_report"
 PORT = 5003

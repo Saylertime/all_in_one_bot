@@ -15,7 +15,7 @@ from pytz import timezone
 
 
 LOCAL_ENV = config.LOCAL_ENV
-BASE_URL = "https://glinkin.pro"
+BASE_URL = config.BASE_URL
 BOT_TOKEN = config.BOT_TOKEN
 WEBHOOK_PATH = "/webhook_guideguru"
 PORT = 5002
