@@ -1,6 +1,5 @@
 import os
 
-# import openai
 from dotenv import load_dotenv, find_dotenv
 
 if not find_dotenv():

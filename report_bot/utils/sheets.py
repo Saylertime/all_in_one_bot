@@ -45,7 +45,7 @@ async def get_sheet_names(spreadsheet_id):
 
 
 async def get_data_from_sheet(month, spreadsheet_id):
-    SAMPLE_RANGE_NAME = f"{month}!A2:M"
+    SAMPLE_RANGE_NAME = f"{month}!A2:N"
 
     try:
         service = build("sheets", "v4", credentials=creds)
@@ -102,9 +102,13 @@ async def rep_month(month):
         try:
             name = row[10]
             money = int(row[11])
+            try:
+                bonus_pts = int(row[13])
+            except:
+                bonus_pts = 1
             if name in dct:
                 value_money, current_count, general_bonus = dct[name]
-                general_bonus += 1
+                general_bonus += bonus_pts
                 dct[name] = (value_money + money, current_count, general_bonus)
             else:
                 dct[name] = (money, 0, 1)

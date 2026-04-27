@@ -17,14 +17,19 @@ async def history(message, state):
     await state.set_state(OverallState.history)
 
 
+from aiogram.types import FSInputFile
+
 @router_history.message(OverallState.history)
 async def answer(message, state):
     await state.clear()
     try:
-        split_message = message.text.split(", ")
-        name = split_message[0]
-        current_month = split_message[1]
-        msg = await rep_name_and_month(name=name, month=current_month)
-        await message.answer(msg, parse_mode="HTML")
-    except:
-        await message.answer("Введи нормально :(")
+        name, current_month = message.text.split(", ", 1)
+        result = await rep_name_and_month(name=name, month=current_month)
+
+        if result and result.endswith(".txt"):
+            await message.answer_document(FSInputFile(result))
+        else:
+            await message.answer(result or "Данных не найдено", parse_mode="HTML")
+
+    except Exception as e:
+        await message.answer(f"Введи нормально :( Ошибка: {e}")

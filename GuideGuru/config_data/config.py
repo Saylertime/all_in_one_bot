@@ -1,6 +1,5 @@
 import os
 
-from aiogram.types import BotCommand
 from dotenv import load_dotenv, find_dotenv
 
 
