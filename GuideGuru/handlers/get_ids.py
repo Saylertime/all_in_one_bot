@@ -42,9 +42,10 @@ async def get_ids_answer(message, state):
 
 
 def get_product_ids(content):
-    pattern = r"https://www\.mvideo\.ru/products/[a-zA-Z0-9\-\_]+-\d+"
+    pattern = r"https://www\.mvideo\.ru/products/(?:[a-zA-Z0-9_-]+-)?\d+"
     links = [link for link in content if re.match(pattern, link)]
     if links:
-        ids = {link.split("-")[-1].split("/")[0] for link in links}
+        print(links)
+        ids = {link.split("/")[4] for link in links}
         return "ID товаров: " + ",".join(ids)
     return ""
